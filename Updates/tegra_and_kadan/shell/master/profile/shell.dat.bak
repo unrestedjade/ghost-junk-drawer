@@ -1,0 +1,21 @@
+Charset,UTF-8
+__system_settings_version__,2
+seriko.scaling.dither,1
+char0.bind.savearray,50=1 100=0
+balloon,C:\Users\Katherine\Desktop\Uka\balloon\FauxCARS Basic\
+Char1.balloon.isleft,0
+seriko.scaling.dither.balloon,1
+balloon0.offset,314.-163
+scriptbox.left,540
+Char0.centery,1062
+balloon1.offset,349.-160
+Char0.balloon.isleft,1
+Char.VirtualDesktop,a6a00b86-c991-4fc3-a92e-f0ead1798603
+Char0.center,377
+scriptbox.top,839
+Char1.centery,1062
+Char1.center,248
+char1.bind.savearray,350=0 50=1
+seriko.scaling.percent.x,100
+seriko.scaling.percent.y,100
+__system_written_flag_do_not_remove__,written

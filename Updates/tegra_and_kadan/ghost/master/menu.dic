@@ -1,0 +1,1548 @@
+﻿//---------------------------Menus--------------------------
+//Tegra and Kadan
+
+
+//--OpenSakuraMenu
+
+OpenSakuraMenu
+{
+	if tegrasleep == "on"
+	{
+		tegrasleep = "off"
+		"\0\s[20000]Come on down...\w4play the Price is Right...\w4\s[0] Huh?"
+		"\0\s[20000]...Zzz...Chef's special today is...\w4 Hmm?\s[0]"
+		"\0\s[0]...Mhm? \w4\i[252]Oh, was I asleep? Sorry!\w4 What's up?\i[158]"
+	}
+	elseif nowshell == "mirror"
+	{
+		tegrasleep = "off"
+		"\0\s[0]\i[253]\i[208]\w8\w8...I'm Gul Kadan's secretary, not yours.\w6 What?"
+		"\0\s[0]\i[254]\i[208]\w8\w8Oh, I'm expected to be at the beck and call of a Terran, now?"
+		"\0\s[0]\i[204]\w8\w8...You're joking\w3, right?"
+		--
+		OnMirrorMenuRun
+	}
+	elseif feelings <= 0
+	{
+		"\0\s[0]\i[253]\i[208]\w8\w8...What do you want, hu-mon?"
+	}
+	else
+	{
+		"\0\s[0]\i[204]\b2Like, what's up?\i[158]"
+		"\0\s[0]\i[203]\b2That'll be three strips of latinum! Haha\w3, j/k.\w5\i[152]\i[410]\i[403] Unless...?\i[158]"
+		"\0\s[0]\i[204]\b2What do you want to do?\i[158]"
+	}
+		--
+		MenuRun
+}
+
+//--MenuRun
+
+MenuRun
+ {	
+ 	wd = GetWeekDay
+ 	ap = GetAP
+	//These four statements basically get the day of the week, whether it's AM or PM, the hour, and the time. It's putting together the information to display the time at the bottom of the balloon. Pay it no mind.
+	--
+	"\n\n\_q\b2" //and \_q means quick session, meaning all the text from this point on will display instantly instead of a few letters at a time like normal ghost dialogue.
+	--
+	if lastTalk != "" //seeing if the lastTalk thing is NOT empty.
+	{
+	  "\![*]\q[What did you say last?,OnLastTalk]\n\n[half]"
+	}
+	--
+ 	"\![*]\q[Let's chat,OnAiTalk]\n"
+	"\![*]\q[What's on your mind?,OnAiTalk]\n"
+	--
+	"\![*]\q[Play Higher or Lower,holgame]\n"
+	"\![*]\q[Play Tic-Tac-Toe,tttgame]\n"
+	--
+	"\![*]\q[Interact with Tegra,OnTegraInteract]\n/
+	\![*]\q[Config Menu,configmenu]\n/
+	\![*]\q[Functions,dosomething]\n\n[half]/
+ 	\![*]\q[Nevermind,CANCEL]\n\n\n[half]%(wd) %(nowhour):%(nowmin) %(ap), %(month)/%(day)/%(year)\e"
+}
+
+//Leave this alone
+OnLastTalk 
+{
+"%(lastTalk)\e"
+}
+
+//This is figuring out what day of the week it is. Leave it alone.
+GetWeekDay
+{
+	if weekday == 0
+	{"Sun"}
+	elseif weekday == 1
+	{"Mon"}
+	elseif weekday == 2
+	{"Tue"}
+	elseif weekday == 3
+	{"Wed"}
+	elseif weekday == 4
+	{"Thu"}
+	elseif weekday == 5
+	{"Fri"}
+	else
+	{"Sat"}
+}
+
+//This is finding out whether it's AM or PM. Leave it alone.
+GetAP
+{
+ 	if hour >= 0 && hour <= 11
+ 		{"AM"}
+ 	else
+ 		{"PM"}
+}
+
+nowhour
+{
+	if hour12 == 0; "1"
+	else; "%(hour12)"
+}
+
+nowmin
+{
+	if minute >= 0 && minute <=9; "0%(minute)"
+	else; "%(minute)"
+}
+
+
+//If someone selects an option linked to BACKTOMENU, it will go back to MenuRun.
+//Advanced users, note that this is formatted as Select.linkedfunction? Remember how it went \q[Displayed Name,linkedfunction] above? When a user clicks an option that doesn't begin with On, they'll be linked to Select.linkedfunction. Pay close attention as we go through and you'll see this in action.
+
+Select.BACKTOMENU
+	{
+		MenuRun
+	}
+	
+OnBACKTOMENU
+	{
+		MenuRun
+	}
+
+//If someone selects configmenu, this will lead to TalkConfig.
+Select.configmenu
+	{
+		TalkConfig
+	}
+
+//*********************Advanced User Info*******************************
+//Some of you may be wondering why some of these Select.options lead to another function. Why not just put the config menu coding under Select.configmenu, instead of linking to TalkConfig?
+//Basically any function that's preceded with Select. is limited in its complexity and can only be called within its own .dic file in my experience. Why should you care, you ask? Well, if you're going to link to this function any other way, such as linking it in other .dic files or as a page in a menu, it needs to be a stand-alone function so it can be properly called. I'm pretty sure.
+//The basic jist is this; if you're going to reuse whatever it is the option leads to, you should make it its own function. Otherwise, you can leave it in Select.option. As a rule of thumb I'd probably put any complicated stuff in its own function, then use the Select.option to call the full function as you can see above. Simple dialogue responses to a choice can stay as a Select.option though (Like "Do you like going to raves and partying? Yes/No"). Study what stays as a Select.option and what links to another Function as we go through the file.
+//***********************************************************************
+
+//--TalkConfig
+//This menu allows the user to change their name and other information, as well as put in their birthday and change how often the ghost speaks. You can restructure how this looks if you want, but it's perfectly functional as is. You can of course change the dialogue though if you like.
+
+TalkConfig
+{
+	"\0\b[2]\_q\" 
+	//This bit of dialogue sets up a large balloon and a quick session, like above, so all the text will appear immediately. The rest is formatted to display the information and options to change it. I wouldn't touch any of it if you don't know what you're doing.
+	--
+	"f[bold,1]Your name:\f[bold,0] %(username) \f[sup,1](\q[Change it?,TEACHNAME])\f[sup,0]\n"
+	--
+	"\f[bold,1]Your pronouns:\f[bold,0] %(heshe)/%(himher)/%(hisher) \f[sup,1](\q[Change them?,TEACHPRONOUN])\f[sup,0]\n"
+	--
+	"\f[bold,1]Your birthday:\f[bold,0] %(birthdayprint) \f[sup,1](\q[Change it?,TEACHBDAY])\f[sup,0]\n\n"
+	--
+	"\f[bold,1]Talk Rate:\f[bold,0] - every %(talktime) \f[sup,1](\q[Change it,talkinter])\f[sup,0]\n\n"
+	--		
+		{
+		"\![*]Enable Uninstall? (NOW : %(deleteshitai))\n\q[ON,deleteon] \q[OFF,deleteoff]\n\n[half]\n"
+		}
+	--
+	if nowshell == "mirror"
+	{
+	"\![*]\q[Back to the menu,BACKTOMIRRORMENU]\e"
+	}
+	else
+	{
+	"\![*]\q[Back to the menu,BACKTOMENU]\e"
+	}
+}
+
+
+Select.TEACHPRONOUN
+{
+	"\0\s[0]What pronouns do you want?\w5\n\n[half]\_q/
+		\![*]\q[He-His-Him,choicemasc]\n/
+		\![*]\q[She-Her-Her,choicefem]\n/	
+		\![*]\q[They-Their-Them,choiceneither]\e"
+}
+
+Select.choicemasc
+{
+	presuffix = "masculine"
+	himher = "him"
+	heshe = "he"
+	hisher = "his"
+	hesshes = "he's"
+	--
+	"\0\s[0]Your pronouns are now he him and his.\e"
+	//Leave the part above the double dashes alone. You can replace the snip of dialogue however with whatever you like.
+}
+
+Select.choicefem
+{
+	presuffix = "feminine"
+	himher = "her"
+	heshe = "she"
+	hisher = "her"
+	hesshes = "she's"
+	--
+	"\0\s[0]Your pronouns are now she her and her.\e"
+}
+
+Select.choiceneither
+{
+	presuffix = "undefine"
+	himher = "them"
+	heshe = "they"
+	hisher = "their"
+	hesshes = "they're"
+	--
+	"\0\s[0]Your pronouns are now they them and their.\e"
+}
+
+//Here are some examples of these envelopes in use.
+//"%(heshe) left that there."
+//"%(hisher) work is really cool."
+//"I'll ask %(himher) later."
+//"%(hesshes) really good at it."
+
+
+//These two options toggle whether or not you can delete your ghost. Leave them alone.
+
+Select.deleteon
+{
+	deleteshitai = "ON"
+	TalkConfig
+}
+
+Select.deleteoff
+{
+	deleteshitai = "OFF"
+	TalkConfig
+}
+
+
+//This next set of functions handles inputting the user's birthday.
+
+Select.TEACHBDAY
+	{	
+		if nowshell == "mirror"
+		{
+		"\0\s[0]\i[410]Who cares about a Terran's nameday?\e"
+		}
+		else
+		{
+		"\0\s[0]\i[406]\i[407]\i[204]What Earth month were you born? \w8Name or number is fine.\![open,inputbox,OnUserBornMonth,-1]\e"
+		}
+		//You can replace the dialogue up to the \![open,inputbox,OnUserBornMonth,-1] tag, leave that alone. You'll need the input box to get the information.
+		
+		//*********************Advanced User Info*******************************
+		//I also touched on this in bootend.dic and explained it in the walkthrough page on coding, but I'll also go into it here. I'm going to break down the tag there at the end of the sentence so you know what it's doing. Basically, \! means a function is going to happen, open tells it to open something, inputbox tells it to open an input box, and OnUserBornMonth is the function the input box will be linked to, which is just below here. -1 means the input box should not time out. If you want to add input boxes to some new function for whatever reason, you should follow this basic format.
+		//On a related note, you can raise any function at the end of any piece of dialogue by using this format - \![raise,InsertFunctionName]. This can be handy for testing things if the function is hard to get to run otherwise.
+		//***********************************************************************
+	}
+
+//--OnUserBornMonth
+
+OnUserBornMonth
+{
+	_tempmonth = TOSTR(reference0) //this stores what the user put in as a variable called _tempmonth
+	_tempmonth = TOLOWER(_tempmonth) //changes it to lowercase
+	
+	//this is attaching the right value to the input from the user
+	if _tempmonth == "january" || _tempmonth == "1" {bornmonth = 1; bornmonthprint = "January"}
+	elseif _tempmonth == "february" || _tempmonth == "2" {bornmonth = 2; bornmonthprint = "February"}
+	elseif _tempmonth == "march" || _tempmonth == "3" {bornmonth = 3; bornmonthprint = "March"}
+	elseif _tempmonth == "april" || _tempmonth == "4" {bornmonth = 4; bornmonthprint = "April"}
+	elseif _tempmonth == "may" || _tempmonth == "5" {bornmonth = 5; bornmonthprint = "May"}
+	elseif _tempmonth == "june" || _tempmonth == "6" {bornmonth = 6; bornmonthprint = "June"}
+	elseif _tempmonth == "july" || _tempmonth == "7" {bornmonth = 7; bornmonthprint = "July"}
+	elseif _tempmonth == "august" || _tempmonth == "8" {bornmonth = 8; bornmonthprint = "August"}
+	elseif _tempmonth == "september" || _tempmonth == "9" {bornmonth = 9; bornmonthprint = "September"}
+	elseif _tempmonth == "october" || _tempmonth == "10" {bornmonth = 10; bornmonthprint = "October"}
+	elseif _tempmonth == "november" || _tempmonth == "11" {bornmonth = 11; bornmonthprint = "November"}
+	elseif _tempmonth == "december" || _tempmonth == "12" {bornmonth = 12; bornmonthprint = "December"}
+	
+	else //if the month isn't a valid month, like 32 or something.
+	{
+			"\0\s[0]\i[212]I don't think that's a real month...?\i[204] Try again!"
+			--
+			"\![open,inputbox,OnUserBornMonth,-1]\![set,balloontimeout,-1]\e"
+			
+			//You can replace this dialogue in the first line. You need to leave the tag for the input box so they can put in a correct month. That last tag there for ![set,balloontimeout,-1] makes it so the input box won't time out if the user takes too long.
+	}
+	--
+	//If it's a valid month
+	
+	"\0\s[0]So you were born during %(bornmonthprint)!\n\w8\i[406]\i[403]What day was it?"
+	--
+	"\![open,inputbox,OnUserBornDay,-1]\![set,balloontimeout,-1]\e"
+	
+	//Here you can see the use of a bornmonthprint envelope to show the user what month they put in. Notice that it opens an inputbox at the end the same way the one above did. You can replace the dialogue in the first line just as with above.
+}
+
+//This adds an appropriate suffix to the number for the day. No need to mess with this.
+
+Printday
+{
+	if bornday == 1 || bornday == 21 || bornday == 31
+	{	"%(bornday)st"	}
+	elseif bornday == 2 || bornday == 22
+	{	"%(bornday)nd"	}
+	elseif bornday == 3 || bornday == 23
+	{	"%(bornday)rd"	}
+	else
+	{	"%(bornday)th"	}
+}	
+
+//--OnUserBornDay
+
+OnUserBornDay
+{
+	_tempday = reference0 //storing the input in _tempday
+	_tempday = TOLOWER(_tempday) //changes it to lowercase
+	_tempday = REPLACE(_tempday,"st","") //if the user types something like 2nd, 3rd, etc, this will make it just the number. It'll just add the suffix back later on the one that actually shows.
+	_tempday = REPLACE(_tempday,"nd","")
+	_tempday = REPLACE(_tempday,"rd","")
+	_tempday = REPLACE(_tempday,"th","")
+	_tempday = TOINT(_tempday) //Converts it to an integer
+	
+	if ((bornmonth == 1 || bornmonth == 3 || bornmonth == 5 || bornmonth == 7 || bornmonth == 8 || bornmonth == 10 || bornmonth == 12) && _tempday >= 1 && _tempday <= 31) || (bornmonth == 2 && _tempday >= 1 && _tempday <= 29) || ((bornmonth == 4 || bornmonth == 6 || bornmonth == 9 || bornmonth == 11) && _tempday >= 1 && _tempday <= 30) //This ugly function checks if the day falls into a valid range. If it does, we set some variables and continue down.
+	{
+		bornday = _tempday
+		borndayprint = Printday
+		userbirthday = "%(bornmonth)month %(bornday)day"
+		birthdayprint = "%(bornmonthprint) %(borndayprint)"
+		
+		"%(birthchecked)"
+		//Mostly defining envelopes and values in here. No need to touch any of this! Eagle-eyed readers will notice the new envelope birthchecked on its own line like a tiny king. We'll get to that momentarily, but pay it no mind for now.
+	}
+	else //If the day isn't valid, like the 10046th or something, this will open the input box again and have a \e so the dialogue below doesn't play. You can replace the dialogue in the first line here.
+	{
+		"\0\s[0]\i[212]I don't think that's a real day...?\i[204] Try again!"
+		--
+		"\![open,inputbox,OnUserBornDay,-1]\e"
+	}	
+}
+
+//--birthchecked
+//This is the new envelope you saw me point out above. As you can see here, you can actually call dialogue in a function with an envelope, even when it has if and else statements like here! Which can be pretty handy. Again, more on envelopes in word.dic. Creative ghostmakers can find handy ways to exploit this, I'm sure.
+
+birthchecked
+{
+	if userbirthday == dayslot //if today is the user's birthday
+		{
+			"\0\s[0]\i[203]It's %(username)'s birthday!\i[160]\w8\1\s[10]Happy birthday, %(username).\i[156]\e"
+			//replace this dialogue with whatever you like
+		}
+	elseif userbirthday == "12month 25day"
+		{
+			"\0\s[0]%(username) was born on Christmas!\w8\1\n\n[half]\s[10]Happy birthday, %(username). \w5Christmas...what was that, again?\w8\0\s[0]\i[406]\i[407]\n\n[half]An old festival where hu-mons would spend a ton of money on presents for each other, I think!\w8\1\s[10]\i[251]\i[55]\n\n[half]...Sounds magical.\w8\0\s[0]\i[203]\n\n[half]It totally does!\i[160]\e"
+		}
+	else //if the birthday is not listed above.
+		{
+			"\0\s[0]So your birthday is %(bornmonthprint) %(borndayprint)? I'm gonna wish you a happy birthday, like, so hard!\w4\i[406]\i[407]\i[251] Just you wait!\i[158]\w8\1\n\n[half]\s[10]\i[55]If she doesn't forget by then...\i[156]\e"
+		}
+}
+
+//--Talk Rate
+
+Select.talkinter
+ 	{
+		if feelings <= 0
+		{
+		"\0\s[0]\b2Like, how often should we talk, according to you, creep?\w8\1\n\n[half]\s[10]Our talk interval is currently set to %(talktime)./
+		//You can replace the dialogue above with whatever you like, just make sure it ends with ./ and not \e.
+ 		\0\n\n[half]/
+ 		\![*]\q[Every 30 seconds,TALKMAX]\n/
+		\![*]\q[Every 1 minute,TALKHIGH]\n/
+ 		\![*]\q[Every 3 minutes,TALKNORMAL]\n/
+		\![*]\q[Every 5 minutes,TALKPOOR]\n/
+ 		\![*]\q[Don't speak,TALKNONE]\n\n[half]/
+		\![*]\q[Don't change,TalksTill]\e"
+		}
+		elseif nowshell == "mirror"
+		{
+		"\0\s[0]\b2Gul Kadan, how often should we talk?\w8\1\n\n[half]\s[10]Our talk interval is currently set to %(talktime)..../
+		//You can replace the dialogue above with whatever you like, just make sure it ends with ./ and not \e.
+ 		\0\n\n[half]/
+ 		\![*]\q[Every 30 seconds,TALKMAX]\n/
+		\![*]\q[Every 1 minute,TALKHIGH]\n/
+ 		\![*]\q[Every 3 minutes,TALKNORMAL]\n/
+		\![*]\q[Every 5 minutes,TALKPOOR]\n/
+ 		\![*]\q[Don't speak,TALKNONE]\n\n[half]/
+		\![*]\q[Don't change,TalksTill]\e"
+		}
+		else
+		{
+ 		"\0\s[0]\b2Like, how often should we talk?\w8\1\n\n[half]\s[10]Our talk interval is currently set to %(talktime)./
+		//You can replace the dialogue above with whatever you like, just make sure it ends with ./ and not \e.
+ 		\0\n\n[half]/
+ 		\![*]\q[Every 30 seconds,TALKMAX]\n/
+		\![*]\q[Every 1 minute,TALKHIGH]\n/
+ 		\![*]\q[Every 3 minutes,TALKNORMAL]\n/
+		\![*]\q[Every 5 minutes,TALKPOOR]\n/
+ 		\![*]\q[Don't speak,TALKNONE]\n\n[half]/
+		\![*]\q[Don't change,TalksTill]\e"
+		}
+	}
+
+Select.TalksTill
+	{
+		"\0\s[0]\i[204]Then we'll keep chatting at the same rate.\e"
+	}
+
+Select.TALKMAX
+	{
+ 		talktime = "30 seconds" //this sets up the envelope properly
+		aitalkinterval = 30 //this changes the actual rate
+		
+ 		"\0\s[0]We'll talk every 30 seconds!\e"
+	}
+
+Select.TALKHIGH
+	{
+ 		talktime = "minute"
+		aitalkinterval = 60
+		
+ 		"\0\s[0]We'll talk every 1 minute!\e"
+	}
+
+Select.TALKNORMAL
+	{
+ 		talktime = "3 minutes"
+		aitalkinterval = 180
+		
+ 		"\0\s[0]We'll talk every three minutes!\e"
+	}
+
+Select.TALKPOOR
+	{
+ 		talktime = "5 minutes"
+		aitalkinterval = 300
+		
+ 		"\1\s[10]We will speak every five minutes.\e"
+	}
+
+Select.TALKNONE
+	{
+ 		talktime = "...we won't talk at all"
+		aitalkinterval = 0
+		
+		if feelings <= 0
+		{
+			"\0\s[0]\i[208]\i[253]\i[410]As if we wanna talk to you, anyway...\e"
+		}
+		elseif nowshell == "mirror"
+		{
+			"\1\s[10]\i[201]\i[406]Tegra, I'd like to introspect in silence until otherwise noted.\w8\0\n\n[half]\s[0]\i[201]Yes, ma'am.\e"
+		}
+		else
+		{
+		"\1\s[10]Tegra, are you familiar with the Quiet Game?\w8\0\n\n[half]\s[0]\i[252]Ooh! I'm great at that game!\i[158]\w8\1\s[10]\n\n[half]Let's play\w4, starting now.\w5\0\s[0]\n\n[half]\w5...!\i[152]\i[203]\e"
+		}
+	}
+
+	
+//This is when the user chooses to change their name. It's linked to the functions outlined in nameteach.dic. Nothing to touch here.
+Select.TEACHNAME
+	{
+		OnTeachName	
+	}
+
+	
+//If the user selects cancel in a menu. Replace as you like, or just leave them blank.
+Select.CANCEL
+	{
+		if feelings <= 0
+		{
+			"\0\s[0]\i[204]\i[251]I'm not here to\w3, like\w5, do tricks for you like a trained fangcat\w2, y'know.\e"
+			
+			"\0\s[0]\i[204]\i[251]\i[406]\i[407]Ugh!\w4 Quit bothering me, then!\e"
+		}
+		elseif nowshell == "mirror"
+		{
+			"\1\s[10]Yes, plese do stop wasting my secretary's time.\e"
+			"\0\s[0]\i[208]\i[410]Good.\w4 I do have real work to do, you know.\e"
+			"\0\s[0]\i[208]\i[254]...\w8...\w8...\w8K.\e"
+		}
+		else
+		{
+		"\0\s[0]\i[204]No worries!\e"
+		
+		"\0\s[0]\i[204]Haha, totally never mind, then.\e"
+		}
+ 	}
+
+	
+//Going back to the MenuRun function we finished above, this is if someone selects the Functions option, linked to dosomething. As you can see, it ends up as Select.dosomething.
+
+Select.dosomething
+{
+		if feelings <= 0
+		{
+		"\0\s[0]\i[208]\b2Like I'm your butler\w4...not!\n\n"
+		"\0\s[0]\i[208]\b2Ugh, like, hurry up, then.\n\n"
+		--
+ 		"\![*]\q[Open Calendar,CALENDAR]\n/
+		\![*]\q[Check Email,MailCheck]\n/
+		\![*]\q[Open SSP Preferences,sspconfig]\n/
+		\![*]\q[Empty Recycle Bin,ChoiceGarbagecan]\n/
+		\![*]\q[System Information,ChoiceSystemInformation]\n\n/
+ 		\![*]\q[Back to main menu,BACKTOMENU]\e"
+		}
+		if nowshell == "mirror"
+		{
+		"\0\s[0]\i[208]\i[410]\b2Sorry, is your name Gul Kadan...?\n\n"
+		"\0\s[0]\i[208]\b2You're really bold, for a Terran.\n\n"
+		--
+ 		"\![*]\q[Open Calendar,CALENDAR]\n/
+		\![*]\q[Check Email,MailCheck]\n/
+		\![*]\q[Open SSP Preferences,sspconfig]\n/
+		\![*]\q[Empty Recycle Bin,ChoiceGarbagecan]\n/
+		\![*]\q[System Information,ChoiceSystemInformation]\n\n/
+ 		\![*]\q[Back to main menu,BACKTOMENU]\e"
+		}
+		else
+		{
+ 		"\0\s[0]\i[204]\b2Anything we can help you with?\n\n"
+ 		"\0\s[0]\i[204]\b2It's five latinum slips per favor.\w4\i[203] Just kidding! \i[410]\i[405]I know hu-mons don't have any money.\i[158]\n\n"
+		"\0\s[0]\i[204]\b2TegCorp, LLC: Service with a Smile!\w4\i[404]\i[405] ...What do you think? <3\i[203]\i[160]\n\n"
+		"\0\s[0]\i[204]\b2I feel so helpful right now, for real!\n\n"
+		"\0\s[0]\i[212]\i[410]\i[403]\b2Something like...\n\n"
+		"\0\s[0]\i[203]\i[406]\i[407]\b2Let's frinxing gooooooo!!!\i[160]\n\n"
+		--
+ 		"\![*]\q[Open Calendar,CALENDAR]\n/
+		\![*]\q[Check Email,MailCheck]\n/
+		\![*]\q[Open SSP Preferences,sspconfig]\n/
+		\![*]\q[Empty Recycle Bin,ChoiceGarbagecan]\n/
+		\![*]\q[System Information,ChoiceSystemInformation]\n\n/
+ 		\![*]\q[Back to main menu,BACKTOMENU]\e"
+		}
+}
+
+//When the user clicks Open Calender. This will open the calender function of SSP, an in-built feature that you don't have to worry about in the least.
+Select.CALENDAR
+{
+	
+	if feelings <= 0
+	{
+		"\0\s[0]\i[208]Fine, here's your stupid calendar.\w8\![open,calendar]\e"
+	}
+	elseif nowshell == "mirror"
+	{
+		"\0\s[0]\i[208]Like a Terran needs a calendar...\w8\![open,calendar]\e"
+	}
+	else
+	{
+	"\0\s[0]\i[203]Opening your calender! <3\i[158]\w8\![open,calendar]\e"
+	}
+}
+
+//When the user chooses SSP preferences. This will open the same window that shows up if you right click your ghost and go to Utilities - Preferences.
+Select.sspconfig
+{
+	if feelings <= 0
+	{
+	"\0\s[0]\i[208]SSP config menu\w4... Whoop-de-fraxxing-doo...\w8\![open,configurationdialog]\e"
+	}
+	elseif nowshell == "mirror"
+	{
+	"\0\s[0]\i[208]Be grateful that Gul Kadan lets you touch the SSP config menu...\w8\![open,configurationdialog]\e"
+	}
+	else
+	{
+	"\0\s[0]Opening the SSP config menu! <3\i[158]\1\n\n[half]\s[10]\i[201]\i[404]\i[405]Please be careful with this...\w8\![open,configurationdialog]\e"
+	}
+}
+
+//If the user chooses to empty the recycle bin.
+Select.ChoiceGarbagecan
+{
+	_gomicheck = FUNCTIONEX("gomi.dll", "-n")	//Don't touch this line. for those curious, it's referencing a SAORI, which are optional user-made plug-in dlls you can download to enable different functions on your ghost. gomi.dll is one included with this template. All SAORI are in Japanese (maybe Korean or Chinese as well idk) and many have disappeared by now, so don't concern yourself very much with SAORI. They're for skilled developers, mostly.
+	
+	if _gomicheck == 0 //If the recycle bin is empty.
+	{
+		if feelings <= 0
+	{
+		"\1\s[10]Tegra, go along with it for now, yes?\w8\0\n\n[half]\s[0]\i[253]Ugh...\w4at least I won't have to look at %(himher) for a second...\w8\w8\s[-1]\w8\w8\w8\w8\w8\0\s[0]\c\i[408]\i[409]\i[251]\i[204]There wasn't even anything to frinxing recycle!\i[152]\e"
+	}
+	elseif nowshell == "mirror"
+	{
+		"\1\s[10]Tegra, run along like the Terran asked.\w4 It's amusing.\i[154]\w8\0\n\n[half]\s[0]\i[253]...Yes, of course, ma'am...\w8\w8\s[-1]\w8\w8\w8\w8\w8\0\s[0]\c\i[408]\i[409]\i[253]It was empty, ma'am.\i[152]\1\s[10]\n\n[half]\i[201]\i[154]\i[406]...Heh.\e"
+	}
+	else
+	{
+		"\1\s[10]Tegra, check on %(username)'s recycling, won't you?\w8\0\n\n[half]\s[0]\i[252]Aye aye, dai'mon!\w8\w8\s[-1]\w8\w8\w8\w8\w8\0\s[0]\c\i[410]\i[403]It was squeaky-clean empty!\i[160]\e"
+	}
+	}
+	elseif _gomicheck >= 1 //If the recycle bin is full.
+	{
+		if feelings <= 0
+	{
+		"\1\s[10]Tegra, go along with it for now, yes?\w8\0\n\n[half]\s[0]\i[253]Ugh...\w4at least I won't have to look at %(himher) for a second...\w8\w8\s[-1]\w8\w8\w8\w8\w8\0\s[0]\c\i[408]\i[409]\i[251]\i[204]There!\w4 You're not welcome, by the way.\i[152]\e"
+	}
+	elseif nowshell == "mirror"
+	{
+		"\1\s[10]Tegra, run along and attend to the trash like %(heshe) ordered.\w8\0\n\n[half]\s[0]\i[253]\i[210]\i[406]...Just because %(heshe) told me to...?\w8\w8\s[-1]\w8\w8\w8\w8\w8\0\s[0]\c\i[408]\i[409]\i[254]\i[214]There.\w4 All done.\w8\w8\i[201] That was gross...\i[152]\1\s[10]\n\n[half]\i[201]\i[154]\i[406]...Heh.\e"
+	}
+	else
+	{
+		"\0\s[0]Clearing out the recycling~~~!\w8\w8\s[-1]\w8\w8\w8\w8\w8\![raise,OnGarbagecanEmpty]\w9\w9\w9\0\s[0]\c\i[203]All done!\i[160]\e"
+		
+		"\1\s[10]Tegra will take care of the recycling.\w8\0\n\n[half]\s[0]I'm a choring dynamo!\w8\w8\s[-1]\w8\w8\w8\w8\w8\![raise,OnGarbagecanEmpty]\w9\w9\w9\0\s[0]\c\i[203]Done!\i[158]\e"
+	}
+	}
+}
+
+
+//This is for the SAORI, don't touch it.
+OnGarbagecanEmpty
+{
+	_gomi = FUNCTIONEX("gomi.dll", "-f")
+}
+
+//This is when the user chooses System Information. Don't touch any of this either. For those curious though, note that this is done using another SAORI, this time saori_cpuid.dll.
+Select.ChoiceSystemInformation
+{
+	os_name = FUNCTIONEX("saori_cpuid.dll","os.name")
+	os_version = FUNCTIONEX("saori_cpuid.dll","os.version")
+	cpu_name = FUNCTIONEX("saori_cpuid.dll","cpu.name")
+	cpu_clockex = FUNCTIONEX("saori_cpuid.dll","cpu.clockex")
+	"/
+	\0\s[0]\b[2]/
+	\_q\f[bold,1]OS:\f[bold,0] %(os_name) %(os_version)\n/
+	\f[bold,1]Memory Load:\f[bold,0] %(memoryload)%\n/
+	\f[bold,1]Physical Memory:\f[bold,0] %(memoryavailphys) KB\n/
+	\f[bold,1]CPU:\f[bold,0] %(cpu_name) %(cpu_clockex)MHz\n/
+	\f[bold,1]Ukagaka:\f[bold,0] %property[baseware.version]/
+	\e"
+}
+	
+//This is when the user chooses to check their email. The rest of this function plays out in etc.dic. You can leave this alone.
+Select.MailCheck
+	{
+		if feelings <= 0
+		{
+			"\0\s[0]\i[251]\i[201]I hope it's nothing but spam.\![biff]\e"
+		}
+		else
+		{
+		"\![biff]\e"
+		}
+	}
+
+
+	
+//---- OnChoiceTimeout ---------------------------------------------------------
+//If the user is given a menu with choices, but doesn't pick one of the choices, it will eventually time out. At that point, they will say this dialogue. Replace with whatever you like, or leave it blank.
+
+OnChoiceTimeout
+ {
+	 if feelings <= 0
+	 {
+	"\0\s[0]\i[254]\i[208]Yeah, like\w4, why not waste my time, too?\e"
+	 }
+	 elseif nowshell == "mirror"
+	 {
+	"\0\s[0]\i[254]\i[208]...Ugh, stop interrupting my work for no reason...!\e"
+	 }
+	 else
+	 {
+	"\0\s[0]\i[404]\i[405]No rush! I'm totally here for you if you need something.\i[158]\e"
+	 }
+ }
+
+ 
+//---- Secondary Character Menu ---------------------------------------------------------
+//This section has to do with the menu for the second character. If you don't want your second character to have a menu, you can just delete this whole chunk.
+
+OpenKeroMenu
+ {
+	if feelings <= 0
+	{
+	"\1\s[10]\i[251]\i[52]\w8\w8...\w6What?"
+	--
+	OnKadanMenu
+	}
+	elseif nowshell == "mirror"
+	{
+	"\1\s[10]\i[201]\i[404]Please direct all comments, questions, concerns, and pleas for mercy to my secretary.\e"
+	"\1\s[10]\i[204]\i[206]Terrans don't make requests of me.\e"
+	"\1\s[10]\i[204]...\w8Cheeky.\e"
+	}
+	else
+	{
+	"\1\s[10]\i[404]\i[405]\i[52]\b[2]"
+	"\1\s[10]\i[201]\b[2]"
+	"\1\s[10]\i[406]\i[407]\i[52]\b[2]"
+ 	--
+	"Did you need something from me?"
+ 	"Mutual assistance is the glue of society."
+ 	"Yes, %(username)?"
+ 	"There's not much I can do from here. Nevertheless..."
+ 	--
+	OnKadanMenu
+	}
+}
+
+OnKadanMenu
+{
+	"\1\s[10]\i[52]"
+	--
+	"\n\n[half]/
+	\![*]\q[Interact with Kadan,OnKadanInteract]\n/
+	\![*]\q[Update,keroupdatecheck]\n/
+ 	\![*]\q[Bug report,bugreport]\n\n/
+	\![*]\q[Test variable,testvariable]\n\n/
+	\![*]\q[Nothing,keroCANCEL]\e"
+}
+
+Select.keroCANCEL
+{
+	"\1\s[10]Very well.\e"
+}
+
+
+//This is when they select bug report. This is mostly meant to briefly give the user information about you, the creator, and how to report a problem to you. This can be handy if the person forgot where they got their ghost or how to contact you. Add whatever info you like here.
+Select.bugreport
+{
+"\1\s[10]\i[201]Here is the current bug report. \w5Report bugs to unrestedjade@yahoo.com. \w5We were downloaded from \_a[http://www.whereveryoupostedthem.com/]some place\_a.\e"
+}
+
+//When clicked, this will automatically tell the ghost to check for updates. More detail on updates in etc.dic. You can leave this alone.
+Select.keroupdatecheck
+{
+	"\1\s[10]\![updatebymyself]\e"
+}
+
+//--Test Variable --------------------------------------------------------
+//I briefly mentioned the test variable in bootend.dic and possibly in etc.dic as well, I'm not sure. What exactly is the test variable? Basically, it's a place you can plug in anything you want to test out. While you can use Script Input to test most of your ghost's dialogue, there are some lines it just can't do, and it can't help you test choices. But the test variable can!
+//You can also use this to test functions as I mentioned above by adding \![raise,function] at the end of it, although you can do this with Script Input as well. Advanced Users, the test variable is also great for testing out any new stuff you may add to your ghost, like mode settings, item values, functions, raising or lowering numbers, what have you, particularly if you have a bunch you want to change all at once.
+
+Select.testvariable
+{
+	"\1\s[10]Testing.\e"
+}
+
+
+OnTegraInteract
+{
+	"\0\s[0]\i[204]\i[410]\i[403]Oh?\w9"
+ 	--
+	if hitcount > 0 
+	{
+	"\n\n[half]/
+	\![*]\q[Apologize for hitting,TegraApologize]\n/
+	\![*]\q[Give her something,TegraGive]\n/
+	\![*]\q[Ask her something,TegraAsk]\n/
+	\![*]\q[Tell her something,TegraTell]\n\n[half]/
+	\![*]\q[Never mind,BACKTOMENU]\e"
+	}
+	else 
+	{
+	"\n\n[half]/
+	\![*]\q[Give her something,TegraGive]\n/
+	\![*]\q[Ask her something,TegraAsk]\n/
+	\![*]\q[Tell her something,TegraTell]\n\n[half]/
+	\![*]\q[Never mind,BACKTOMENU]\e"
+	}
+}
+
+OnKadanInteract
+{
+	"\1\s[10]\i[52]\i[410]\i[403]...Yes?\w9"
+ 	--
+	if hitcount > 0 
+	{
+	"\n\n[half]/
+	\![*]\q[Apologize for hitting,KadanApologize]\n/
+	\![*]\q[Give her something,KadanGive]\n/
+	\![*]\q[Ask her something,KadanAsk]\n/
+	\![*]\q[Tell her something,KadanTell]\n/
+	\![*]\q[Feelings,OnFeelings]\n\n[half]/
+	\![*]\q[Never mind,OnKadanMenu]\e"
+	}
+	else 
+	{
+	"\n\n[half]/
+	\![*]\q[Give her something,KadanGive]\n/
+	\![*]\q[Ask her something,KadanAsk]\n/
+	\![*]\q[Tell her something,KadanTell]\n/
+	\![*]\q[Feelings,OnFeelings]\n\n[half]/
+	\![*]\q[Never mind,OnKadanMenu]\e"
+	}
+}
+
+Select.TegraGive
+{
+	"\0\b[2]\s[0]\_q(What do you want to give her?)"
+	--
+	"\n\n[half]/
+	\![*]\q[Something to eat,GiveTegraFood]\n/
+	\![*]\q[Something to drink,GiveTegraDrink]\n/
+	\![*]\q[A trinket,GiveTegraShiny]\n/
+	\![*]\q[Something for her studies,GiveTegraFlora]\n/
+	\![*]\q[Something to play,GiveTegraFiles]\n/
+	\![*]\q[Never mind,BACKTOMENU]\e"
+}
+
+Select.GiveTegraFood
+{
+	feelings += 1
+	"\0\s[0]Oh, %(food)?\w4 Thanks.\n\n\![*]\q[Back,BACKTOMENU]"
+}
+
+Select.GiveTegraDrink
+{
+	feelings += 1
+	"\0\s[0]Ah, %(softdrink)?\w4 Thanks.\n\n\![*]\q[Back,BACKTOMENU]"
+}
+
+Select.GiveTegraShiny
+{
+	feelings += 1
+	"\0\s[0]Oh, shiny!\w8\i[204] You're giving me this?\i[159]\n\n\![*]\q[Back,BACKTOMENU]"
+}
+
+Select.GiveTegraFlora
+{
+	feelings += 1
+	"\0\s[0]\i[203]Nice, %(flora)!\n\n\![*]\q[Back,BACKTOMENU]"
+}
+
+Select.GiveTegraFiles
+{
+	feelings += 1
+	"\0\s[0]\i[204]...What is it, like a holonovel?\i[410]\i[210] I wonder if it'll run...?\i[157]\n\n\![*]\q[Back,BACKTOMENU]"
+}
+
+Select.TegraAsk
+{
+	"\0\b[2]\s[0]\_q(What do you want to ask her?)"
+	--
+	"\n\n[half]/
+	\![*]\q[Why did you want to live abroad?,LeaveHomeTegra]\n/
+	\![*]\q[Why come to Earth?,EarthTegra]\n/
+	\![*]\q[What are you studying?,StudyTegra]\n/
+	\![*]\q[Anyone special?,DatingTegra]\n/
+	\![*]\q[What's this Marauder Mo thing...?,FangirlTegra]\n/
+	\![*]\q[Never mind,BACKTOMENU]\e"
+}
+
+Select.LeaveHomeTegra
+{
+	if feelings <= 0 //disklike
+	{
+		"\0\s[0]\i[251]\i[208]\i[406]What's it to you, hu-mon?\w4 Are us nasty ferengi not allowed on your dumb perfect planet?\i[153]\e"
+	}
+	elseif feelings > 0 && feelings <= 5 //conflicted
+	{
+		"\0\s[0]\i[254]\i[204]\i[410]Why do you ask?\w4\e"
+	}
+	elseif feelings > 5 && feelings <= 35 //neutral
+	{
+		feelings += 1
+		"\0\s[0]Oh...\w3\i[210]I just needed a change, you know?\w4\i[210]\i[408]\i[254] Why does anyone do anything?\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+	elseif feelings > 35 && feelings < 100 //like
+	{
+		feelings += 1
+		"\0\s[0]\i[204]Ha...\w3\i[210]\i[254]\i[407]As soon as it was legal for females to travel off-world\w2, I got totally obsessed with leaving.\w4\i[204]\i[403]\i[408] I didn't think I'd ever get the chance, so, like...\w3how can I not take it?\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+	else //full trust
+	{
+		"\0\s[0]\i[204]...\w4\i[210]\i[254]\i[406]Don't go spreading this around, %(username)\w3, but I was engaged.\w2 \i[216]\i[253]I'm from a super conservative province, and if I'd gone along with my family and got married\w2, the Grand Nagus' reforms might as well not exist for me.\w4\s[0]\i[204]\i[403]\i[410] So my brother helped me get off-world.\w4\i[204] He's the only one who knows I'm here.\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+}
+
+Select.EarthTegra
+{
+	if feelings <= 0 //disklike
+	{
+		"\0\s[0]\i[251]\i[208]\i[406]Because I felt like it!\w4\s[0]\i[220] ...Maybe that was, like, a bad decision.\i[152]\e"
+	}
+	elseif feelings > 0 && feelings <= 5 //conflicted
+	{
+		"\0\s[0]\i[254]\i[204]\i[406]Is it that weird to come to Earth?\w4\e"
+	}
+	elseif feelings > 5 && feelings <= 35 //neutral
+	{
+		feelings += 1
+		"\0\s[0]\i[204]Funny story!\w2 I stumbled across an application for this university on subspace.\w4\i[203]\i[408]\i[254] Who would have thought they'd actually let me in?\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+	elseif feelings > 35 && feelings < 100 //like
+	{
+		feelings += 1
+		"\0\s[0]\i[204]Luck, I guess?\w3\i[210]\i[407] The university lets people come here to study\w2, even if you're not a Federation citizen.\w4\s[0]\i[204] Plus, you don't need money to live on if you're on Earth!\w3\i[203] That's totally perfect for a broke female like me. <3\i[160]\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+	else //full trust
+	{
+		"\0\s[0]\i[204]...\w4\i[210]\i[254]\i[404]\i[405]I'm safe here, %(username).\w3\i[216] If my family figures out where I am\w2, \i[253]they might try to force me to come back home.\w4\s[0]\i[204]\i[403]\i[410] It'd be way harder to do that if I ask for refugee status here.\w4\i[203]\i[254] You probably think that's totally crazy, huh?\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+}
+
+Select.StudyTegra
+{
+	if feelings <= 0 //disklike
+	{
+		"\0\s[0]\i[251]\i[208]\i[406]...\w4Leave me alone.\i[152]\e"
+	}
+	elseif feelings > 0 && feelings <= 5 //conflicted
+	{
+		"\0\s[0]\i[204]You know\w3, just normal college stuff.\w4\e"
+	}
+	elseif feelings > 5 && feelings <= 35 //neutral
+	{
+		feelings += 1
+		"\0\s[0]\i[204]Oh\w2, I'm studying exoagronomy.\w2\w4\s[0]\i[203]\i[409]\i[252] Bet you weren't expecting that, huh?\i[160]\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+	elseif feelings > 35 && feelings < 100 //like
+	{
+		feelings += 1
+		"\0\s[0]\i[204]\i[252]Exoagronomy!\w6\i[210]\i[407] You know\w2, farming and stuff?\w4\s[0]\i[204] I come from a long line of farmers.\w3\i[220]\i[254]\i[405] Not that I, like, talk about it that much.\i[155]\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+	else //full trust
+	{
+		"\0\s[0]\i[204]\i[406]\i[407]I'm gonna be the very best exoagronomist ever!!!\w8\i[203] Like no one ever was!\w3\i[210] My family's farm really struggles to,like\w2, \i[253]keep up with the corporate operations?\w4\s[0]\i[204]\i[403]\i[409] But sustainable vermiculture is the future!\w4 The way we raise things is better than a factory farm. \s[0]\i[410]Why not make my fortune and help feed people at the same time?\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+}
+
+Select.DatingTegra
+{
+	if feelings <= 0 //disklike
+	{
+		"\0\s[0]\i[253]\i[208]...\w4Just make whatever gross joke you wanna make about ferengi sex\w2, and then shut up.\e"
+	}
+	elseif feelings > 0 && feelings <= 5 //conflicted
+	{
+		"\0\s[0]\i[210]...A lot of aliens are judgmental about that stuff\w2, so I don't really want to talk about it.\w4\e"
+	}
+	elseif feelings > 5 && feelings <= 35 //neutral
+	{
+		feelings += 1
+		"\0\s[0]\i[204]Nah\w2, I'm too busy enjoying my youth and stuff to settle down yet.\w8\w6 Like\w2, I'm in outer space!\w4\s[0]\i[407]\i[252] There's so many cool people to meet!\w2\i[203] And have sex with!\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+	elseif feelings > 35 && feelings < 100 //like
+	{
+		feelings += 1
+		"\0\s[0]\i[210]Well\w2, there is this one person...\w8\w6 \i[204]Like\i[254]\w2, I've been dropping hints for a while now,\w4\i[216] but maybe I'm being too subtle?\w8\s[0]\i[409]\i[252]\w8\w6 Or she's just too nice to tell me to leave her alone already.\w8\w8\w8\i[203]\i[253]\i[406]\i[407] Ahh...!\w2 This'd be so much easier if aliens used contracts like normal...\i[152]\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+	else //full trust
+	{
+		"\0\s[0]\i[204]Honest question\w3, do you think Kadan would be, like, okay with an alien?\w8\w6\s[0]\i[203]\i[406]\i[409] Ahh, don't answer, %(username)! Just\w3, let me dream, okay???\i[161]\w8\w8\w8\w8 Like\w2\s[0]\i[252], I want a big family, too!\w4\i[210] Eventually.\w4\s[0]\i[407] But I don't need my family to look like my parents family in, like, a lot of ways.\w7\s[0]\i[210]\i[410] But Kadan's way more traditional than me...\i[152]\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+}
+
+Select.FangirlTegra
+{
+	if feelings <= 0 //disklike
+	{
+		"\0\s[0]\i[253]\i[208]...\w4Were you snooping through my PADD, or something?\w3\s[0]\i[206]\i[251] Like\w2\i[404]\i[407], piss off!\s[0]\i[251]\i[203]\i[404]\i[407]\e"
+	}
+	elseif feelings > 0 && feelings <= 5 //conflicted
+	{
+		"\0\s[0]\i[216]\i[253]...No, you'd probably, like, think it's stupid.\w4\e"
+	}
+	elseif feelings > 5 && feelings <= 35 //neutral
+	{
+		feelings += 1
+		"\0\s[0]\i[204]Oh\w2, Mo's a popular character back home! He's a space pirate!\i[157]\w8\w8\s[0]\i[210]\i[409] He's super clever and strong and pretty\w2, and he has a ship made from a bunch of stolen parts!\w3\i[254] And the whole crew are kind of insane?\w8\w6\s[0]\i[252]\i[406]\i[407] There's been like\w2, a zillion holodramas, and novels, and action figures and games and people do cosplay and...!\w4\i[220] And... \i[161]\w8\w4\s[0]\i[407]\i[254] Sorry\i[203]\w2, I'm probably boring you, huh?\i[152]\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+	elseif feelings > 35 && feelings < 100 //like
+	{
+		feelings += 1
+		"\0\s[0]\i[204]Mo's a character I've really liked since I was little! He's a space pirate!\i[157]\w8\w8\s[0]\i[210]\i[409] But he's not just, like, an action hero.\w4\s[0]\i[204]\i[406]\i[403] He totally has hidden depths! And subtext!\w8\i[216]\i[254]\i[410] Subtext that fan-holos make into lots of text, hee hee~!\i[160]\w8\w8\s[0]\i[204] I didn't have much room to pack when I came to Earth\w2, but I made sure I brought my old Mo action figure with me.\w4\s[0]\i[203] He sits on my desk and guards me while I'm studying!\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+	else //full trust
+	{
+		"\0\s[0]\i[216]\i[254]This might sound totally weird, but Mo really helps me get through stuff.\w8\w8\s[0]\i[210]\i[407] He's just always there for me\w2, you know?\w4\w6\s[0]\i[204]\i[406] Like...when I was growing up\w2, Mo was everything I couldn't have myself.\w8\s[0]\i[254]\i[410] He goes wherever he wants, he makes his own choices\w3, and no matter how hard things get, he always escapes by the skin of his teeth.\w8\w8\s[0]\i[204] Maybe that's what gave me the idea that I could leave home.\w4\s[0]\i[201]\i[406] Like...I could be free like that, too.\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+}
+
+Select.TegraTell
+{
+	"\0\b[2]\s[0]\_q(What do you want to tell her?)"
+	--
+	"\n\n[half]/
+	\![*]\q[Compliment,ComplimentTegra]\n/
+	\![*]\q[Insult,InsultTegra]\n/
+	\![*]\q[Joke,JokeTegra]\n/
+	\![*]\q[Flirt,FlirtTegra]\n/
+	\![*]\q[Berate,BerateTegra]\n/
+	\![*]\q[Never mind,BACKTOMENU]\e"
+}
+
+Select.ComplimentTegra
+{
+	feelings += 1
+	"\0\s[0]\i[203]\i[404]\i[405]Oh?\w4 Thanks! <3\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
+}
+
+Select.InsultTegra
+{
+	feelings -= 1
+	"\0\s[0]\i[204]\i[251]\i[408]\i[409]\i[204]Oh yeah? Well, I'm rubber and you're glue!\i[161]\n\n\![*]\q[Back,BACKTOMENU]"
+}
+
+Select.JokeTegra
+{
+	feelings += 1
+	"\0\s[0]\i[252]\i[203]Hahaha!\w4\i[254]\i[210] I totally get it\i[160]!!!\n\n\![*]\q[Back,BACKTOMENU]"
+}
+
+Select.FlirtTegra
+{
+	feelings += 2
+	"\0\s[0]\i[410]\i[403]\i[203]Ohh???\w4\i[204]\i[254] I'm listening...\i[155] \n\n\![*]\q[Back,BACKTOMENU]"
+}
+
+Select.BerateTegra
+{
+	feelings += 2
+	"\0\s[0]\i[253]\i[406]\i[407]\i[202]\w8\w8...What did I do...?\i[152]\w4 </3 \n\n\![*]\q[Back,BACKTOMENU]"
+}
+
+
+Select.KadanGive
+{
+	"\1\b[2]\s[10]\_q(What do you want to give her?)"
+	--
+	"\n\n[half]/
+	\![*]\q[Something to eat,GiveKadanFood]\n/
+	\![*]\q[Something to drink,GiveKadanDrink]\n/
+	\![*]\q[A cool rock,GiveKadanRock]\n/
+	\![*]\q[Something for her studies,GiveKadanSupplies]\n/
+	\![*]\q[Something to read,GiveKadanBook]\n/
+	\![*]\q[Something expensive,givesmokerexpensive]\n\n/
+	\![*]\q[Never mind,OnKadanMenu]\e"
+}
+
+Select.GiveKadanFood
+{
+	feelings += 1
+	"\1\s[10]Ah, %(food)?\w4 ...\i[204]Thank you, I suppose.\n\n\![*]\q[Back,OnKadanMenu]"
+}
+
+Select.GiveKadanDrink
+{
+	feelings += 1
+	"\1\s[10]Ah, %(softdrink)?\w4 ...\i[204]Thank you, I suppose.\n\n\![*]\q[Back,OnKadanMenu]"
+}
+
+Select.GiveKadanRock
+{
+	feelings += 1
+	"\1\s[10]...\w4\i[201]What an interesting rock.\n\n\![*]\q[Back,OnKadanMenu]"
+}
+
+Select.GiveKadanSupplies
+{
+	feelings += 1
+	"\1\s[10]...\w4\i[201]I can use these supplies.\n\n\![*]\q[Back,OnKadanMenu]"
+}
+
+Select.GiveKadanBook
+{
+	feelings += 1
+	"\1\s[10]...\w4\i[201]It's probably trash, but I'll try it.\n\n\![*]\q[Back,OnKadanMenu]"
+}
+
+Select.KadanAsk
+{
+	"\1\b[2]\s[10]\_q(What do you want to ask her?)"
+	--
+	"\n\n[half]/
+	\![*]\q[Why did you want to live abroad?,LeaveHomeKadan]\n/
+	\![*]\q[Why come to Earth?,EarthKadan]\n/
+	\![*]\q[What are you studying?,StudyKadan]\n/
+	\![*]\q[Anyone special?,DatingKadan]\n/
+	\![*]\q[Plans for the future?,FutureKadan]\n/
+	\![*]\q[Never mind,OnKadanMenu]\e"
+}
+
+Select.LeaveHomeKadan
+{
+	if feelings <= 0 //disklike
+	{
+		"\1\s[10]\i[251]\i[208]\i[406]...\e"
+	}
+	elseif feelings > 0 && feelings <= 5 //conflicted
+	{
+		"\1\s[10]\i[254]\i[204]\i[410]I didn't want to.\i[155]\e"
+	}
+	elseif feelings > 5 && feelings <= 35 //neutral
+	{
+		feelings += 1
+		"\1\s[10]...\w3\i[204]It wasn't a choice I made lightly.\w4\i[210]\i[408]\i[254] I don't feel like discussing it.\i[155]\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+	elseif feelings > 35 && feelings < 100 //like
+	{
+		feelings += 1
+		"\1\s[10]\i[204]I wasn't in a good place, mentally, after the war.\w4 Not that I'm unique in that regard.\w4\i[204]\i[403]\i[408] Cardassia holds so many painful memories now...\w3\s[10]\i[201] For many reasons, I could not stay.\i[158]\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+	else //full trust
+	{
+		"\1\s[10]\i[201]...\w4\i[204]\i[254]\i[404]Ah, %(username)\w3, I deserted.\w8\w8\w8\w8 \s[10]\i[201]\i[254]Once I lost my family\w2, I felt like the living dead.\w8\w8\w8\s[10]\i[204]\i[403]\i[410] I know how selfish I am to abandon my home in its time of greatest need.\w4\i[208]\i[408] And yet...\w6here I am.\i[152]\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+}
+
+Select.EarthKadan
+{
+	if feelings <= 0 //disklike
+	{
+		"\1\s[10]\i[251]\i[204]\i[404]\i[155]...\e"
+	}
+	elseif feelings > 0 && feelings <= 5 //conflicted
+	{
+		"\1\s[10]\i[254]\i[204]\i[406]Because Earth allowed me entry.\i[156]\e"
+	}
+	elseif feelings > 5 && feelings <= 35 //neutral
+	{
+		feelings += 1
+		"\1\s[10]\i[204]The Federation is ridiculously accepting of foreign flotsam wandering into its territory.\w4\i[201]\i[408]\i[254] Earth is as good a place to land as any.\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+	elseif feelings > 35 && feelings < 100 //like
+	{
+		feelings += 1
+		"\1\s[10]\i[204]Earth's traditional collegiate system reminds me slightly of the academies back home.\w3\i[407] That\w2, coupled with what one could term an extremely low cost of living made it an attractive option.\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+	else //full trust
+	{
+		"\1\s[10]\i[204]It's quite simple\w2, , %(username).\w4\i[254]\i[404]\i[405] Earth is a peaceful world\w3\i[201], far away from Cardassia and all reminders of my abject failure to be of any use at all to my family or my countrymen.\w4\s[10]\i[204]\i[403]\i[410] Does that answer satisfy you?\w4\i[203]\i[254] I hope you don't think less of me\w2, but I could scarcely blame you.\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+}
+
+Select.StudyKadan
+{
+	if feelings <= 0 //dislike
+	{
+		"\1\s[10]\i[251]\i[201]\i[406]...\w4Don't speak to me.\e"
+	}
+	elseif feelings > 0 && feelings <= 5 //conflicted
+	{
+		"\1\s[10]\i[204]...Fine arts.\e"
+	}
+	elseif feelings > 5 && feelings <= 35 //neutral
+	{
+		feelings += 1
+		"\1\s[10]\i[204]I'm studying the fine arts\w2, with a concentration on sculpting.\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+	elseif feelings > 35 && feelings < 100 //like
+	{
+		feelings += 1
+		"\1\s[10]\i[204]\i[252]I'm training to be a sculptor.\w6\i[210]\i[407] It's...\w2a bit of a departure from my prior career.\w4\s[10]\i[204]\i[408] I wasn't the one with artistic talent in my family.\w3\s[10]\i[220]\i[254]\i[405] But with hard work and perseverance, I'm improving my skill.\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+	else //full trust
+	{
+		"\1\s[10]\i[204]\i[406]\i[408]My youngest sister wasn't able to finish her education before she was killed.\w8\s[10] Perhaps that's a poor reason for me to pursue art myself\w2, as if I'm making a mockery of her.\w6\i[208] I'll\w2 never hold a candle to her talent, or vision.\i[154]\w4\s[10]\i[204]\i[403]\i[402] But this is the only memorial I can give her,\w4 or the rest of our family. \w5\s[10]\i[201]It feels right with my heart to do this.\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+}
+
+Select.DatingKadan
+{
+	if feelings <= 0 //disklike
+	{
+		"\1\s[10]\i[253]\i[208]\i[406]...\w4I don't care to understand why you would ask me that.\e"
+	}
+	elseif feelings > 0 && feelings <= 5 //conflicted
+	{
+		"\1\s[10]\i[204]...\w4No.\e"
+	}
+	elseif feelings > 5 && feelings <= 35 //neutral
+	{
+		feelings += 1
+		"\1\s[10]\i[204]No\w2, I'm focused on my studies.\w8\w6 In any case,\w4\s[10]\i[407]\i[252] there is no one here with whom I would be a suitable match.\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+	elseif feelings > 35 && feelings < 100 //like
+	{
+		feelings += 1
+		"\1\s[10]\i[210]...\w2I had thought that perhaps...\w8\w6 \s[10]\i[204]Then again\i[253]\w2, it's extremely difficult to tell apart a jest from an earnest overture.\w4\s[10]\i[216]\i[404] Unless I'm wrong on both counts, and seeing something that is not there.\w8\s[10]\i[201]\i[402]\i[252]\w8\w6 It's useless, anyway.\w8\w8\w8\i[254]\i[406] I accepted long ago\w2 that persons like myself are meant to pass through life alone...\i[155]\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+	else //full trust
+	{
+		"\1\s[10]I'm in exile\w3, and I cannot bear children, so I'm useless even on that account.\w8\w6\s[10]\i[204]\i[406] I'm sure you're about to tell me Tegra wouldn't care about either point, %(username).\w3 But those aren't the only impediments.\i[156]\w8\w8\w8\w8 Tegra\w2\s[10]\i[252]\i[404] is young, and full of yearning for all life has to offer.\w4\i[208] I don't wish to be a millstone around her neck.\w4\s[10]\i[402] And that's what I fear I would be.\w4\i[201] I'd drive her to resent me\w3, make her miserable...\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+}
+
+Select.FutureKadan
+{
+	if feelings <= 0 //dislike
+	{
+		"\1\s[10]\i[252]\i[201]Yes, mock the cardassian now that the Union has collapsed.\w3\i[404] I'm sure we deserve everything that's occurred, right down to the youngest infants.\e"
+	}
+	elseif feelings > 0 && feelings <= 5 //conflicted
+	{
+		"\1\s[10]\i[204]\i[253]...Are you mocking me, %(username)?\w4\e"
+	}
+	elseif feelings > 5 && feelings <= 35 //neutral
+	{
+		feelings += 1
+		"\1\s[10]\i[204]...\w2That's a difficult question.\w8\w8\s[10]\i[210]\i[404] Two years ago\w2, my plans would have begun and ended at surviving through the night.\w3\s[10]\i[204]\i[254] Since then,\w2 it's been all I can do to readjust to the idea of having a present\w3, let alone a future.\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+	elseif feelings > 35 && feelings < 100 //like
+	{
+		feelings += 1
+		"\1\s[10]\i[204]...\w2I've only recently come around to the idea that I deserve to live to see whatever future presents itself.\w8\w8\s[10]\i[210]\i[404]\i[254] Or perhaps\w2, ''deserve'' isn't quite the right word.\w3\s[10]\i[204] I suppose,\w2 I'll do my best to support Cardassia from a respectful distance\w3, and allow the rest to take care of itself in due course.\i[154]\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+	else //full trust
+	{
+		"\1\s[10]\i[204]\w2I don't know that I'd call what's in my mind a ''plan,'' per se.\w8\w8\s[10]\i[210]\i[406]\i[254] Definitely, I will be donating much of my labor\w2 and proceeds from my art towards Cardassia and Bajor's joint reconstruction.\w3\s[10]\i[201] Aside from that, I'll see where Tegra would prefer to go.\w4 I can ply my trade from anywhere.\i[154]\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+}
+
+Select.KadanTell
+{
+	"\1\b[2]\s[10]\i[52]\i[410]\i[403]\_q(What do you want to tell her?)"
+	--
+	"\n\n[half]/
+	\![*]\q[Compliment,ComplimentKadan]\n/
+	\![*]\q[Insult,InsultKadan]\n/
+	\![*]\q[Argue,ArgueKadan]\n/
+	\![*]\q[Flirt,FlirtKadan]\n/
+	\![*]\q[Berate,BerateKadan]\n/
+	\![*]\q[Never mind,OnKadanMenu]\e"
+}
+
+Select.ComplimentKadan
+{
+	feelings += 1
+	"\1\s[10]\i[201]\i[404]\i[405]...Thank you.\n\n\![*]\q[Back,OnKadanMenu]"
+}
+
+Select.InsultKadan
+{
+	feelings -= 2
+	"\1\s[10]\i[251]\i[404]\i[405]\i[204]...Your inferiority complex is both showing and well-deserved.\n\n\![*]\q[Back,OnKadanMenu]"
+}
+
+Select.ArgueKadan
+{
+	feelings += 1
+	"\1\s[10]\i[252]\i[201]\i[406]\i[407]Ah, but there are many points of your argument that you have not considered...\i[156]\n\n\![*]\q[Back,OnKadanMenu]"
+}
+
+Select.FlirtKadan
+{
+	
+	"\1\s[10]\i[410]\i[403]\i[201]Ah, %(username), I get quite enough of that nonsense from Tegra...\i[152] \n\n\![*]\q[Back,OnKadanMenu]"
+}
+
+Select.BerateKadan
+{
+	feelings -= 1
+	"\1\s[10]\i[251]\i[404]\i[405]\i[202]And just who do you think you are, human?\n\n\![*]\q[Back,OnKadanMenu]"
+}
+
+
+Select.TegraApologize
+{
+	hitcount = 0
+	feelings += 5
+	
+	"\0\s[0]\i[204]Oh yeah?\w4 We can talk about you paying restitution later, then.\e"
+	"\0\s[0]\i[204]\i[410]\i[403]Do you really mean that? Or do you just want us to stop being angry with you?\e"
+	"\0\s[0]\i[204]...Really? You are?\w8\1\s[10]I certainly hope you're sincere, %(username)...\e"
+}
+
+Select.KadanApologize
+{
+	hitcount = 0
+	feelings += 5
+	
+	"\1\s[10]That's all well and good, but it's more important that you improve your future behavior.\n\n\![*]\q[Back,OnKadanMenu]"
+	"\1\s[10]\i[410]\i[403]Since I can't enact justice on you from here, I have little choice but to hope you're sincere in your remorse.\n\n\![*]\q[Back,OnKadanMenu]"
+	"\1\s[10]I have my doubts, but I suppose whether I believe you or not doesn't matter.\w8\0\s[0]You better be telling the truth, %(username)...! Be nice!\n\n\![*]\q[Back,OnKadanMenu]"
+}
+
+OnFeelings
+{	
+	if feelings >= 100
+	{
+		 "\1\s[10]\i[52]We trust you.\w8\0\s[0]\i[203]\i[406]\i[407]Yeah! Besties!\i[160]\n\n[half]Feelings: %(feelings)\nHits: %(hitcount)\n\n\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+	elseif feelings > 35
+	{
+		"\1\s[10]\i[52]We've taken a liking to you.\n\n[half]Feelings: %(feelings)\nHits: %(hitcount)\n\n\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+	elseif feelings > 5 && feelings <= 35
+	{
+		"\1\s[10]\i[52]We're neutral toward you.\n\n[half]Feelings: %(feelings)\nHits: %(hitcount)\n\n\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+	elseif feelings > 0 && feelings <= 5
+	{
+		"\1\s[10]\i[52]We...are unsure about you.\n\n[half]Feelings: %(feelings)\nHits: %(hitcount)\n\n\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+	else
+	{
+		"\1\s[10]\i[52]We dislike you.\n\n[half]Feelings: %(feelings)\nHits: %(hitcount)\n\n\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+
+}
+
+//OnMirror
+//{
+	//tegramirror = 1
+	//kadanmirror = 1
+	
+	//"_q\Entered the mirror universe.\q[Back,OnKadanMenu]"
+//}
+
+//OnLeaveMirror
+//{
+	//tegramirror = 0
+	//kadanmirror = 0
+	
+	//"_q\Escaped the mirror universe.\q[Back,OnKadanMenu]"
+//}
+
+
+OnMirrorMenuRun
+ {	
+ 	wd = GetWeekDay
+ 	ap = GetAP
+	//These four statements basically get the day of the week, whether it's AM or PM, the hour, and the time. It's putting together the information to display the time at the bottom of the balloon. Pay it no mind.
+	--
+	"\n\n\_q\b2" //and \_q means quick session, meaning all the text from this point on will display instantly instead of a few letters at a time like normal ghost dialogue.
+	--
+	if lastTalk != "" //seeing if the lastTalk thing is NOT empty.
+	{
+	  "\![*]\q[What did you say last?,OnLastTalk]\n\n[half]"
+	}
+	--
+ 	"\![*]\q[Let's chat,OnAiTalk]\n"
+	"\![*]\q[What's on your mind?,OnAiTalk]\n"
+	--
+	"\![*]\q[Play Higher or Lower,killallgamers]\n"
+	"\![*]\q[Play Tic-Tac-Toe,killallgamers]\n"
+	--
+	"\![*]\q[Interact with Tegra,OnMirrorTegraInteract]\n/
+	\![*]\q[Config Menu,configmenu]\n/
+	\![*]\q[Functions,dosomething]\n\n[half]/
+ 	\![*]\q[Nevermind,CANCEL]\n\n\n[half]%(wd) %(nowhour):%(nowmin) %(ap), %(month)/%(day)/%(year)\e"
+}
+
+Select.BACKTOMIRRORMENU
+{
+	OnMirrorMenuRun
+}
+
+Select.killallgamers
+{
+	"\0\s[0]\i[204]\i[410]Do I look like I have time to play childish games, Terran?\e"
+	"\1\s[10]\i[253]Tegra doesn't play those kinds of games.\0\s[0]\i[210]\i[254]\w8\1\s[10]\i[204] And certainly not with a Terran.\i[154]\e"
+	"\1\s[10]\i[204]\i[251]\i[406]If you're bored, then act like a proper Terran and do some work.\e"
+	"\0\s[0]\i[208]\i[251]\i[406]\i[208]I'm not here to keep you entertained...!\i[157]\e"
+	"\0\s[0]\i[204]\w8\w8\w8\w8\i[251]...\w8No.\i[161]\e"
+}
+
+OnMirrorTegraInteract
+{
+	"\0\s[0]\i[204]\i[410]\i[403]What is it, Terran?\w9"
+ 	--
+	if hitcount > 0 
+	{
+	"\n\n[half]/
+	\![*]\q[Apologize for hitting,MirrorTegraApologize]\n/
+	\![*]\q[Give her something,MirrorTegraGive]\n/
+	\![*]\q[Ask her something,MirrorTegraAsk]\n/
+	\![*]\q[Tell her something,MirrorTegraTell]\n\n[half]/
+	\![*]\q[Never mind,BACKTOMIRRORMENU]\e"
+	}
+	else 
+	{
+	"\n\n[half]/
+	\![*]\q[Give her something,MirrorTegraGive]\n/
+	\![*]\q[Ask her something,MirrorTegraAsk]\n/
+	\![*]\q[Tell her something,MirrorTegraTell]\n\n[half]/
+	\![*]\q[Never mind,BACKTOMIRRORMENU]\e"
+	}
+}
+
+Select.MirrorTegraGive
+{
+	"\0\b[2]\s[0]\_q(What do you want to give her?)"
+	--
+	"\n\n[half]/
+	\![*]\q[Something to eat,MirrorGiveTegraFood]\n/
+	\![*]\q[Something to drink,MirrorGiveTegraDrink]\n/
+	\![*]\q[A trinket,MirrorGiveTegraShiny]\n/
+	\![*]\q[Something for her garden,MirrorGiveTegraFlora]\n/
+	\![*]\q[Something to play,MirrorGiveTegraFiles]\n/
+	\![*]\q[Never mind,BACKTOMIRRORMENU]\e"
+}
+
+Select.MirrorGiveTegraFood
+{
+	mirrortegratrust += 1
+	"\0\s[0]Oh, %(food)?\w4\i[204] What am I supposed to do with this?\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+}
+
+Select.MirrorGiveTegraDrink
+{
+	mirrortegratrust -= 1
+	"\0\s[0]Huh, %(drink)?\w4\i[208] I can't drink on duty.\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+}
+
+Select.MirrorGiveTegraShiny
+{
+	mirrortegratrust -= 1
+	"\0\s[0]Oh, shiny!\w8\w8\i[254] Wait\i[214]\w4, whare are you giving me this? Take it back.\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+}
+
+Select.MirrorGiveTegraFlora
+{
+	mirrortegratrust += 2
+	"\0\s[0]Ah, %(flora)...! \i[210]\i[410]I could add it to the gardens...\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+}
+
+Select.MirrorGiveTegraFiles
+{
+	mirrortegratrust -= 2
+	"\0\s[0]...What is it, a virus?\i[214]\i[405]\i[406] Like I'm dumb enough to run this.\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+}
+
+Select.MirrorTegraTell
+{
+	"\0\b[2]\s[0]\_q(What do you want to tell her?)"
+	--
+	"\n\n[half]/
+	\![*]\q[Compliment,MirrorComplimentTegra]\n/
+	\![*]\q[Insult,MirrorInsultTegra]\n/
+	\![*]\q[Joke,MirrorJokeTegra]\n/
+	\![*]\q[Flirt,MirrorFlirtTegra]\n/
+	\![*]\q[Berate,MirrorBerateTegra]\n/
+	\![*]\q[Never mind,BACKTOMIRRORMENU]\e"
+}
+
+Select.MirrorComplimentTegra
+{
+	//feelings += 1
+	"\0\s[0]\i[214]\i[404]\i[405]Oh?\w4 Is the opinion of a Terran supposed to mean something to me? <3\i[158]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+}
+
+Select.MirrorInsultTegra
+{
+	//feelings -= 1
+	"\0\s[0]\i[201]\i[254]\i[410]\i[409]\i[204]Oh yeah? As if I haven't heard worse.\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+}
+
+Select.MirrorJokeTegra
+{
+	mirrortegratrust += 1
+	"\0\s[0]\i[252]\i[203]......\w4\i[254]\i[210] I don't get it.\i[160]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+}
+
+Select.MirrorFlirtTegra
+{
+	//feelings += 2
+	"\0\s[0]\i[410]\i[403]\i[203]Oh?\w4\i[214]\i[254] Like I'd ever go for a Terran.\i[161]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+}
+
+Select.MirrorBerateTegra
+{
+	mirrortegratrust -= 1
+	"\0\s[0]\i[253]\i[214]\i[410]\w8\w8...Is that supposed to upset me...?\i[159]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+}
+
+Select.MirrorTegraApologize
+{
+	hitcount = 0
+	mirrortegratrust += 1
+	
+	"\0\s[0]\i[208]Whatever. You're a Terran.\w4 Terrans are just violent.\e"
+	"\0\s[0]\i[214]\i[410]\i[403]Do you really mean that? I doubt it.\e"
+	"\0\s[0]\i[214]\i[404]\i[405]...Really? You are?\w8\1\s[10]\i[204]As if the remorse of a Terran counts for anything, %(username)...\i[154]\e"
+}
+
+Select.MirrorTegraAsk
+{
+	"\0\b[2]\s[0]\_q(What do you want to ask her?)"
+	--
+	"\n\n[half]/
+	\![*]\q[What happened to Earth?,MirrorTegraEarth]\n/
+	\![*]\q[What's a Terran?,MirrorTegraTerrans]\n/
+	\![*]\q[What's with you and Kadan?,MirrorTegraBoss]\n/
+	\![*]\q[So you're all evil here?,MirrorTegraEvil]\n/
+	\![*]\q[Do you need help?,MirrorTegraHelp]\n/
+	\![*]\q[Never mind,BACKTOMIRRORMENU]\e"
+}
+
+Select.MirrorTegraEarth
+{
+	"\0\s[0]\i[254]\i[407]\i[206]\w8\w8...Earth...?\i[410]\i[204]\w4 You mean Terra Prime?\w8\n\n[half]\s[0]\i[204]\i[402]\i[409]Um, it was the heart of the evil Terran Empire until about a century ago.\w4 Now it's a penal colony for Terrans and other criminals.\w4\i[254] How does a Terran not know that?\i[161]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+}
+
+Select.MirrorTegraTerrans
+{
+	"\0\s[0]\i[254]\i[407]\i[204]\w8\w8...Uh...\w4You're a Terran...?\w4 You're from Terra, right?\w8\n\n[half]\i[403]\i[161]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+}
+
+Select.MirrorTegraBoss
+{
+	if mirrortegratrust > 10
+	{
+		"\0\s[0]\i[210]It's...\w4 It's a little complicated.\i[152]\w8\w8\n\n[half]\s[0]\i[216]She's my boss\w6, and I'm her secretary.\w8\s[0]\i[201]\i[254]\i[410] On duty\w2, anyway.\w4\s[0]\i[208] Don't judge me, Terran.\i[152]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	}
+	elseif mirrortegratrust > 25
+	{
+		"\0\s[0]\i[204]...\w4 You can see well enough by now\w2, right?\i[152]\w8\w8\n\n[half]\s[0]\i[212]It kind of goes without saying.\w8\s[0]\i[201]\i[254]\i[406] She's not\w2 the worst person whose mistress I've been.\w4\s[0]\i[253]\i[208] Don't ask me about the worst ones\w3, okay?\i[152]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	}
+	elseif mirrortegratrust > 50
+	{
+		"\0\s[0]\i[204]...\w4 We all do what we have to\w2, Terran.\i[152]\w8\w8\n\n[half]\s[0]\i[218]Gul Kadan isn't so bad.\w8\s[0]\i[201]\i[254]\i[409] Don't get me wrong\w4, she doesn't treat me nice.\w4\i[220] But she doesn't treat me too badly, either.\s[0]\i[253]\i[208]\i[410] I wish my standards weren't so low\w3, but I like her.\i[160]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	}
+	else
+	{
+	"\0\s[0]\i[251]\i[406]\i[407]\i[202]\w8\w8...That's Gul Kadan to you, Terran...\w4 So rude.\i[152]\w8\w8\n\n[half]\s[0]\i[216]She's my boss\w6, and I'm her secretary.\w8\s[0]\i[201]\i[254]\i[410] Anything else isn't really any of your business\w2, is it?\i[155]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	}
+}
+
+Select.MirrorTegraEvil
+{
+	if mirrortegratrust > 10
+	{
+		"\0\s[0]\i[214]\i[254]\i[406]\w8\w8...I don't really know what you mean.\w4 It's just...\w3\i[201]always been this way.\w8\n\n[half]\s[0]\i[410]And once the Terran Empire fell\w4, the Klingon-Cardassian Alliance picked right up where you people left off.\w2\i[214]\i[254]\i[407]\i[402] There's nothing anyone can do about it.\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	}
+	elseif mirrortegratrust > 25
+	{
+		"\0\s[0]\i[214]\i[254]\i[406]\w8\w8...I guess so.\w4 Yeah.\w3\i[201] Maybe that's true.\w8\n\n[half]\s[0]\i[410]The rest of us are too scared to try to stop all this.\w4 So I guess we get the world we deserve, huh?\w2\i[214]\i[254]\i[407]\i[402] But it's not like I'm running off to join the Resistance\w4\i[404]\i[405], so I deserve what I get, too.\i[156]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	}
+	elseif mirrortegratrust > 50
+	{
+		"\0\s[0]\i[214]\i[254]\i[406]\w8\w8...Pretty much, yeah.\w4 We can tell ourselves we're just trying to survive\w3\i[201], but it's a load of shit.\w8\n\n[half]\s[0]\i[410]\i[216]None of the Terrans who hurt us during the empire are alive anymore.\w4\i[406] But this won't stop unless someone makes it stop...\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	}
+	else
+	{
+	"\0\s[0]\i[214]\i[254]\i[406]\w8\w8...That's rich, coming from a Terran.\w4 Evil, huh?\w3\i[201] Okay. Sure.\w8\n\n[half]\s[0]\i[410]The Terran Empire spent a few centuries tearing the rest of the quadrant to ribbons.\w4 This is what survived, so here we are.\w2\i[214]\i[254]\i[407]\i[402] What am I supposed to do about it?\i[156]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	}
+}
+
+Select.MirrorTegraHelp
+{
+	if mirrortegratrust > 10
+	{
+		"\0\s[0]\i[204]\i[254]\i[410]\i[407]\w8\w8Um\w2, getting employed by Gul Kadan \f[italic,true]was\f[italic,false] me getting help.\w8\w6\i[214]\i[404]\i[405] She takes care of me\w2, and barely hits me at all.\w8\n\n[half]\s[0]\i[220]And she pays me enough to send money home to my family.\w4 I can't risk all that.\w3\s[0]\i[208]\i[253]\i[406] So don't blow this for me, got it?\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	}
+	elseif mirrortegratrust > 25
+	{
+		"\0\s[0]\i[204]\i[254]\i[410]\i[407]\w8\w8Yeah...\w2No offense\w4, but a Terran can't do much to help me.\w8\w6\i[214]\i[404]\i[405] Unless\w2 you happened to be a Resistance operative\w4, or something.\w8\n\n[half]\s[0]\i[220]But if you were\w4, you wouldn't risk me telling Gul Kadan.\w3\s[0]\i[206]\i[253]\i[407] I'm on my own...\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	}
+	elseif mirrortegratrust > 50
+	{
+		"\0\s[0]\i[204]\i[254]\i[410]\i[407]\w8\w8Well...\w2Maybe\w4, if you could guarantee Gul Kadan couldn't retaliate against my family.\w8\w6\i[214]\i[404]\i[405] But\w2 that's not very likely\w4, is it?\w8\n\n[half]\s[0]\i[220]Not that I don't appreciate the offer\w4, %(username)...\w3\s[0]\i[206]\i[253]\i[407] Maybe it's better if I tough it out...\i[152]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	}
+	else
+	{
+	"\0\s[0]\i[204]\i[253]\i[410]\i[407]\w8\w8What\w2, are you going to sweep in and take me away from this awful place?\w8\w6\i[214]\i[404]\i[405] Don't make me laugh\w2, Terran.\w8\n\n[half]\s[0]\i[406]\i[220]Gul Kadan is the closest thing I've ever had to really being safe.\w4 I'm not risking that for anything\w3\s[0]\i[208], and sure as hell not you.\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	"\0\s[0]\i[208]\i[251]\i[406]\i[407]Shh! Don't get me in trouble!!!\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	}
+}

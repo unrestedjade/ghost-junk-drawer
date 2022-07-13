@@ -1,0 +1,9 @@
+﻿charset,UTF-8
+type,ghost
+name,Tegra and Kadan
+directory,tegra_and_kadan
+
+
+//I think this needs to be here to set default balloon?
+
+balloon.directory,FauxCARS Basic

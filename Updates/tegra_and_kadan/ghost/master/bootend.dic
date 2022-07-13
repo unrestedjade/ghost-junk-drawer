@@ -1,0 +1,753 @@
+﻿//---------------------------Booting and Ending--------------------------
+//Tegra and Kadan
+
+//This .dic file is set aside for booting and ending dialogue, as well as a few other functions. Make sure to read the walkthrough (http://www.ashido.com/ukagaka/walkthrough.html), in particular the page about SakuraScript, for more details about how to properly format ghost dialogue!
+//You should be editing these in Notepad++, and in particular, you should set the Language to C to properly highlight all the text. It will make things A LOT EASIER for you, trust me! It will also help you keep track of your brackets in case you forget some. If you click on a line with a bracket in Notepad++, it should highlight where the other bracket ends, or turn purple if there's no finishing bracket (which you should definitely fix!)
+//It will also highlight my commented lines in green, so you'll know where they are. Any line beginning with // is a commented line that the code will not read. It's just for your reference!
+
+//Much of this file you will only have to set up once, so take heart!
+
+
+//*********************Advanced User Info*******************************
+//These text boxes are meant for those who have an interest in expanding or using more complicated functions in their ghost. Also for my own reference in the future since I plan on using this template too, haha. If you have no interest in any of this and just want to keep things as simple as possible, feel free to skip these boxes.
+
+//--A Note about Functions--
+//A function that begins with On, such as OnFirstBoot here, can be called from anywhere in any .dic file by using \![raise] or by just sticking OnFunction somewhere. A function that does NOT start with On, however, can be a bit finicky. You can create your own functions all over the place if you want, there's just a difference between OnDoodlebop and Doodlebop, if you get me. See the walkthrough page about coding for more about creating functions.
+
+//If you're having trouble getting a function of yours to run, like Doodlebop, try changing it to OnDoodlebop and see if that fixes it.
+//***********************************************************************
+
+
+//--OnFirstBoot--
+
+//OnFirstBoot is, as you can probably guess, what happens when your user first boots up your ghost. This is where you'll want to set up an introduction and ask your user for information your ghost will need, like their name and what pronouns they'll be using. This will only run the first time they are booted!
+
+//*********************Advanced User Info*******************************
+//Because this only runs once and under an odd set of circumstances, it can be hard to test if this function is working properly. Trying to run the entire function using \![raise,OnFirstBoot] will instead bring up your alternate dialogue, so sadly you can't check it that way. You CAN get it to run using \![raise,OnFirstBoot,0] though.
+
+//If you're going to be adding new variables and values and such, make sure you define them all in OnFirstBoot! You can make any value you want, but it has to equal SOMEthing to exist at first. Then you can do whatever with it.
+//***********************************************************************
+
+
+OnFirstBoot
+{
+//OnFirstBoot begins with some code at first to define some values your ghost will be using. I'll briefly touch on what they are, but for the most part you should not need to edit any of these and you can safely ignore most of them (except nowshell if you've changed your shell folder's name from master). Definitely don't delete them unless you know what you're doing.
+
+ 	lastTalk = "" //This is part of how chained conversations work (see aitalk.dic).
+	passhour = 0
+	passmin = 0 
+	passsec = 0 //clock
+ 	username         = "USER" 
+	stroke           = 0	
+ 	teachusername    = 0	
+	mikireflag       = 0	
+ 	aitalkinterval = 300 
+ 	birthdayprint = "????" //A temporary value for the user's birthday.
+	talktime = "every 5 minutes" //How the value aitalkinterval will display in the config menu.
+	deleteshitai = "OFF" 
+	nowshell = "master" 
+	feelings = 10
+	hitcount = 0
+	mirrorverse = 0
+	mirrortegratrust = 0
+	mirrorhitcount = 0
+	tegrasleep = "off"
+	kadansleep = "off"
+	
+	firstboot = 1 //This marks that this is the first time you've run the ghost. It's so it won't reroute to general name changing dialogue when the user inputs their name.
+	
+	if reference0 == 0 //Don't touch this line.
+ 	{
+		
+		
+		"\![enter,passivemode]\1\s[10]\0\s[0]...Hm. Tegra, are you seeing some primitive human nonsense, too?\w5 Honestly, the last thing I need today is indirect temporal anomaly shenanigans.\w8\0\n\n[half]\s[0]I see it too!\i[204] Oh my gosh, hi~!\w5\i[0] Kadan, look, an old-timey hu-mon!\w5 Time-travel pal!!! <3 \w8\1\n\n[half]\s[10]Tegra, do you suppose the temporal prime directive applies to foreign civilians?\w8\0\s[0]\i[254]\i[33]\n\n[half]The what to the who? \w5\i[252]\i[204]...Do you think the hu-mon can see us?\s[0]\w8\1\n\n[half]\s[10]\i[201]...And I've lost her to yet another shiny new thing. \i[31]\i[52]\w8Human, I've no idea how this happened or how to fix it, so I suppose we might as well make the best of it.\x\c\0\s[0]\i[32]New friend!!!\i[160]\w8\1\c\s[10]\i[52]At the very least, we should find out how to refer to you, human.\w8\0\s[0]\n\n[half]Yeah!\i[33]\i[204] Hu-mon, what pronouns should we use for you?\x\w8\1\c\s[10]Given the limitations of our translators, which works best?\n\n[half]/
+		\w5\_q\![*]\q[He/Him/His,choicefirsthehim]\n/
+		\![*]\q[She/Her/Hers,choicefirstsheher]\n/
+		\![*]\q[They/Them/Their,choicefirsttheythem]\e"
+ 	}
+	else
+ 	{
+ 		{
+ 		"\1\s[10]Hm, what an odd feeling of deja vu.\0\n\n[half]\s[0]Has this happened before?\e"
+		}
+ 	}
+	
+
+}
+
+
+Select.choicefirsthehim
+{
+	presuffix = "masculine"
+	himher = "him"
+	heshe = "he"
+	hisher = "his"
+	hesshes = "he's"
+	--
+	NameInput
+} 
+
+Select.choicefirstsheher
+{
+	presuffix = "feminine"
+	himher = "her"
+	heshe = "she"
+	hisher = "her"
+	hesshes = "she's"
+	--
+	NameInput
+}
+
+Select.choicefirsttheythem
+{
+	himher = "them"
+	heshe = "they"
+	hisher = "theirs"
+	hesshes = "they're"
+	--
+	NameInput
+}
+
+
+//--NameInput
+
+//NameInput is the next step in our introduction sequence. Now that the ghost has the pronouns set properly, they can ask the user for their name. It's done in this order so they'll know what prefixes will be appropriate for their name, like Mr. to he/him for example.
+
+//*********************Advanced User Info*******************************
+//Note this functions' name. This isn't a natural function included in the ghost, it's a piece of dialogue created by the original base coder to finish this sequence (cindysuke). I point this out to show you that you can do this too! You can create any number of functions just like this called whatever you want to do and say whatever you want! There are many things you can do with your Ghost if you're creative. Don't feel limited by what's in these files or the listed Shiori functions!
+//Just make sure you test them and they work, alright? I wrote more about coding and functions in the coding page for the walkthrough.
+//***********************************************************************
+
+NameInput
+{	
+	"\1\s[10]Now, aside from pronouns, the least we can do is learn your name. \![leave,passivemode]\w8\0\n\n[half]\s[0]Right! What's your name, hu-mon? \![open,inputbox,OnNameTeach,-1]\e"
+	
+	//At the end of this dialogue there's a tag saying "\![open,inputbox,OnNameTeach,-1]". It basically leads to the naming function defined in nameteach.dic, so don't touch it. 
+}
+
+//--timeslot
+
+//This is another unique function to tell what time of day it is. This is used for specialized dialogue related to the day. If you're uninterested, just ignore it. Either way, don't touch it. If you are going to use it though, make a note of the names used for each chunk of time, like earlymorning or lunch. Those are the names you'll be using later.
+
+timeslot
+{
+	if hour >= 5 && hour <= 8
+	{	"earlymorning"	}
+	elseif hour >= 9 && hour <= 11
+	{	"morning"	}
+	elseif hour >= 12 && hour <= 14
+	{	"lunch"	}
+	elseif hour >= 15 && hour <= 17
+	{	"afternoon"	}
+	elseif hour >= 18 && hour <= 20
+	{	"evening"	}
+	elseif hour >= 21 && hour <= 24
+	{ "latenight"	}
+	else
+	{ "midnight" }
+}
+
+
+//--dayslot
+
+//Like the above, but to find out what day it is. You can primarily use this for specialized dialogue on certain days, like the user's birthday. Either way, don't touch it.
+
+dayslot
+{
+	"%(month)month %(day)day"
+}
+
+
+//-----------------------Normal Booting----------------------------
+
+//*********************Advanced User Info*******************************
+//If you're defining new values that depend on what you were doing with your ghost (like say, if you've hit them, if they're in a certain mode of some kind) and are generally temporary, remember to put them in OnBoot and set them back to zero or off. For example, I have a counter in the Hunter Smoker ghost that keeps track of if you've hit one of them so that when you go into their menus, it will know to give you the option to apologize or not. So I made sure to add a hunterpunchcount = 0 tag at the beginning of OnBoot, that way when you boot them up, they start fresh and don't display the option if you haven't done anything wrong yet. It's unlikely this'll come up very much if you're not interested in expanding your ghost, but I'm making a note of it here anyway for enterprising developers, huge success.
+
+//You can also stick any values you want to reset on boot into their own function, like "BootReset", then run BootReset instead during boot so it's a bit less unwieldy. It's up to you though!
+//***********************************************************************
+
+OnBoot
+ {
+	
+	lastTalk = "" //These values you may recognize from OnFirstBoot up there. Just pay them no mind.
+	passhour = 0
+	passmin = 0
+	passsec = 0
+	tegrasleep = "off"
+	kadansleep = "off"
+	
+ 	"\0\s[0]\1\s[10]" //This sets them up in their neutral pose for now.
+	
+
+	--
+	
+	if nowshell != "mirror" && feelings > 0 && dayslot == userbirthday 
+	{
+				"\1\s[10]It's %(bornmonthprint) %(borndayprint).\w8\0\n\n[half]\s[0]\i[204]\i[406]\i[407]\i[252]Happy nameday, %(username)!\i[160]\w8\1\s[10]\i[52]Many happy returns.\i[156]\e" 
+				
+				//Notice in this dialogue that there are two new envelopes, %(bornmonthprint) and %(borndayprint). These two things basically display the user's birthday - bornmonthprint is the month and borndayprint is the day. These were defined when the user put in their birthday in the menu.dic file. See word.dic for more info on envelopes.
+	}
+	elseif nowshell != "mirror" && feelings > 0 && dayslot == "1month 1day" 	
+	{
+				"\0\s[0]\i[203]\i[406]\i[407]\i[252]It's New Year's Day!\i[158]\w8 \1\n\n[half]\s[10]\i[201]\i[406]\i[407]As far as the Earth solar calendar is concerned, anyway.\i[156]\w8 \0\s[0]\i[252]Time is a construct!\w4\i[203] Yay!\i[160]\e"
+	}
+	elseif nowshell != "mirror" && feelings > 0 && dayslot == "4month 5day"
+	{
+				"\0\s[0]\i[203]\i[406]\i[403]\i[252]Happy First Contact Day!\w5\s[0] This is the day the vulcans talked to the hu-mons for the first time!\i[158]\w8\1\n\n[half]\s[10]\i[251]\i[406]\i[407]I'm aware. Every human I've crossed paths with has wished me a happy First Contact Day\w4, even though it's nothing to do with anyone not from Earth or Vulcan.\w8 \0\s[0]\i[410]\i[403]Isn't their species' friendship totally cute, though?\i[160]\e"
+	}
+	elseif nowshell != "mirror" && feelings > 0 && dayslot == "5month 4day"
+	{
+				"\1\s[10]It's May the fourth.\w8 \0\n\n[half]\s[0]\i[203]\i[406]\i[407]\i[252]Yay!\w5\i[254]\i[410]\i[405] ...What's special about May the fourth?\w8 \1\s[10]\w5\i[404]\i[405]\i[252]\i[201]...I've no idea.\i[158]\e"
+	}
+	else
+	{
+		"%(normalboottalk)" 
+	}
+}
+
+
+//--normalboottalk
+
+
+normalboottalk
+{
+	if nowshell == "mirror"
+	{
+		"\1\s[10]\i[404]\i[405]\i[204]...?\w8\0\n\n[half]\s[0]\i[254]Oh, it's %(username).\i[204] What are you doing back again?\w8\1\s[10]\i[251]\i[201]\n\n[half]What an inconvenience...\w8\0\s[0]\i[204]\i[254]\n\n[half]Don't get in Gul Kadan's way!\e"
+	}
+
+	elseif nowshell == "spa"
+	{
+		"\1\s[10]\i[404]\i[405]\i[202]Ngk...!\w8\0\n\n[half]\s[0]\i[204]Oh, hi %(username)! We're at the spa today!\w8\1\s[10]\i[251]\i[201]\n\n[half]This is so embarrassing...\w8\0\s[0]\i[254]\n\n[half]It's really not a big deal, is it?\e"
+	}
+	elseif feelings < 0
+	{
+		"\1\s[10]\i[52]\i[410]\i[403]Oh, not this again...\i[157]\w8\0\n\n[half]\s[0]\i[251]\i[408]\i[409]Like, get a clue and leave us alone, %(username)!\i[153]\e"
+		
+		"\0\s[0]\i[253]\i[204]Ugh,\w4 day.\w8\i[251] Ruined.\w8\1\n\n[half]\s[10]\i[251]\i[52]Agreed.\e"
+		
+		"\0\s[0]\i[204]\1\s[10]\w8\i[52]\w8\w8\w8\w8\i[251]\i[201]\i[404]\i[405]...\w8\0\s[0]\i[251]\i[404]\i[405]\i[201]\i[153]...\e"
+	}
+	else
+	{
+	if weekday == 6 && hour >= 19 
+		{
+		"\0\s[0]\i[203]\i[406]\i[407]\i[252]It's Saturday night! Time-travel party time with %(username)!\i[160]\e"
+		}
+	elseif RAND(100) < 40 //What this does is choose a random number from 1-100, and then checks if that number is less than 40. If it's less than forty, then these dialogue pieces will occur. 
+		{
+		"\0\s[0]\i[204]\i[406]\i[403]\i[252]Hey, it's %(username)!\w3 Hi~!\w8\1\n\n[half]\s[10]\i[52]Oh, is the anomaly still happening?\e"
+	
+		"\1\s[10]\i[52]\i[404]\i[405]Seems we're still not rid of each other, dear %(username).\w8\0\n\n[half]\s[0]\i[203]\i[406]\i[407]\i[252]I hope we're never rid of each other! <3\i[158]\e"
+	
+		"\0\s[0]\i[204]\i[406]\i[407]\i[252]Yeah, a visit with %(username)! Now the day is interesting.\i[158]\w8\1\n\n[half]\s[10]\i[52]I suppose a correspondence transcending centuries qualifies as interesting, yes.\e"
+		}
+ 	else
+ 	{
+		if timeslot == "earlymorning" 
+		{
+		"\0\s[0]\i[253]\i[201]\i[408]\i[403]Uuuugh, it can't be time to get up yet, can it?\i[152]\w8\1\n\n[half]\s[10]\i[404]\i[405]Tegra, you may as well join %(username) and me among the ranks of the respectable early risers.\e"
+		
+		"\1\s[10]\i[52]\i[406]\i[407]Good morning, %(username) I see you're up and productive, very commendable.\i[156]\w8\0\n\n[half]\s[0]\s[0]\i[253]\i[201]Nooooo, five more minutes...\i[152]\e"
+		
+		"\1\s[10]\i[406]\i[407]Time to get the day started.\i[156]\w8\0\n\n[half]\s[0]\i[202]\i[253]\i[206]\i[408]\i[409]No!\w4 It's not!!!\i[152]\e"
+		}
+		elseif timeslot == "morning"
+		{
+		"\0\s[0]\i[204]\i[254]Oh, good morning, %(username).\w4 Are you on your third cup of raktajino, too?\i[158]\e"
+		
+		"\1\s[10]\i[52]Good morning, %(username).\w8\0\n\n[half]\s[0]Yeah, good\w4...\i[253]\i[201]\i[406]\i[403]\f[italic,true]*yawn*\f[italic,false]\w4\s[0]\i[152]\i[254]...morning.\i[152]\e"
+		}
+		elseif timeslot == "lunch"
+		{
+		"\0\s[0]\i[204]Hey, %(username)\w4, you're just in time to have lunch with us!\i[158]\1\n\n[half]\s[10]\i[201]In spirit\w3, as it were.\e"
+		
+		"\1\s[10]\i[52]\i[406]\i[407]Good day, %(username).\e"
+		}
+		elseif timeslot == "afternoon"
+		{
+		"\1\s[10]\i[52]\i[406]\i[407]Good afternoon.\w8\0\n\n[half]\s[0]\i[204]\i[410]\i[403]Is your day going well, %(username)?\i[158]\e"
+		}
+		elseif timeslot == "evening"
+		{
+ 		"\0\s[0]\i[252]\i[203]Hey, %(username)\i[160]!!!\i[158]\1\n\n[half]\s[10]\i[52]\i[404]\i[405]\i[251]Are you here to wind Tegra up just as I'm trying to wind down?\i[158]\e"
+		}
+		elseif timeslot == "latenight"
+		{
+ 		"\0\s[0]\i[252]\i[203]Yeah! Party time!\i[158]\w8 \1\n\n[half]\w8\s[10]...Isn't it almost bedtime?\w8 \0\s[0]\i[406]\i[407]\i[206]\n\n[half]Party!\w6 Time!!!\i[160]\e"
+		
+ 		"\0\s[0]\i[204]Hi, %(username)! Are you having a good night?\i[158]\1\n\n[half]\w8\s[10]\i[201]\i[406]\i[407]I was\w3, back when I thought I'd get to bed on time...\e"
+		
+ 		"\1\s[10]\i[52]\i[408]\i[409]Oh, no. Why are you contacting us so late?\w8\0\n\n[half]\s[0]\i[410]\i[403]Um, because %(username) is energetic and vital\w3, like me!\i[158]\e"
+		}
+		else 
+		{
+		"\0\s[0]\i[253]\i[204]Can you not sleep\w3, %(username)?\w6\i[252]\i[406]\i[403] I'll stay up with you. <3\i[158]\1\n\n[half]\w8\s[10]\i[201]\i[408]\i[409]...Can you two stay up without me?\i[158]\w8 \0\s[0]\i[203]\n\n[half]No! Hee hee...\i[160]\e"
+		
+ 		"\0\s[0]\i[204]Perfect timing, %(username)!\w3 I just got home from the club.\i[158]\1\n\n[half]\w8\s[10]\i[202]\i[404]\i[405]I'm about to use a club on the both of you if you don't quiet down and let me rest.\i[152]\e"
+		
+ 		"\1\s[10]\i[52]\i[408]\i[409].\w8.\w8.\w8Why are you waking me up in the dead of night, %(username)?\w8\0\n\n[half]\s[0]\i[201]\i[404]\i[405]Rule of Acquisition number\w4\i[0] whatever: You can sleep when you're dead!\i[158]\e"
+		}
+	}
+	}
+}
+
+
+//--OnClose
+
+OnClose
+ {
+	if nowshell == mirror
+	{
+		"\1\s[10]\i[52]\i[410]\i[403]Good, we can get back to more important matters.\i[157]\w8\0\n\n[half]\s[0]\i[404]\i[405]So true, ma'am!\i[153]\w8\w8"
+		
+		"\0\s[0]\i[253]\i[204]Right, stop wasting Gul Kadan's time.\w8\1\n\n[half]\s[10]\i[251]\i[52]Quite right.\w8\w8"
+		
+		"\0\s[0]\i[204]\1\s[10]\w8\i[52]\w8\w8\w8\w8\i[251]\i[201]\i[404]\i[405]...\w8\0\s[0]\i[251]\i[404]\i[405]\i[201]\i[153]....\w8\w8"
+	}
+	elseif feelings < 0
+	{
+		"\1\s[10]\i[52]\i[410]\i[403]Oh, are we dismissed?\i[157]\w8\0\n\n[half]\s[0]\i[251]\i[404]\i[405]Wow\w4\i[201], how generous of you, %(username).\i[153]\w8\w8"
+		
+		"\0\s[0]\i[253]\i[204]Like,\w4 about \w4\i[251]\f[italic,true]frinxing\f[italic,false] time.\w8\1\n\n[half]\s[10]\i[251]\i[52]Agreed.\w8\w8"
+		
+		"\0\s[0]\i[204]\1\s[10]\w8\i[52]\w8\w8\w8\w8\i[251]\i[201]\i[404]\i[405]...\w8\0\s[0]\i[251]\i[404]\i[405]\i[201]\i[153]...Bye.\w8\w8"
+	}
+	else
+	{
+	if passmin >= 5 || passhour > 0	//This checks to see if you've had them open for at least five minutes.
+		{
+			if RAND(100) < 40 //see above about the random number generator
+			{
+				"\0\s[0]\i[204]Bye, %(username)! Talk to you later!\i[158]\w8\1\n\n[half]\s[10]Goodbye.\w8\w8"
+			}
+			else
+			{
+			if timeslot == "earlymorning"
+				{
+					"\1\s[10]Yes, let's all get down to the day's tasks in earnest.\w8\0\n\n[half]\s[0]\i[253]\i[201]I'm totally going back to bed.\i[152]\w8\w8"
+					
+					"\0\s[0]Yay, I can get extra sleep!\i[157]\w8\1\n\n[half]\s[10]But you're already up...?\w8\w8"
+				}
+			elseif timeslot == "morning"
+ 				{
+ 					"\0\s[0]\i[204]Have a great day, %(username).\i[158]\w8\w8"
+ 				}
+ 			elseif timeslot == "lunch"
+ 				{
+ 					"\0\s[0]\i[203]See you later, %(username)!\i[158]\w8\1\n\n[half]\s[10]\i[52]Remember to eat, if you haven't yet.\w8\w8"
+					
+ 					"\0\s[0]\i[406]\i[407]\i[203]Gotta run, talk to you later!\i[157]\w8\1\n\n[half]\s[10]Perhaps.\w8\w8"
+ 				}
+ 			elseif timeslot == "afternoon"
+ 				{
+ 					"\0\s[0]\i[204]Have a good evening if we don't run into each other again, okay?\i[158]\w8\1\n\n[half]\s[10]\i[52]Indeed.\w8\w8"
+					
+ 					"\1\s[10]\i[404]\i[405]\i[404]\i[405]Yes, let's get back to work while we have daylight left.\w8\0\n\n[half]\s[0]\i[406]\i[403]\i[203]Staying on that grind\i[160]~! <3\w8\w8"
+ 				}
+  			elseif timeslot == "evening"
+ 				{
+ 						if weekday == 6 
+ 						{
+ 							"\0\s[0]\i[252]\i[406]\i[407]\i[203]Saturday night!\w4 Time to go out dancing!\i[160]\w8\1\n\n[half]\s[10]\i[404]\i[405]\i[251]You do that nearly every night, anyway.\w8\w8"
+ 						}
+ 						else //if it's not saturday, then it'll do this dialogue instead.
+ 						{
+ 							"\0\s[0]\i[204]Goodnight, %(username)!\i[158]\w8\1\n\n[half]\s[10]\i[52]\i[406]\i[407]Try not to stay up too late.\w8\w8"
+							
+ 							"\1\s[10]\i[408]\i[409]I'm going to bed.\w4\i[52] Goodnight, %(username)\w4, Tegra.\w8\0\n\n[half]\s[0]\i[203]Night! <3\i[158]\w8\w8"
+ 						}
+ 				}
+			elseif timeslot == "latenight"
+			 	{
+ 						if weekday == 0 
+ 						{
+ 							"\0\s[0]\i[254]\i[406]\i[403]Ohh, tomorrow morning is, like, going to hurt\i[152]...\w8\1\n\n[half]\s[10]\i[201]\i[404]\i[405]And yet, you stay up this late every Sunday.\i[158]\w8\w8"
+							
+ 							"\1\s[10]\i[406]\i[407]Yes, let's not make the start of a new week harder than it has to be.\w8\0\n\n[half]\s[0]\i[253]\i[201]I guessssss~!\w8\w8"
+ 						}
+						
+ 						"\1\s[10]\i[251]\i[201]\i[404]\i[405]Finally.\w4 Goodnight.\w8\0\n\n[half]\s[0]\i[201]Sleep well!\i[158]\w8\w8"
+						
+						"\0\s[0]Night!\w8\1\n\n[half]\s[10]At last...\w8\w8"
+ 				}
+			else //like above, this is the midnight time slot since it's the last one left.
+ 				{
+ 						if weekday == 0 //checking if it's the middle of the night on Sunday
+ 						{
+ 							"\1\s[10]\i[251]Tegra, I don't want to hear a word from you on the way to class tomorrow.\w8\0\n\n[half]\s[0]\i[406]\i[407]\i[203]\i[254]Uuuuugh! Fine\w4, Mom~!\i[156]\w8\w8"
+ 						}
+						"\0\s[0]\i[406]\i[403]Yeah, we still have time to catch some sleep!\w4\i[201] Night!\i[158]\w8\1\n\n[half]\s[10]\i[251]\i[408]\i[409]Wonderful, just enough time for a nap.\i[157]\w8\w8"
+						
+						"\1\s[10]\i[251]\i[404]\i[405]Once again, I don't know how I put up with you two.\w4 Goodnight.\w8\w8"
+						
+						"\1\s[10]\i[408]\i[409]\i[251]\i[201]I'm going back to sleep.\w8\0\n\n[half]\s[0]\i[203]Pleasant dreams!\i[160]\w8\w8"
+				}
+			}
+				
+ 		}
+ 		
+ 		
+ 	else //This dialogue is for if they haven't been open for at least five minutes.
+ 	{
+		if nowshell == mirror
+		{
+			"\1\s[10]\i[253]At least this was a brief interruption...\0\n\n[half]\s[0]\i[201]Agreed, ma'am.\e"
+		}
+		elseif feelings <= 0
+		{
+			"\0\s[0]\i[254]\i[208]Like\w4, thank the Exchequer...\w8\w8"
+		}
+		else
+		{
+ 		"\0\s[0]\i[204]\i[410]\i[403]Oh, are you, like, busy? See you later, then, %(username).\w8\w8"
+		
+ 		"\1\s[10]\i[408]\i[409]Ah, I'm being granted a reprieve.\w4\i[52] Thank you, %(username).\w8\0\n\n[half]\s[0]\i[406]\i[407]Hey! Kadan\w3, what do you mean???\i[152]\w8\w8"
+		}
+ 	}
+	}
+ 	--
+	"\-\e" //this bit of code actually closes and ends the ghost. Because \e is here, you don't have to end each line above with it. Again, this will come up very rarely, so OnClose is an unusual case.
+	
+ }
+
+
+ //-------------------------State Changing--------------------
+ //From here on, most of the dialogue will have to do with changing shells, ghosts, or states in some way.
+ 
+ 
+ //--OnWindowStateMinimize
+
+//This will run when you minimize them. Replace with what you like.
+
+ OnWindowStateMinimize
+ {
+	if nowshell == mirror
+	{
+		"\1\s[10]...?\0\s[0]\i[254]\i[152]\i[202]\e"
+	}
+	 elseif feelings <= 0
+	 {
+	 "\0\s[0]\i[208]\i[410]\i[403]We're, like\w3, outta here.\w8\1\n\n[half]\s[10]\i[201]If you'll excuse us...\e"
+	 }
+	 else
+	 {
+	"\0\s[0]\i[201]\i[410]\i[403]We're, like, stepping out for a bit!\w8\1\n\n[half]\s[10]\i[201]If you'll excuse us...\e"
+	 }
+}
+
+
+//--OnWindowStateRestore
+
+//This will run when you minimize them and then bring them back up. Replace with what you like.
+
+OnWindowStateRestore
+ {
+	if nowshell == mirror
+	{
+		"\0\s[0]...Well\w4\i[254], that was weird.\w8\1\n\n[half]\s[10]\i[201]Extremely.\e"
+	}
+	elseif feelings <= 0
+	 {
+	 "\0\s[0]\i[254]\i[206]\i[410]\i[403]Ugh.\w4 So much for that idea...\w8\1\n\n[half]\s[10]\i[201]\i[406]\i[407]Looks like we can't terminate the anomaly from our side.\e"
+	 }
+	 else
+	 {
+	"\0\s[0]We're back!\w4\i[204] Did you miss us, %(username)?\w8\1\n\n[half]\s[10]\i[406]\i[407]It's not as if we actually left.\e"
+	 }
+}
+
+
+//--OnGhostChanging
+
+//This runs whenever you change or reload the ghost. You can change ghosts by going into the right click menu and going to Change Ghost, but this dialogue will also be called if you reload them using Utilities->Reload Ghost or the Developer's Console->Reload->Ghost. Protip: If you are going to make a ghost, you will be reloading it A LOT.
+//Note: If you reload your ghost using the developer console instead of Utilities->Reload Ghost, it won't do this dialogue, so don't freak out if it doesn't show up.
+ 
+OnGhostChanging
+ {
+	if reference0 == "Tegra" 
+	{
+		"\0\s[0]\i[254]Oh, a time anomaly thingy! That felt weird.\w8\w8\e"
+	}
+ 	else //If you're switching to another Ghost.
+	{
+	if nowshell == mirror
+	{
+	"\1\s[10]Finally.\w4\i[204] Be on your way, terran.\e"
+	}
+	 elseif feelings <= 0
+	 {
+	 "\0\s[0]\i[254]\i[206]\i[410]\i[403]Too bad for %(reference0)\w3, but at least we get a break.\w8\1\n\n[half]\s[10]\i[201]\i[406]\i[407]Indeed.\e"
+	 }
+	 else
+	 {
+	"\0\s[0]Say hi to %(reference0) for us!\w8\1\n\n[half]\s[10]Whoever that is.\w8\w8\e"
+	 }
+	}
+}
+
+
+//--OnGhostChanged
+
+//A sister to the above, this runs after the ghost has either reloaded itself, or when you switch from another ghost to this ghost.
+
+OnGhostChanged
+{
+	tegrasleep = "off"
+	kadansleep = "off"
+	"\0\s[0]\1\s[10]" //this sets up their default poses
+	--
+	if reference0 == "Tegra" //As above, this should be the name of your ghost as in install.txt or descript.txt.
+	{
+		"\0\s[0]Dizzy...\1\n\n[half]\w8\s[10]Such an odd feeling.\e"
+	}
+	else //If you're switching to them from another ghost...
+	{
+		if nowshell == mirror
+		{
+		"\0\s[0]\i[204]\i[253]Uh-oh...\w4 Gul Kadan?\w8\1\n\n[half]\s[10]\i[201\i[404]Oh, honestly...\e"
+		}
+		elseif feelings < 0
+		{
+		"\1\s[10]\i[204]\i[404]\0\s[0]\i[204]...?\w4\i[206] Oh. Tired of bothering %(reference0), hu-mon?\e"
+		}
+		else
+		{
+		"\0\s[0]Hi, %(username)! You were hanging out with %(reference0)?\w8\1\n\n[half]\s[10]I've no idea who that is, but fine.\e"
+		}
+	}
+}
+
+
+//--OnShellChanging
+
+//This will run when you change your ghost's shell. If you don't have any other shells for your ghost, you can safely ignore this but don't delete it, you might as well keep it just in case. I probably won't add a different shell to this template because shells are a lot of work ugh, but for the sake of argument, let's pretend I did.
+
+OnShellChanging
+ {
+	if reference0 == "Tegra and Kadan Spa Day Shell" 
+	{
+	"\1\s[10]\i[251]This really couldn't have waited until we had some privacy?\w8\0\n\n[half]\w8\s[0]Nope!\i[158]\w8\e"
+	
+	"\0\s[0]\i[203]\i[406]\i[407]Yay! I love the spa!\i[160]\w8\1\n\n[half]\s[10]\i[404]\i[405]...Do all these other people need to be here?\w8\0\s[0]\i[254]\i[206]\n\n[half]Um, it's a public spa, you big weirdo...\i[158]\e"
+	}
+	else 
+	{
+	"\1\s[10]Ah, did you feel that? The anomaly was active for a moment.\w8\0\n\n[half]\s[0]Yeah, somthing's happening...?!!\w8\e"
+	
+	"\0\s[0]\i[254]\i[210]Oh, my stomach flipped for a second!\w8\1\n\n[half]\s[10]\i[201]The anomaly is up to its usual mischief, I see.\e"
+	
+	
+	}
+ }
+ 
+ 
+ //--OnShellChanged
+ 
+ //The sister to the above, this is the dialogue after you've changed the shell.
+ 
+OnShellChanged
+ {
+ 	if reference0 == "Tegra and Kadan Default Shell" //Again, this is the name of your shell as you put in the descript.txt file for that shell.
+ 	{
+ 		nowshell = "master" 
+		mirrorverse = 0
+		
+ 		"\1\s[10]\0\s[0]Casual clothes are so nice, don't you think?\i[158]\w8\1\n\n[half]\s[10]Have you figured out the difference between different types of clothing, Tegra?\w8\0\s[0]\i[410]\i[403]\i[212]\n\n[half]...Mmmmmmmaybe\i[154]???\e"
+ 	}
+ 	elseif reference0 == "Tegra and Kadan Spa Day Shell" //You can use as many elseifs for as many shells as you've got.
+ 	{
+ 		nowshell = "spa"
+		mirrorverse = 0
+		
+ 		"\1\s[10]\0\s[0]\i[253]\i[201]I'm totally never getting out of this pool!\i[158]\e"
+		
+ 		"\1\s[10]\0\s[0]We should really go to the spa more often, Kadan!\w8\1\n\n[half]\s[10]\i[404]\i[405]For a ferengi, you're a bit too eager to laze about.\w8\0\n\n[half]\s[0]\i[253]\i[202]Hey, we work hard all the time!\i[410]\i[403]\w5\i[201] We deserve to relax, too.\i[160]\e"
+		
+ 	}
+ 	elseif reference0 == "Tegra and Kadan Mirrorverse Shell"
+ 	{
+ 		nowshell = "mirror"
+		mirrorverse = 1
+		
+ 		"\1\s[10]\i[52]Terran...?\e"
+		
+ 	}
+ 	else //For any shell without a specific name, or if you don't want to bother with individual responses to a shell.
+ 	{
+	mirrorverse = 0
+	"\1\s[10]\0\s[0]Ohhh, so now we're using %(reference[0])!\w8\1\n\n[half]\s[10]...Hn?\e"
+	
+	//Note the %(reference[0]) here! This time that should store the name of whatever shell you're switching to. Replace this bit of dialogue as you need.
+	}
+ }
+
+
+ //--OnDressupChanged
+ 
+ //This runs whenever you fiddle with their clothing via the dress-up option, if you've set any for your ghost. Make sure to read the clothing page on the walkthrough for details on how clothes work! This template won't have any because Girl and Triangle move around too much for it, but if your ghost is mostly stationary, clothes are an option. In that case, these functions are for you. For now, I'll fill this in with some hypothetical items. Replace the dialogue below with whatever you need.
+
+OnDressupChanged
+{
+if reference0 == 0 //in OnDressupChanged, reference0 refers to the character, therefore this is evaluating which character in question is getting dressed up. 0 is the main character, as you know from the walkthrough by now.
+	{
+	if reference1 == "Headband - Stars" //This is the name of the clothing item in the descript.txt file, I'm pretty sure.
+		{
+			if reference2 == 1 //This checks if you're putting it on.
+			{
+			"\0\s[0]\i[252]\i[212]Oh! Was I wearing this headband before?\w8\1\n\n[half]\s[10]No. Must be the anomaly's doing.\w8\0\s[0]\i[410]\i[403]\n\n[half]Huh. Well, I do like this headband, anyway...\e"
+			}
+			else // This checks if you're taking it off.
+			{
+			"\0\s[0]\i[212]...Did I take it off somewhere and forget...?\w5\i[410]\i[403] Where did it...?\e"
+			}
+		}
+	elseif reference1 == "Necklace - Purple" 
+		{
+			if reference2 == 1 
+			{
+			"\1\s[10]\i[253]That's an incredibly chunky necklace.\w8\0\n\n[half]\s[0]\i[203]\i[406]\i[407]Thanks!\w4 It makes a fun clacky sound\w3, too!\i[158]\w8\1\n\n[half]\s[10]\i[406]\i[407]Apparenty\w2, an important aspect of jewelry...?\i[154]\e"
+			}
+			else //when you take it off
+			{
+			"\1\s[10]Did the necklace get too heavy?\0\n\n[half]\s[0]\i[201]\i[260]\i[408]\i[403]Sometimes it's better to let your décolletage speak for itself.\i[157]\e"
+			}
+		}	
+	elseif reference1 == "Orange" 
+		{
+			if reference2 == 1 
+			{
+			"\1\s[10]Why is there an orange on your head?\w8\0\n\n[half]\s[0]\i[202]\i[406]\i[407]It's the will of the Great River!\i[158]\w8\1\n\n[half]\s[10]\i[406]\i[407]Just please don't start talking about the Law of Attraction again, I beg of you...\e"
+			}
+			else //when you take it off
+			{
+			"\1\s[10]I think your orange fell off somewhere.\0\n\n[half]\s[0]\i[253]\i[408]\i[403]Kadaaaaan, you better not have eaten my orange!!!\e"
+			}
+		}
+		elseif reference1 == "Towel" 
+		{
+			if reference2 == 1 
+			{
+			"\0\s[0]Look, Kadan! I have hair, like you!\w8\1\n\n[half]\n\n[half]\s[10]\i[406]\i[407]That towel doesn't even vaguely resemble hair...\e"
+			}
+			else //when you take it off
+			{
+			"\1\s[10]I hope you didn't need to use that towel, because it's slipped off.\0\n\n[half]\s[0]\i[253]\i[408]\i[403]Oops!\w5 I think that was yours, actually.\1\s[10]\i[202]\i[152]\i[404]\i[405]\e"
+			}
+		}
+		elseif reference1 == "Ducky" 
+		{
+			if reference2 == 1 
+			{
+			"\1\s[10]Tegra, what on earth is that?\w8\0\n\n[half]\s[0]\i[252]\i[410]\i[403]It's, like, part of an ancient Earth bathing ritual.\w6\i[203] Super cute\w4, right?\1\s[10]\i[208]\i[158]\i[406]\i[407]\e"
+			}
+			else //when you take it off
+			{
+			"\1\s[10]Looks like your duck swam away.\i[156]\0\n\n[half]\s[0]\i[210]\i[253]\i[408]\i[403]Aww.\w5 Like, be free, little buddy!\e"
+			}
+		}
+		elseif reference1 == "Veil - Gauze" 
+		{
+			if reference2 == 1 
+			{
+			"\0\s[0]\i[254]These used to just be worn by males.\w4 \i[210]It's nice to wear something that's obviously ferengi, though.\i[158]\e"
+			}
+			else //when you take it off
+			{
+			"\1\s[10]I think you look a bit more feminine with the veil.\i[154]\0\n\n[half]\s[0]\i[212]\i[254]\i[410]Really, ma'am?\e"
+			}
+		}
+		elseif reference1 == "Anklets - Silver" 
+		{
+			if reference2 == 1 
+			{
+			"\0\s[0]These jingle when I walk.\w8\1\n\n[half]\s[10]I like to be able to hear where you are.\i[406] You ferengi are so sneaky...\e"
+			}
+			else //when you take it off
+			{
+			"\1\s[10]\i[201]There you go again, padding around so quietly...\i[212]\0\n\n[half]\s[0]\i[208]\i[254]\i[410]Ha, %(username), I don't think she's figured out that I can walk without letting them make noise...\i[158]\e"
+			}
+		}
+		elseif reference1 == "Tabard - Plain" 
+		{
+			if reference2 == 1 
+			{
+			"\0\s[0]\i[210]Gul Kadan always has me wear this if certain other guls are visiting.\w8\1\n\n[half]\s[10]\i[404]\i[208]\i[251]Those lecherous old men don't need any encouragement.\e"
+			}
+			else //when you take it off
+			{
+			"\1\s[10]When among civilized people, additional modesty isn't necessary.\i[154]\0\n\n[half]\s[0]\i[201]\i[253]\i[408]\i[403]That thing is so warm, too.\i[152]\e"
+			}
+		}
+		elseif reference1 == "Choker - Garnet" 
+		{
+			if reference2 == 1 
+			{
+			"\0\s[0]\i[406]\i[407]Oh! This is the choker Gul Kadan gave me for my last anniversary.\w4\i[203] It's pretty, isn't it?\i[158]\w8\1\n\n[half]\s[10]\i[410]\i[403]The garnet reminded me of your eyes.\i[154]\e"
+			}
+			else //when you take it off
+			{
+			"\1\s[10]Best not to tempt one of the terrans into attempting to steal it, after all...\0\n\n[half]\s[0]\i[210]\i[253]\i[408]\i[403]Yeah, wouldn't it be awful if\w4\f[italic,true] a terran\w4\f[italic,false] tried to sell it\w5, haha...\e"
+			}
+		}
+	}
+else //if reference0 isn't the main character, then it has to be the side character.
+	{
+	if reference1 == "Hairpin" //The name of the item of clothing in the descript.txt file in your shell folder.
+		{
+			if reference2 == 1 
+			{
+			"\1\s[10]\i[55]I don't recall picking out this hairpin this morning...\w8\0\n\n[half]\s[0]\i[252]It looks super nice on you, though!\i[158]\e"
+			}
+			
+			else //When you take it off.
+			{
+			"\1\s[10]\i[55]...Did I not put that in my hair this morning, after all?\w4\i[252]\i[410]\i[403] Maybe I misremembered...\e"
+			}
+		}
+	elseif reference1 == "Glasses" 
+		{
+			if reference2 == 1 //if you're putting it on
+			{
+			"\0\s[0]Wow, Kadan, I didn't know you needed glasses.\w8\1\n\n[half]\s[10]\i[404]\i[405]Only to read. It's not worth surgery yet.\e"
+			}
+			else //when you take it off
+			{
+			"\1\s[10]\i[55]Hn. Where did I set those glasses...?\e"
+			}
+		}
+	elseif reference1 == "Orange" 
+		{
+			if reference2 == 1 //if you're putting it on
+			{
+			"\1\s[10]\i[251]\i[402]Tegra, you didn't just set an orange on my head, did you? Please grow up.\w8\0\n\n[half]\s[0]\i[254]Huh? It wasn't me...\w8\1\n\n[half]\s[10]\i[210]\i[404]Certainly, I've never heard \f[italic,true]that\f[italic,false] before.\e"
+			}
+			else //when you take it off
+			{
+			"\1\s[10]Tegra must have purloined it.\i[201] Good riddance.\e"
+			}
+		}
+		elseif reference1 == "Hairpin - Silver" 
+		{
+			if reference2 == 1 //if you're putting it on
+			{
+			"\1\s[10]\i[253]\i[408]Tegra\w3 did you put this pin in my hair this morning?\i[156]\w8\0\n\n[half]\s[0]\i[210]\i[254]\i[410]\i[405]Um...\w4 Well...?\w8\1\n\n[half]\s[10]\i[210]\i[404]\f[italic,true]Technically\f[italic,false]\w3, it's against regulation\w4\s[10], but I let it slide.\i[154]\e"
+			}
+			else //when you take it off
+			{
+			"\1\s[10]\i[201]Best not to risk anyone of consequence seeing it...\e"
+			}
+		}
+		elseif reference1 == "Sunglasses" 
+		{
+			if reference2 == 1 //if you're putting it on
+			{
+			"\1\s[10]\i[254]\i[402]It's so damnably bright on this planet!\w8\0\n\n[half]\s[0]\i[254]\i[203]\i[408]Very true\w2, ma'am.\w8\1\n\n[half]\s[10]\i[208]\i[404]Clearly\w3, this sun is what made the Terrans the violent psychopaths they are.\e"
+			}
+			else //when you take it off
+			{
+			"\1\s[10]\i[201]\i[253]\i[406]Perhaps if I only leave the manor at night...?\e"
+			}
+		}
+	}
+}

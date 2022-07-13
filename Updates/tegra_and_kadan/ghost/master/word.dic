@@ -1,0 +1,740 @@
+﻿//---------------------------Envelopes--------------------------
+//Tegra and Kadan
+
+FeelUp
+{
+	feelings += 1
+}
+
+FeelDown
+{
+	feelings -= 1
+}
+
+
+dating
+{
+	"I went out with a bolian this one time. Did you know their bodily fluids are, like, crazy acidic? \w8\n\n[half]\i[253]\i[202]Yeah, that was a super awkward trip to the doctor...\i[153]"
+	"Caitians are so soft and fuzzy! \w8\n\n[half]\i[253]I think I might be allergic, though. Sad face\i[152]..."
+	"I got coffee with this guy who claimed women only like him for his brains. \w8\w8\i[252]\i[406]\i[407]His cranium was totally see-through! \w8\w6\n\n[half]\i[410]\i[405]He was so funny,\w4 I wish I'd gotten his comm frequency...\i[158]"
+	"Did you know the more spiritual bajorans do this thing where they grab your ear to...\i[37]\i[212]\w8check your vibes, I guess? \w8\i[210]\n\n[half]And a lot of them don't know doing that means something totally different in ferengi culture? \w8\n\n[half]So.\i[406]\i[407]\w8 Embarrassing. \s[0]\i[253]\i[408]\i[403]\i[153]\w8\w8\w8\n\n[half]\s[0]\i[253]We both agreed to just, like, never speak of that whole misunderstanding again."
+	"I ran into the cutest orion at the club not long ago! \w8\n\n[half]\i[252]\i[33]I wonder if she'll be there this weekend...?"
+	"\i[252]So, like, the most adorable klingon threw a rock at my head. \i[37]\i[210]\w8I had to get treated for a concussion,\s[0]\i[32] but I was so flattered, you know?\i[160]"
+	"\i[251]\i[32]This bolian, like, won't stop messaging me. So annoying! \i[406]\i[403]\w8As if I'd forget those chemical burns I got last time\i[201]... Not!\i[153]"
+	"\i[410]\i[403]So this hu-mon told me he only dates girls with long hair...\i[254]\w8Weirdly specific fetish, but, like, okay...?\i[156]"
+	"\i[406]\i[407]Like, this ferengi male had the nerve to ask me to dinner. \w8\w6If I wanted to date other ferengi I could have just stayed home, you know?\i[254]\i[406]\i[403]\i[201] \w8\w8Like, keep it moving, limp-lobes...\i[155]"
+}
+
+randomcomsumable
+{
+	"%(food)"
+	"%(softdrink)"
+	"%(drink)"
+	"%(produce)"
+}
+holonovels
+{
+	"Vulcan Love Slave"
+	"Marauder Mo vs Archa 7"
+	"Lesbian Spider Queens of Mars"
+	"Captain Proton"
+	"Ziltoid the Omniscient"
+	"Marauder Mo and the Prince of Trill"
+	"Tribble Rancher 4"
+	"In Another World as a Klingon Blacksmith"
+	"Ace Accountant: In The Red"
+	"Dixon Hill: Private Eye"
+	"Cowboy Horse"
+	"Who Kidnapped Cowboy Horse"
+	"Dance-Contest Danger"
+	"Snake Town"
+	"Vacation Island and the Mysterious Coin"
+	"The Mystery of the Candy Tree"
+	"The Werewolf-Wolf: The Story of a Wolf that Can Turn into a Werewolf, Based on a Drawing by Geordi La Forge"
+	"Romance of the Three Commerce Zones XIII"
+	"Swamp King: the Swampening: the Remake"
+	"Privateer of the Swampways"
+	"Smiling Partner VII"
+}
+
+food
+{
+	"%(tfood)"
+	"%(kfood)"
+	"grilled squid"
+	"hasparat"
+	"plomeek soup"
+	"caviar"
+	"groatcakes"
+	"mapa bread"
+	"pok tar"
+	"okra"
+	"bloodcake"
+	"fried plantain"
+	"grilled carp roe"
+	"smoked fish"
+	"Thai"
+	"rokeg blood pie"
+	"krada legs"
+	"zilm'kach and cream"
+	"icoberry torte"
+	"kimchi"
+	"sashimi"
+	"smoked eel"
+	"vak clover soup"
+	"Andorian spice bread"
+	"pevrig cake"
+	"skopar"
+	"duuploni"
+	"lox"
+	"artichoke"
+	"tofu tempura"
+	"tuna"
+}
+
+tfood
+{
+	"fried isopod"
+	"mealworms"
+	"slug steak"
+	"sand fleas"
+	"tube grubs"
+	"gree worms"
+	"gagh"
+	"Feline Supplement 27"
+	"Terran chicken eggs"
+	"barbeque tarantula"
+	"mushroom soup"
+	"escargot"
+	"krada legs"
+	"Bolian steak pourri"
+	"crayfish"
+	"lobster"
+	"mushroom jerky"
+	"ant egg stirfry"
+	"stag beetles"
+	"dragonfly salad"
+	"spore pie"
+	"Kytherian crab"
+	"jellied gree worm"
+	"racht"
+	"millipede"
+	
+}
+
+kfood
+{
+	"red leaf tea"
+	"fruit salad"
+	"salad with fish sauce"
+	"kippers"
+	"seaweed sheets"
+	"caviar"
+	"sea grapes"
+	"a jumja stick"
+	"%(fish)"
+}
+
+fish
+{
+	"tuna"
+	"red snapper"
+	"swordfish"
+	"salmon"
+	"herring"
+	"octopus"
+	"squid"
+	"sole"
+	"halibut"
+	"trout"
+	"perch"
+	"sea bass"
+}
+
+destination
+{
+	"to the beach"
+	"to a hot spring"
+	"to the mountains"
+	"to the moon"
+	"downtown"
+	"see a concert"
+	"camping"
+	"rent a boat"
+	"to Risa"
+	"find a dom-jot hall"
+}
+
+tlocale
+{
+	"the Sacred Marketplace"
+	"the Latinum Mandible beetle derby"
+	"Binx"
+	"the Caverns of Sogg"
+	"the Gothis Mountains"
+	"the Lenth Sea"
+	"Fereng"
+	"Kope"
+	"the Loom forests"
+	"Mount Tubatuba"
+}
+
+klocale
+{
+	" the Ithian Forest"
+	"downtown Lakarian City"
+	"the Lakat botanical gardens"
+	"the Cardassian Institute of Art"
+	"Central University"
+	"the Imperial Plaza"
+	"the University of Culat Hebitian-era art exhibit"
+	"the Ba'aten Peninsula"
+	"Cardassia City"
+	"the Morfan Sea"
+}
+
+animals
+{
+	"wompat" //C
+	"gettle" //C
+	"riding hound" //C
+	"mudpuppy" //F
+	"fangcat" //F
+	"sleekback beetle" //F
+	"timber weevil" //F
+	"desert regnar" //C
+	"gutfish" //C
+	"hevrit" //C
+	"honge" //C
+	"plaktar" //C
+	"redrat" //C
+	"sleg corgan" //C
+	"taspar" //C
+	"wooly slug" //F
+	"spiderpoodle"
+	"fire spider"
+	"bogfly" //F
+	"Hupyrian wood beetle"
+	"Grumpackian tortoise"
+	"electric eel" //F
+}
+
+drink
+{
+	"bloodwine"
+	"wormwine"
+	"Stardrifter"
+	"synth-ale"
+	"Black Hole"
+	"Warp Core Breach"
+	"Vulcan Sunrise"
+	"kanar"
+	"cider"
+	"Saurian brandy"
+	"Flaming Nova"
+	"Rekarri Starburst"
+	"mead"
+	"zinfandel"
+	"el presidente"
+	"whiskey smash"
+	"jello shot"
+	"Old Fashioned"
+	"sonic screwdriver"
+	"pink squirrel"
+	"ramos gin fizz"
+	"gimlet"
+	"peppermint schnapps"
+}
+
+softdrink
+{
+	"slug juice"
+	"water"
+	"tea"
+	"prune juice"
+	"barley tea"
+	"seltzer"
+	"coffee"
+	"raktajino"
+	"Eelwasser"
+	"Slug-o-Cola"
+	"hevrit juice"
+	"bubble juice"
+	"espresso"
+}
+
+produce
+{
+	"apples"
+	"persimmons"
+	"lyhcee"
+	"starfruit"
+	"passionfruit"
+	"dragonfruit"
+	"plantains"
+	"bananas"
+	"blackberries"
+	"raspberries"
+	"strawberries"
+	"huckleberries"
+	"gooseberries"
+	"kumquats"
+	"nectarines"
+	"peaches"
+	"figs"
+	"dates"
+	"grapes"
+	"pears"
+	"kiwis"
+	
+}
+
+flora
+{
+	"a snowflower"
+	"an ink cap"
+	"lichens"
+	"club moss"
+	"horsetails"
+	"an oyster mushroom"
+	"an Edosian orchid" //C
+	"an indigo sunsearcher" //C
+	"a Mekarian sawtooth" //C
+	"a mekla" //C
+	"an Ithian tree sapling" //C
+	"a jooble" //F
+	"a hooyup tree sapling" //F
+	"some bog moss" //F
+}
+
+color
+{
+	"puce"
+	"red"
+	"gray"
+	"black"
+	"sandstone"
+	"\i[201]gold" 
+	"adobe rose"
+	"violet"
+	"white"
+	"silver"
+	"cerulean"
+	"beige"
+	"white"
+	"cadmium yellow"
+	"pthalo blue"
+	"pthalo green"
+	"burnt umber"
+	"mauve"
+}
+
+relaxing
+{
+	"reading"
+	"playing a game"
+	"watching a stream"
+	"browsing subspace"
+	"chatting with someone"
+	"planning an outfit"
+	"window shopping"
+}
+
+gossip
+{
+	"the Grand Nagus's wife always looks so pretty"
+}
+
+kadanfun
+{
+	"Clean up your living space."
+	"Read an improving text."
+	"Meditate."
+	"Muse on how you can best benefit society."
+	"Practice calligraphy."
+	"Mentally debate a topic of ethics and morality."
+	"Take some exercise."
+	"Organize your belongings."
+	"Delete unneeded data from your PADD."
+	"Create a spreadsheet."
+	"Admire antique paper and vellum."
+	"Make a cup of tea by hand."
+	"Read ahead in your course texts."
+	"Study."
+}
+
+knegative
+{
+	"No"
+	"Absolutely not"
+	"You must be joking"
+	"I would sooner perish"
+	"Impossible"
+	"Never"
+	"Ridiculous"
+}
+
+tnegative
+{
+	"...It's totally my fault for asking."
+	"I said something FUN?!"
+	"...Never mind."
+	"Um...I guess...?"
+	"...Nope!"
+	"Blech!"
+	"That bored me so much just to hear that I circled back around to not being bored anymore."
+	"Oh, for sure, for sure. Thanks..."
+	"I'd rather, like, close a door on my earlobe."
+	"Aaaaand now I'm in a coma. You put me in a coma, Kadan."
+}
+
+tsuperlative
+{
+	"cool"
+	"cute"
+	"pretty"
+	"interesting"
+	"exotic"
+	"neat"
+	"gorgeous"
+	"beautiful"
+	"tasty"
+	"great"
+}
+
+species
+{
+	"human"
+	"vulcan"
+	"klingon"
+	"betazoid"
+	"bolian"
+	"caitian"
+	"andorian"
+	"orion"
+	"tellerite"
+	"bajoran"
+	"trill"
+	"risian"
+	"lurian"
+	"denobulan"
+	"hupyrian"
+	"saurian"
+}
+
+ferenglish
+{
+	"Sa-na Fu-ra-nu-shi-shi-ko"
+	"Sa-o Pa-o-lo"
+	"Li-ni-co-no-shi-re"
+	"A-me-su-te-ru-da-mu"
+	"Ti-mu-bo-ku-tu"
+	"A-le-shu-no-du-ri-a"
+	"Shi-u-da-do de Me-ku-shi-ko"
+}
+
+usersfolder
+{
+	"%(username)'s Recycle Bin"
+	"%(username)'s Documents"
+	"%(username)'s secret folder"
+	"%(username)'s music"
+	"%(username)'s search history"
+	"%(username)'s browser bookmarks"
+}
+
+outfit
+{
+	"orange dress"
+	"chainmail bikini"
+	"black suit"
+	"blue dress"
+	"red dress"
+	"yellow dress"
+	"black dress"
+	"emerald necklace"
+	"pearl necklace"
+	"latinum collar"
+	"gold earrings"
+}
+
+frain
+{
+	"glebbening"
+	"choritzing"
+	"frippering"
+	"melnering"
+	"oolmering"
+	"pradooshing"
+	"thloppering"
+	"vinkling"
+	
+}
+
+flesson
+{
+	"glebbening,very heavy and punishing rain"
+	"choritzing,somewhat heavier than average rain"
+	"frippering,unremarkable rain"
+	"melnering,light and refreshing drizzle"
+	"oolmering,harder rain than frippering but lighter than glebbening"
+	"pradooshing,raindrops falling steadily at a slight angle and elongated due to wind"
+	"thloppering,cold and hard rain but not yet sleet"
+	"vinkling,pleasant rain"
+	"*UT ESCAPE ERROR. TRANSLITERATION TO FOLLOW:* gale dart rain,raindrops blown horizontally by strong wind"
+	"*UT ESCAPE ERROR. TRANSLITERATION TO FOLLOW:* dry fire rain,electrical storm without precipitation"
+	"*UT ESCAPE ERROR. TRANSLITERATION TO FOLLOW:* stone rain,unremarkable hail"
+	"*UT ESCAPE ERROR. TRANSLITERATION TO FOLLOW:* air rain,unremarkable mist"
+	"*UT ESCAPE ERROR. TRANSLITERATION TO FOLLOW:* walking cloud,unremarkable fog"
+	"*UT ESCAPE ERROR. TRANSLITERATION TO FOLLOW:* blind rain,heavy rain such that visibility is low and hearing is impaired"
+	"*UT ESCAPE ERROR. TRANSLITERATION TO FOLLOW:* rain that can't be killed,sunshower or rain that has been blown into a rare patch of clear skies"
+	"booplop,wife"
+	"dooplop,brother next in line to inherit"
+	"lop,one who does a thing"
+	"boop,to serve"
+	"doop,to get"
+	"yoba,elder brother"
+	"gooblatrupyob,alien (derogatory)"
+	"fafa,father (affectionate)"
+	"moogie,mother (affectionate)"
+	"grawmpie,grandfather (affectionate)"
+	"groogie,grandmother (affectionate)"
+	"*UT ESCAPE ERROR. TRANSLITERATION TO FOLLOW:* little-ear,child (affectionate)"
+	"val-eff,one who refuses payment (derogatory)"
+	"frinx,excrement (slang)"
+	"bena,subflooring...or the Grand Nagus' infant daughter. Why is she named...?\w8\0\s[0]I think it means something else in Bajoran? Anyway..."
+	"oo-mox,stroking of earlobes (sexual\w4...ugh\i[152])"
+	"*UT ESCAPE ERROR. TRANSLITERATION TO FOLLOW:* river sludge,customer"
+	"*UT ESCAPE ERROR. TRANSLITERATION TO FOLLOW:* no,no (which invites negotiation)"
+	"nass,no (which does not invite negotiation)"
+	"*UT ESCAPE ERROR. TRANSLITERATION TO FOLLOW:* no,no (which may result in violence if negotiation is attempted)"
+	"dai-mon,captain"
+	"yop,I"
+	"gren,you"
+	"uff,we"
+	"irr,they"
+	"lahje,here"
+	"lat,to"
+	"nagus,one who leads"
+	"nan-di,excellent"
+	"neep-gren,thank you"
+	"yop-im too,I'm sorry"
+	"bree,to say"
+	"orink,to observe (imperative)"
+	"ningor,to go"
+	"fatarik,to know or be capable of something"
+	"im,to be"
+	"duk,to do"
+	"rrela,(ear)lobes"
+	"guzah,medicine"
+	"teepah,small"
+	"sen-pah,pretty"
+	"habi,to command or to be the boss"
+	"teyvalah,thousand"
+	"lorala,very fine or costly"
+	"gleep,thing"
+	"triska,to require"
+	
+}
+
+lessonrules
+{
+	"Rule 1:\nOnce you have their money...never give it back.,How mercenary.,No refunds! <3"
+	"Rule 2:\nMoney is everything.,How bleak.,It kinda is when you think about it!"
+	"Rule 3:\nNever spend more for an acquisition than you have to.,Surprisingly banal advice given how unhinged some of these are.,It's figuring out where ''have to'' ends up that's hard!"
+	"Rule 4:\nSedition and treason are always profitable.,Certainly not in the Cardassian Union.,Ugh! No fun allowed in the Cardassian Union."
+	"Rule 5:\nAlways exaggerate your estimates.,What's the point if everyone knows what you're doing?,So you have room to negotiate down!"
+	"Rule 6:\nNever allow family to stand in the way of opportunity.,How unnatural.,It's not like all of these are *easy* to follow, ya know."
+	"Rule 7:\nKeep your ears open.,You can close your ears?,What? You can't?"
+	"Rule 8:\nSmall print leads to large risk.,A meditation on minding the subtle details.,You gotta pay attention and stuff!"
+	"Rule 9:\nOpportunity plus instinct equals profit.,This lifestyle is exhausting to contemplate.,Keeping an ear up for interesting things is fun though!"
+	"Rule 10:\nGreed is eternal.,For your species certainly.,\i[410]\i[403]Haha! Just ours. Totally. ;3"
+	"Rule 13:\nAnything worth doing is worth doing for money.,If I substitute every mention of money for ''the state'' I can nearly stomach these.,Interpetation is as important as remembering them!"
+	"Rule 14:\nSometimes the quickest way to find profits is to let them find you.,A reminder that patience is a virtue. All species seem to have an analog.,My family's super patient\i[201] and nothing's finding them."
+	"Rule 15:\nDead men close no deals.,Your people's greed is outshined only by their cowardice.,\i[254]Yeah because getting bad-mouthed is so much worse than dying..."
+	"Rule 16:\nA deal is a deal until a better one comes along.,I thought your civilization had quite an impressive body of legal code opposing this sentiment?,It says ''deal'' and not ''contract'' for a reason!"
+	"Rule 17:\nA contract is a contract is a contract-- but only between ferengi.,A hint of some normal affinity for your kinsmen over other aliens?,Why would we be accountable to outsiders who don't get us anyway?"
+	"Rule 18:\nA ferengi without profit is no ferengi at all.,What are women and the poor then?,That's kind of a heavy one...\i[152]"
+	"Rule 19:\nSatisfaction is not guaranteed.,Hn! True words. Life it not meant for mere happiness.,\i[406]\i[407]Yeah! Life really sucks sometimes!"
+	"Rule 20:\nHe who dives under the table today lives to profit tomorrow.,How detestable.,It works!"
+	"Rule 21:\nNever place friendship over profit.,You all must lead incredibly atomized lives.,Replace ''profit'' with ''the state'' and you'd be totally on board.\i[155]"
+	"Rule 22:\nA wise man can hear profit in the wind.,Do you really never think about anything else?,Well duh!\i[201] They're not called the Rules of Everything Else."
+	"Rule 23:\nNothing is more important than your health except for your money.,Truly?,You can't go broke on medical bills and then go meet the Blessed Exchequer empty-handed. Right?"
+	"Rule 27:\nThere's nothing more dangerous than an honest businessman.,I must confess this sounds like nonsense on its face.,This one's hard to explain to outsiders... \i[210]\i[410]\i[403]You'd have to read up on Drek-May-His-Name-Live-In-Infamy."
+	"Rule 29:\nWhat's in it for me?,I have a feeling only a rather narrow set of answers to this is acceptable.,It's a question you gotta ask!"
+	"Rule 30:\nConfidentiality equals profit.,You do seem oddly capable of discretion.,\i[252]Big ears are good\w5\i[251] and a big mouth is bad!\i[156]"
+	"Rule 31:\nNever make fun of a ferengi's mother. Insult something he cares about instead.,Revolting.,\i[254]Aw don't take that one too serious.\w5\i[206] And don't say nasty things about my mom!\i[155]"
+	"Rule 33:\nIt never hurts to suck up to the boss.,I have a feeling this goes beyond proper respect for one's superiors.,What's not proper about keeping your boss happy?"
+	"Rule 34:\nWar is good for business.,I suppose.,I like the hu-mon version better!\w4\i[203]\i[402]\i[409] Go on and look up ''human Rule 34''...!\w4 *snrk!*\i[56]"
+	"Rule 35:\nPeace is good for business.,Doesn't this directly contradict ''war is good for business''?,You're not scared of a little contradiction are you?"
+	"Rule 37:\nThe early investor reaps the most interest.,Mathematically I suppose this is true.,As long as it's a sound investment in the first place. <3"
+	"Rule 39:\nDon't tell customers more than they need to know.,I can agree with a warning not to volunteer information carelessly.,Oversharing is no good!"
+	"Rule 40:\nShe can touch your lobes but never your latinum.,I'd wondered when we'd happen across some of that famed ferengi misogyny.,I just ignore the sucky rules. <3"
+	"Rule 41:\nProfit is its own reward.,I suppose that is literally true.,I like the rules that explain themselves."
+	"Rule 43:\nFeed your greed-- but not enough to choke it.,An actual caution toward self control? I'm shocked.,My grandma used to say if you try to eat the whole gree worm you get nothing but its teeth."
+	"Rule 44:\nNever confuse luck for wisdom.,A rare glimmer of good counsel among the chaff.,This one's my favorite!"
+	"Rule 45:\nExpand or die.,This would seem to be in conflict with Rule 43.,Yeah I think it's discussed in one of the commentaries\w4 but I never read them."
+	"Rule 47:\nDon't trust a man wearing a better suit than your own.,Probably a fair assessment given your people's track record with pro-social behavior.,Mom said this one means females can't trust any males at all."
+	"Rule 48:\nThe bigger the smile the sharper the knife.,This one is sensible.,Oh! We should run the Smiling Partner holonovels together sometime.\w3\i[253]\i[202]\i[406]\i[407] They're so scary!"
+	"Rule 52:\nNever ask when you can take.,\i[406]\i[407]Is this why my things keep going missing?\i[158],There's no point asking to borrow something if you're just gonna say no!"
+	"Rule 53:\nNever trust anybody taller than you.,That covers a great many people for the average ferengi.\i[156],That's the joke!"
+	"Rule 54:\nRate times time equals profit.,Another banal statement of fact.,Technically it equals revenue. You gotta subtract expenses."
+	"Rule 55:\nTake joy from profit and profit from joy.,Work does bring a sense of purpose.,The hu-mons say if you do what you love you never work a day in your life!"
+	"Rule 57:\nGood customers are as rare as latinum-- treasure them.,I thought you all prided yourselves on being swindlers?,You gotta follow through most of the time or no one will do business with you at all!"
+	"Rule 58:\nThere is no substitute for success.,You lot are certainly acheivement oriented.,Unlike cardassians?"
+	"Rule 59:\nFree advice is seldom cheap.,I feel I'm taking a meaning from this as a cardassian that is not necessarily the intent.,Cardassians treat information like currency sometimes-- right?"
+	"Rule 60:\nKeep your lies consistent.,By all accounts sound advice.,Easier said than done!"
+	"Rule 62:\nThe riskier the road the greater the profit.,I suppose this is what passes for courage among you.,What's not brave about it?"
+	"Rule 63:\nWork is the best therapy.,I know better than to agree wholeheartedly. However...,If you keep busy the existential dread can't set in!"
+	"Rule 65:\nWin or lose there's always hupyrian beetle snuff.,A reminder to take solace in simple pleasures?,But that snuff is pretty bad for you..."
+	"Rule 66:\nSomeone's always got bigger ears.,\i[201]Except possibly in Tegra's case.\i[156],\w4\i[408]\i[409]...Hey!!!\i[251] My ears are dainty and cute!\w3\i[202] Shut up!\i[152]"
+	"Rule 68:\nRisk doesn't always equal reward.,A caution against overreaching one's grasp.,And not talking yourself into a bad idea!"
+	"Rule 69:\nFerengi are not responsible for the stupidity of other races.,Do I sense a slight bitterness?,Hu-mons agree! I told a hu-mon about this rule once and they were like: ''nice''."
+	"Rule 74:\nKnowledge equals profit.,Kowledge of what? That's the question.,You never know what might come in handy!"
+	"Rule 77:\nIf you break it I'll charge you for it.,I sense a more profound warning in the subtext.,This rule shows up in tons of break-up songs!\i[157]"
+	"Rule 79:\n:Beware the vulcan greed for knowledge.,Oddly specific. Did your two species' first contact go poorly?,I dunno!\w4\i[212] Something about a murder or corpse desecration I think?\w4\i[203] Can't help with this one. <3"
+	"Rule 82:\nThe flimsier the product the higher the price.,A caution against foolhardy assumptions.,Gotta be able to spot a load of junk when you see it."
+	"Rule 85:\nNever let the competition know what you're thinking.,It's usually best to keep one's hand close to the vest in any case.,Yeah! Be mysterious!\w4\i[203]\i[410]\i[405] Like me!\i[160]"
+	"Rule 87:\nLearn the customer's weaknesses to better take advantage of them.,So many of these read like modified war aphorisms.,\i[202]\i[406]\i[407]We wage war across a negotiating table instead of a battlefield!\i[156]"
+	"Rule 88:\nVengeance will cost you everything.,This one is uniquely intriguing.,Isn't it just?"
+	"Rule 89:\nBetter to lose some profit and live than lose all profit and die.,Discretion being the better part of whatever passes for valor...,Life comes at you fast!"
+	//"Rule 89:\nAsk not what your profits can do for you but what you can do for your profits.,A reminder that your work must be your animating force.,You can't just sit around and waste what you worked for!"
+	"Rule 92:\nThere are many paths to profit.,Is this meant to encourage creativity or criminality?,Yeah!"
+	"Rule 94:\nFemales and finances don't mix.,It's a wonder to me that you ferengi women don't all go on homicidal rampages.,Well some of us are widowed under mysterious circumstances. Does that count?"
+	"Rule 97:\nEnough is never enough.,An exhortation to continuously strive on.,Sure if you want!"
+	"Rule 98:\nEvery man has his price.,The issue being that the price is always so low...,Haha! Good one!"
+	//"Rule 98:\nIf you can't take it with you, don't go.,This one confuses me. I thought your people welcomed reincarnation?,I think this one's just a joke...?"
+	"Rule 99:\nTrust is the biggest liability of all.,Such can easily be the case.,Attacks can come from any direction! <3"
+	"Rule 100:\nWhen it's good for business tell the truth.,And how often is it good for business?,That's what you gotta figure out!"
+	"Rule 101:\nProfit trumps emotion.,Many things trump emotion.,Oh yeah! Lots of things!"
+	"Rule 102:\nNature decays but latinum lasts forever.,My own people's history could tell you how helpful latinum is in a global famine.,Some of us need nature in good shape to earn our latinum too!"
+	"Rule 103:\nSleep can interfere with opportunity.,See Tegra? Even your own sacred text is telling you to get out of bed earlier.,\i[253]\i[408]\i[409]\i[203]I'm not a fundamentalist okay\i[152]????"
+	"Rule 104:\nFaith moves mountains of inventory.,This feels sacreligious even for the ferengi.,Nah!\i[201] The Blessed Exchequer isn't thin-skinned like *some* gods."
+	"Rule 106:\nThere is no honor in poverty.,A great many religions argue the precise opposite.,They do! I wonder why...?"
+	"Rule 108:\nHope doesn't keep the lights on.,An exhortation that one must actively seek to improve one's circumstances from the days when electricity was a salable commodity.,It still is!"
+	"Rule 109:\nDignity and an empty sack is worth the sack.,This rule alludes to the Ferengi-Lytasian war?,Yeah! The Sack Incident! The Lytasians were like...SO offended. </3"
+	"Rule 110:\nExploitation begins at home.,Is this a warning or an affirmation?,Depends on who you ask I guess."
+	"Rule 111:\nTreat people in your debt like family. Exploit them.,A depressing illumination of Rule 110.,There's benefits to being a debtor if you're clever about it!"
+	"Rule 112:\nNever have sex with the boss' sister.,A metaphor regarding knowing one's place in the hierarchy?,I think someone made someone's brother mad and tried to spin it into something deep."
+	"Rule 113:\nAlways have sex with the boss.,I thought only your men were allowed to work outside the home? So then...,That's right! <3"
+	"Rule 117:\nYou can't free a fish from water.,This nearly sounds profound but I'm sure it's something idiotic.,It's true! Fish gotta be in the water.\i[201] It's science."
+	"Rule 121:\nEverything is for sale. Even friendship.,To begin a friendship? Or to forsake one?,That is the question! <3"
+	"Rule 123:\nEven a blind man can recognize the glow of latinum.,Does raw latinum glow?,Yeah! I hear it's really pretty. Like radium!"
+	"Rule 125:\nYou can't make a deal if you're dead.,One would think natural cowards wouldn't need so many reminders not to jump into reckless situations.,We just get so excited!!!"
+	"Rule 135:\nListen to secrets but never repeat them.,True enough. Information needs guarding.,And no one wants to talk to a blabbermouth!"
+	"Rule 139:\nWives serve; brothers inherit.,How about widows?,Now you're thinking like a female ferengi! <3"
+	"Rule 141:\nOnly fools pay retail.,A reminder not to accept what one sees at face value?,Haggling works with everything!"
+	"Rule 144:\nThere's nothing wrong with charity as long as it winds up in your pocket.,That would seem to negate the purpose of charity.,What if the purpose is to make yourself look good?\i[212] Can that be something in your pocket?"
+	"Rule 147:\nPeople love the bartender.,If this one's a metaphor I fail to see it.,I guess most people just need someone to listen to their problems and give them a drink?"
+	"Rule 151:\nEven when you're a customer you must sell yourself.,One's public persona is paramount. This is true.,It can be super tiring to think about how other people see you all the time..."
+	"Rule 153:\nSell the sizzle not the steak.,Rhetorical gamesmanship does seem to be rife with you lot.,It's more fun that way!"
+	"Rule 162:\nEven in the worst of times someone turns a profit.,Those people are often the source of those very ''worst of times'' as well.,I always read it as finding the silver lining behind a cloud.\w8 Oh! Did you know Grand Nagus Gint wrote this rule first? It's true!"
+	"Rule 168:\nWhisper your way to success.,Playing one's cards close to the vest as it were?,Grabbing attention isn't always a good thing. You know?"
+	"Rule 177:\nKnow your enemies but do business with them always.,This is distressingly close to a cardassian proverb.\i[404]\i[405] This troubles me.,\i[406]\i[407]I can't wait to get my very own nemesis! <3"
+	"Rule 181:\nNot even dishonesty can tarnish the shine of profit.,Any means to acheive one's ends. Pragmatic if not particularly uplifting.,Whatever gets the job done! <3"
+	"Rule 183:\nWhen life hands you ungaberries make detergent.,These blips of optimism depress me in ways difficult to articulate.,\i[212]Ungaberries smell really nice\i[210] but you gotta get your stomach pumped if you eat them.\i[203] Pro tip!"
+	"Rule 184:\nA ferengi waits to bid until his opponents have exhausted themselves.,Waiting for the opportune moment to move against one's enemies feels entirely too sensible for your people to have come up with.,We're the same Kadan.\i[202] The saaaaame!\i[408]\i[409] Oooooo~\i[157]"
+	"Rule 189:\nLet others keep their reputation. You keep their latinum.,I can't help but feel that your people place too little stock in reputation.,What makes a good reputation for us is a little different I guess."
+	"Rule 190:\nHear all. Trust nothing.,Good advice.\i[201] I hate when these contain good advice.,Careful Kadan! You're respecting another culture!!!"
+	"Rule 192:\nNever cheat a klingon unless you can get away with it.,Oddly specific and ill-advised at once.,I think it's a metaphor...?"
+	"Rule 193:\nTrouble comes in threes.,I would argue that misfortune is a constant.,The hu-mons agree with us here! It's definitely three."
+	"Rule 194:\nIt's always good business to know about new customers before they walk in your door.,Gathering information is never a bad play. That much is true.,Gotta be ready for anyone and anything!"
+	//"Rule 194:\nIt's never too late to fire the staff.,A metaphor for knowing when to wash one's hands of a failed endeavor?,Cut toxicity out of your life! <3"
+	"Rule 199:\nLocation location location.,Completely impenetrable.,You gotta be where stuff's going on!"
+	"Rule 200:\nA ferengi chooses no side but his own.,Your species' policy of interstellar neutrality speaks to that.,Not like anyone's watching out for us."
+	"Rule 202:\nThe justification for profit is profit.,For profit being your species' alleged natural motivator you need a great many reminders of this fact.,Uh-huh! Like how your species needs reminders about how society is more important than you are...?"
+	"Rule 203:\nNew customers are like razor-toothed gree worms. They can be succulent but sometimes they bite back.,Why not just kill the worms before you eat them?,Those bites do hurt super bad!"
+	"Rule 208:\nSometimes the only thing more dangerous than a question is an answer.,True. There is such a thing as being too curious for one's own good.,Don't ask if you don't really wanna know!"
+	"Rule 211:\nEmployees are rungs on the ladder of success; don't hesitate to step on them.,I'm not sure how this attitude fosters loyalty from one's underlings.,Oh it doesn't!"
+	"Rule 212:\nA good lie is easier to believe than the truth.,Another where I can't discern whether it's encouraging a scoundrel or warning a potential victim.,Everyone's both!"
+	"Rule 214:\nNever begin a business negotiation on an empty stomach.,Stomach here being a metaphor for...? I'm stumped.,Oh this one's just a ChiggerBurger ad. You can ignore this one."
+	"Rule 216:\nNever gamble with a telepath.,I thought your species' brain structure rendered you immune to most telepathy?,Maybe the telepath is a metaphor for information asymmetry...?"
+	"Rule 218:\nAlways know what you're buying.,So many of these are about either guarding against or perpetrating deception.,\i[254]We live in...\w4like\w4\i[201]...a society. You know?"
+	"Rule 219:\nSometimes what you get for free costs entirely too much.,I'd be curious to know some examples before I agree or disagree with this.,\i[212]\i[410]\i[403]Favors...gifts...gossip...sex...basic kindness...?\i[155]"
+	"Rule 223:\nBeware the man who doesn't make time for oo-mox.,I will suspend my disgust to concede that casual sex does seem to be your people's main socializing force.,Ace people are one thing\w4\i[201] but every prude I've ever met has been a nightmare.\w8\i[202]\i[254] Present company excepted...!\i[156]"
+	"Rule 227:\nIf that's what's written then that's what's written.,Oddly fatalistic for your people.,You gotta be able to move on from bad stuff as fast as you can."
+	"Rule 229:\nLatinum lasts longer than lust.,I could nearly agree with this if it weren't another snide denigration of ferengi women.,It's totally a snide denigration of all sexual relationships if that makes you feel any better...?"
+	"Rule 235:\nDuck. Death is tall.,I shouldn't be surprised to find your famous cowardice codified into your faith.,We're just honest about wanting to stay alive like everyone does."
+	"Rule 236:\nYou can't buy fate.,Fatalism feels to be at odds with much of these other teachings.,Well even super-rich people can't control everything."
+	"Rule 242:\nMore is good. All is better.,How has your civilization endured under this hyper-competitive ethos?,Competeing is fun! Especially when you're winning. <3"
+	"Rule 243:\nAlways leave yourself an out.,Good advice in moderation.\i[32] Is this why you seem so inconstant?,\i[201]Safety first! <3"
+	"Rule 248:\nThe definition of insanity is trying the same failed scheme and expecting different results.,You describe your own tactics as ''schemes''?,That's what they are!"
+	"Rule 255:\nA wife is a luxury; a smart accountant a necessity.,Once again the casual commodification of half your species greatly disturbs me.,The modern interpretation is that they're totally the same person But people have been talking about the ''subtextual homoeroticism'' of this one for like...centuries. <3"
+	"Rule 257:\nWhen the messenger comes to appropriate your profits-- kill the messenger.,I thought your species eschewed violence?,I don't think they mean literally shooting a literal messenger...?"
+	"Rule 261:\nA wealthy man can afford anything except a conscience.,This rings true. Likely for different reasons for myself than for the author.,How else can someone get rich in the first place?"
+	"Rule 263:\nNever allow doubt to tarnish your lust for latinum.,You people need so many reminders of something that's ostensibly in your nature.,If doing the right thing were easy then... I lost my train of thought. You get it."
+	"Rule 266:\nWhen in doubt...lie.,I fully understand the impulse toward discretion but I loathe the wording.,Good advice should be simple and easy to understand!"
+	"Rule 267:\nIf you believe it-- they believe it.,A musing on becoming one's mask. How post-modern.,You gotta respect people enough to tell a *good* lie!"
+	"Rule 272:\nAlways inspect the merchandise before making a deal.,Sound enough advice in several aspects.,People will try to pull a fast one on you sometimes!"
+	"Rule 280:\nIf it ain't broke don't fix it.,Ugh. That hurt to recite. What illiterate buffoon penned that one?,True things are true even with bad grammar!"
+	"Rule 284:\nDeep down everyone's a ferengi.,This hint of self-loathing... I don't know how to feel about it.,We don't hate ourselves! Everyone else is just kinda uptight. <3"
+	"Rule 285:\nNo good deed ever goes unpunished.,How dark.,Kinda true though. Nice people get taken advantage of."
+	"Rule 287:\nAlways get someone else to do the lifting.,Not literally I assume. You seem fairly muscular.,You can still carry my stuff for me if you want!"
+	"Rule 288:\nNever get into anything you can't get out of.,Fear of commitment tracks with what I've seen of you.,I like to keep my options open okay???"
+	"Rule 289:\nA man is only worth the sum of his possessions.,How depressing.,Can you honestly say this isn't at least a little true for your culture?"
+	"Rule 290:\nAn angry man in an enemy and a satisfied man is an ally.,Ferengi diplomacy in a nutshell I suppose.,Makes sense don't you think?"
+	"Rule 291:\nThe less employees know about the cash flow the smaller the share they can demand.,Hmm. How is that wave of union organizing on Ferenginar going?,It's going super good last I heard!"
+	"Rule 292:\nOnly a fool passes up a business opportunity.,Depends on the alternative options.,Agreeing to one opportunity means passing up on another!"
+	"Rule 293:\nThe more time they take deciding the more money they will spend.,Is that true?,The people who take the longest looking through our catalog always end up ordering the most stock from our farm!"
+	"Rule 294:\nA bargain usually isn't.,I thought ''only a fool pays retail''.,There's a difference between a deal you negotiate and one you're offered out of the blue."
+	"Rule 299:\nWhenever you exploit someone it never hurts to thank them.,So that they don't get fed up with you and either leave or retaliate?,Good manners make life easier for everyone!"
+		
+}
+
+
+
+//--Variables for Higher-or-Lower
+oldcarddisp{
+
+    "\f[color,%(oldcard[3])]%(oldcard[2])%(oldcard[0])\f[color,default]"
+
+}
+
+newcarddisp {
+
+    "\f[color,%(card[3])]%(card[2])%(card[0])\f[color,default]"
+
+}
+
+
+ //**** Don't touch this ***************************************************************
+ //This is code stuff and nothing for you to worry about, just save the .dic and move on! You're done!
+ 
+ On_\person
+{
+ 	person
+}
+
+
+
+
+		//*********************Advanced User Info*******************************
+	  
+	  //Another use for these envelopes is to shortcut certain long lines of SakuraScript you don't want to have to keep typing. A good example is if you want to change the font for a character. Take Papyrus from my Gaster ghost, he talks in the font Papyrus. But I don't want to have to type the tag for it for every line of dialogue he does. So instead I can put it in an envelope.
+	  
+	  //p
+	//	{
+	//	"\f[name,Papyrus UT]\f[height,16]"
+	//	}
+		
+		//And then I can make one that'll change the font back to normal.
+		
+	//	d
+	//{
+	//"\f[name,default]\f[height,default]"
+	//}
+	
+	//So in dialogue, to change fonts I'd just have to go "%(p)HEY THERE!%(d)" to change fonts back and forth quickly. These kind of shortcuts can be very useful.
+	
+	//Another way to use envelopes is to store multiple poses for SurfaceRestore in aitalk.dic. Gaster for example has several neutral idle poses, but also several poses for when he's scared. So I can make an envelope like
+	
+	//scared
+	//{
+	//"\0\s[9]\i[3]\i[104]\i[39]"
+	//"\0\s[100]\i[2]\i[40]\i[104]"
+	//"\0\s[100]\i[2]\i[40]\i[106]"
+	//}
+	
+	//And have him randomly pick one whenever I use %(scared) in dialogue. This can be an easy way to vary certain poses without having to manually put them in one at a time, and have some variety when your ghost goes back to its neutral pose in SurfaceRestore.
+		
+	  //***********************************************************************

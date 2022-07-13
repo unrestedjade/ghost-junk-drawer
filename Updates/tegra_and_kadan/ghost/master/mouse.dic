@@ -1,0 +1,294 @@
+﻿//---------------------------Mouse Functions--------------------------
+//Tegra and Kadan
+//--OnMouseMove
+//This is a bunch of code determining who the mouse is over. Don't touch any of it.
+
+OnMouseMove
+ {
+		//---- reference3 determines the character in question
+		if reference3 == 0 //if the character is 0, aka the main character
+		{
+			//---- it will run the mouse functions for that character
+			MouseMoveSakura
+		}
+		else //if the character isn't 0, then it must be the side character.
+		{
+			//---- this will run the mouse functions for the side character.
+			MouseMoveKero
+		}
+ }
+ 
+ 
+ //--MouseMoveSakura
+ //The petting function for your main character. Remember how it was referred to as sakura in some of the descript.txt and install.txt files?
+ 
+MouseMoveSakura
+ {
+	if reference4 != "" //ignore
+ 	{
+ 		stroke++ //if you move the mouse over the right areas, the stroke count will go up.
+ 		if stroke >= 40 //if the stroke count is above a certain number, the petting dialogue will kick in.
+		{
+ 			stroke = 0 //resetting the stroke count
+			if reference4 == "Ear" 
+ 			{
+				if feelings <= 0
+				{
+				"\0\s[0]\i[208]\i[408]\i[403]\i[254]Um\w4, sorry, what?\w4\i[204] Don't touch me!\w4\i[153]\e"
+				"\0\s[0]\i[203]\i[408]\i[403]\i[253]Ugh!!!\w4 Knock it off!\w4\i[153]\w8\1\s[10]\i[251]\i[408]\i[409]\i[52]Leave her be...!\e"
+				}
+				elseif nowshell == "mirror"
+				{
+				"\0\s[0]\i[204]\i[253]Um...I don't know if Gul Kadan would appreciate you doing that...\w8\1\n\n[half]\s[10]\i[253]Oh, I don't know. It's amusing.\w8\0\s[0]\i[253]\n\n[half]\w8Oh.\w8\w8\w8\i[410] O-okay, then...\i[152]\e"
+				"\0\s[0]\i[254]\i[208]Don't do that, %(username). Gul Kadan might get mad...\i[152]\i[152]\w8\1\n\n[half]\s[10]Presumptuous little thing.\w2\i[201] Why would I feel jealous over a ferengi?\w8\0\s[0]\n\n[half]\i[253]\i[406]\i[407]Right, ma'am. Sorry, ma'am.\i[153]\e"
+				"\0\s[0]\i[208]\i[410]Seriously\w3, I'm not here for someone like you to paw at, Terran.\i[153]\e"
+				}
+				else
+				{
+				"\0\s[0]\i[203]\i[408]\i[403]0w0...?\i[158]\e"
+				"\0\s[0]\i[204]Well, if you're offering, I'm not gonna turn down some oo-mox...\i[158]\e"
+				"\0\s[0]\i[212]\i[410]\i[403]\i[254]So long as you know this is, like, a sexual thing?\w4\i[204] I'm cool with it, haha.\w4\i[201]\i[158]\e"
+				"\0\s[0]\i[203]\i[406]\i[407]\i[158]\i[252]<3\w4 <3\s4 <3\w8\1\n\n[half]\s[10]\i[52]\i[252]\i[410]\i[403]Can't you do that somewhere else?\i[152]\e"
+				}
+ 			}
+ 			elseif reference4 == "Face"
+ 			{
+				if feelings <= 0
+				{
+				"\0\s[0]\i[208]\i[408]\i[403]\i[254]Um\w4, did I ask you to paw at my face?\w4\i[251]\i[204] Stop it!\w4\i[153]\e"
+				"\0\s[0]\i[208]\i[408]\i[403]\i[251]Stop doing that\w4 right\w4 now.\i[153]\e"
+				}
+				elseif nowshell == "mirror"
+				{
+				"\0\s[0]\i[254]Um...why...?\w8\1\n\n[half]\s[10]Perhaps %(hesshes) admiring your hide.\w3\i[201]\i[406] You know how imperial Terrans were about leather.\i[154]\w8\0\s[0]\i[253]\i[208]\i[409]\i[406]\n\n[half]\w8Don't get any weird ideas, %(username)\w2, you freak!\i[162]\e"
+				"\0\s[0]\i[208]\i[254]\i[406]\i[407]Don't be weird.\i[152]\w8\1\n\n[half]\s[10]\i[253]I keep telling you\w2, this is what happens if you're kind to these creatures.\e"
+				"\0\s[0]\i[208]\i[410]Knock it off before you smear my eyeshadow\w2, weirdo.\e"
+				}
+				else
+				{
+ 				"\0\s[0]\i[252]You like?\w4\i[201] I'm trying a new day cream.\i[158]\e"
+ 				"\0\s[0]\i[406]\i[407]\i[203]Haha, don't smudge my makeup, %(username)~\i[158]\e"
+ 				"\0\s[0]\i[203]\i[408]\i[403]Yay! Affection!!!\i[160]\e"
+				}
+ 			}
+			
+ 		}
+	}
+ 	else
+	{
+ 		// If the mouse isn't over the ghost, it'll zero out the stroke value.
+		stroke = 0
+ 	}
+}
+
+ //---- MouseMoveKero -----------------------------------------------------------------
+ //MouseMoveKero is exactly like the above, except set up for your second character. 
+ 
+MouseMoveKero
+ {
+	if reference4 != ""
+ 	{
+ 		stroke++
+ 		if stroke >= 40
+		{
+			stroke = 0
+			if reference4 == "Face" 
+ 			{
+				if feelings <= 0
+				{
+				"\1\s[10]\i[52]\i[251]\i[410]\i[403]Keep your hands to yourself, human.\e"
+				"\1\s[10]\i[202]\i[251]\i[410]\i[403]Cease.\i[152]\e"
+				}
+				elseif nowshell == "mirror"
+				{
+				"\1\s[10]\i[204]\i[251]\i[406]If you must paw at someone, avail yourself of Tegra.\w4\i[201] Ferengi enjoy that sort of thing.\e"
+				"\1\s[10]\i[204]Unimpressive.\e"
+				"\1\s[10]\i[201]\i[251]Behave.\e"
+				}
+				else
+				{
+				"\1\s[10]\i[52]? Is this some human thing I'm not aware of?\e"
+				"\1\s[10]\i[55]I wonder why so many aliens are so fascinated by scales.\i[158]\e"
+				"\1\s[10]\i[201]\i[251]\i[406]\i[407] know you're trying to be friendly. However...\e"
+				}
+ 			}
+			elseif reference4 == "Head" 
+			{
+				if feelings <= 0
+				{
+				"\1\s[10]\i[52]\i[251]\i[410]\i[403]Don't condescend to me, human.\e"
+				"\1\s[10]\i[202]\i[251]\i[410]\i[403]My hair is not public property.\i[152]\0\n\n[half]\s[0]\i[251]\i[406]\i[403]\i[208]Quit being creepy to Kadan!\i[153]\e"
+				}
+				elseif nowshell == "mirror"
+				{
+				"\1\s[10]\i[204]Terrans really don't know how to behave...\e"
+				"\1\s[10]\i[251]\i[201]Now I'll have to have Tegra fix my hair again...\i[156]\e"
+				"\1\s[10]Tegra, this is what I mean when I caution against idle hands.\w8\0\n\n[half]\s[0]\i[406]You're absolutely right, ma'am!\e"
+				}
+				else
+				{
+				"\1\s[10]\i[52]If you need help styling your own hair\w4\i[410]\i[403], I'm happy to advise.\i[156]\e"
+				"\1\s[10]\i[201]\i[404]\i[405]I'm a bit old to be patted on the head.\i[158]\e"
+				"\1\s[10]\i[52]I take it you're admiring my hair?\e"
+				}
+			}	
+ 		}
+	}
+ 	else
+	{
+ 		// If the mouse isn't over the ghost, it'll zero out the stroke value.
+		stroke = 0
+ 	}
+}
+
+//---- OnMouseDoubleClick -------------------------------------------------------
+//This is set up much like OnMouseMove above, except this is checking to see if the user is double clicking on the ghost. You also don't need to touch any of this. 
+//Advanced users adding a third character, the same principles from OnMouseMove apply here as well! Make sure to add an elseif with the right number for your third character.
+
+OnMouseDoubleClick
+ {
+	//---- like with the OnMouseMove function above, this determines who the user is clicking on.
+	if reference5 == 0 //checks which button is being used for the click
+	{
+	 	if reference3 == 0 //if the character is 0, aka your main character
+		{
+		MouseDoubleClickSakura
+		}
+		else
+		{
+ 		MouseDoubleClickKero
+		}
+	}
+ }
+
+ //---- MouseDoubleClickSakura ----------------------------------------------------------
+ //Like the petting animation above, this is the reactions they have to being double clicked. These also rely on the collisions you set up in surfaces.txt! This set is specifically for the main character, as indicated by the Sakura in the name again.
+ 
+ //*********************Advanced User Info*******************************
+ //As a note, double clicking on a certain area of your ghost doesn't have to be the user hitting them. You could instead set up a collision for a piece of clothing, and then have the character talk about that bit of clothing when it's double clicked, for example. One of Smoker's double clicks gives her a high-five when she's in a certain pose. Maybe double clicking is patting them, or pointing behind them, or tapping them, or any number of things. You can be creative here with how they respond depending on what areas you've set up as collisions!
+ 
+ //If you don't want your character to be hittable at all, you can just delete everything in MouseDoubleClickSakura except OpenSakuraMenu. So it'd look like
+ 
+ //MouseDoubleClickSakura
+ //{
+ //OpenSakuraMenu
+ //}
+ 
+ //That's all there is to it. This method also applies to the secondary character, Kero, below this set.
+ //***********************************************************************
+ 
+MouseDoubleClickSakura
+ {
+ 	if reference4 == "Ear" || reference4 == "Face" //here, this is checking to see if the user is double clicking on either the character's head OR their face, which for our purposes means they're hitting the ghost. More about operators at the walkthrough.
+	{
+		if hitcount == 0 && nowshell != "mirror"
+		{
+			HitTegraConfirm
+		}
+		elseif feelings <= 0
+		{
+		feelings -= 2
+		hitcount += 1
+		"\0\s[0]\i[162]\i[208]\i[253]\i[407]\i[408]HSSS!!!\e"
+		"\0\s[0]\i[201]\i[253]\i[407]\i[408]STOP IT!!!\i[153]\1\n\n[half]\s[10]\i[251]\i[204]\i[402]Enough, %(username)!\e"
+		"\0\s[0]\i[152]\i[208]\i[251]\i[409]\i[406]*gck*...........\e"
+		}
+		elseif nowshell == "mirror"
+		{
+		mirrortegratrust -= 1
+		mirrorhitcount += 1
+		"\0\s[0]\i[203]\i[253]Ow!\w4\i[204]\i[410] Why...?\i[152]\w8\1\n\n[half]\s[10]Ferengi are so satisfying to hit, yes?\0\s[0]\i[153]\i[202]\i[253]\i[410]\1\s[10]\w8\w8 All the same\w4\i[204]\i[251], please refrain from striking\i[404] \f[italic,true]my\f[italic,false] secretary, Terran.\0\s[0]\i[254]\i[161]\e"
+		"\0\s[0]\i[253]\i[202]\i[406]\i[407]...! *sniffle*\i[41]\w8\1\n\n[half]\s[10]Oh, do stop sniveling, Tegra,\0\s[0]\i[254]\i[406]\i[407]\1\s[10]\i[201] %(heshe) can't possibly hit any harder than I do.\i[156]\w8\0\s[0]\i[253]\i[404]\i[405]\n\n[half]\w8...Yes, ma'am.\e"
+		"\0\s[0]\i[162]\i[208]\i[253]\i[407]\i[408]HSSS!!!\e"
+		"\0\s[0]\i[152]\i[208]\i[251]\i[409]\i[406]*gck*...........\e"
+		}
+		{
+		feelings -= 2
+		hitcount += 1
+		"\0\s[0]\i[251]\i[202]\i[408]\i[409]Ouch!\i[153]\w8\1\n\n[half]\s[10]\i[252]Did you offend %(username) in some way?\w8\0\s[0]\i[251]\i[206]\i[408]\i[409]\n\n[half]No, I didn't!!!\i[153]\w8\w8\w8\w8\s[0]\i[152]\i[253]\i[410]\i[405] Did I???\i[154]\e"
+		"\0\s[0]\i[251]\i[202]\i[408]\i[409]Hey! Not funny!\e"
+		"\0\s[0]\i[251]\i[202]\i[408]\i[409]Oww-uh...!\w8\1\n\n[half]\s[10]\i[251]\i[52]\i[404]\i[405]How \f[italic,true]dare\f[italic,false] you?!\e"
+		"\0\s[0]\i[251]\i[202]\i[408]\i[409]Umm...Rude?!?!\e"
+		}
+ 	}
+	else
+ 	{
+		//Otherwise, if the user doubleclicks somewhere else on the character, they will open their menu as detailed in menu.dic.
+ 		OpenSakuraMenu
+	}
+ }
+ 
+ Select.HitTegraConfirm
+ {
+	"\0\_q(Are you sure you want to hit Tegra...?)\n\n\![*]\q[Yes,ConfirmHitT]\n\![*]\q[No!!,NoHit]\e"
+ }
+ Select.ConfirmHitT
+ {
+	if nowshell = "mirror"
+	{
+		mirrortegratrust -= 1
+		mirrorhitcount += 1
+		"\0\s[0]\i[203]\i[253]Ow!\w4\i[204]\i[410] Why...?\i[152]\w8\1\n\n[half]\s[10]Ferengi are so satisfying to hit, yes?\0\s[0]\i[153]\i[202]\i[253]\i[410]\1\s[10]\w8\w8 All the same\w4\i[204]\i[251], please refrain from striking\i[404] \f[italic,true]my\f[italic,false] secretary, Terran.\0\s[0]\i[254]\i[161]\e"
+		"\0\s[0]\i[253]\i[202]\i[406]\i[407]...! *sniffle*\i[41]\w8\1\n\n[half]\s[10]Oh, do stop sniveling, Tegra,\0\s[0]\i[254]\i[406]\i[407]\1\s[10]\i[201] %(heshe) can't possibly hit any harder than I do.\i[156]\w8\0\s[0]\i[253]\i[404]\i[405]\n\n[half]\w8...Yes, ma'am.\e"
+		"\0\s[0]\i[162]\i[208]\i[253]\i[407]\i[408]HSSS!!!\e"
+		"\0\s[0]\i[152]\i[208]\i[251]\i[409]\i[406]*gck*...........\e"
+	}
+	else
+	{
+		feelings -= 1
+		hitcount += 1
+		"\0\s[0]\i[251]\i[202]\i[408]\i[409]Ouch!\i[153]\w8\1\n\n[half]\s[10]\i[252]Did you offend %(username) in some way?\w8\0\s[0]\i[251]\i[206]\i[408]\i[409]\n\n[half]No, I didn't!!!\i[153]\w8\w8\w8\w8\s[0]\i[204]\i[253]\i[410]\i[405] Did I???\i[154]\e"
+		"\0\s[0]\i[251]\i[202]\i[408]\i[409]Hey! Not funny!\e"
+		"\0\s[0]\i[251]\i[202]\i[408]\i[409]Oww-uh...!\e"
+		"\0\s[0]\i[251]\i[202]\i[408]\i[409]Umm...Rude?!?!\e"
+	}
+ }
+
+ 
+ //---- MouseDoubleClickKero -----------------------------------------------------------
+ //This is just the same as MouseDoubleClickSakura above, except for your secondary character. The same principles apply, including how to make your character unhittable.
+ 
+ 
+MouseDoubleClickKero
+ {
+ 	if reference4 == "Face" || reference4 == "Head" 
+	{
+		if hitcount == 0 && nowshell != "mirror"
+		{
+			"\0\_q(Are you sure you want to hit Kadan...?)\n\n\![*]\q[Yes,ConfirmHitK]\n\![*]\q[No!!,NoHit]\e"
+		}
+		if nowshell == "mirror"
+		{
+			"\1\s[10]\i[204]Nice try, Terran.\w4\i[154]\e"
+			"\1\s[10]\i[204]\i[406]If you need to destress\w2, Tegra is right there.\0\s[0]\i[152]\i[253]\w4\1\s[10]\i[156]\e"
+			"\1\s[10]\i[204]That's almost cute\0\s[0]\i[204]\i[410]\1\s[10]\i[204], how you think you can harm me.\e"
+		}
+		else
+		{
+		feelings -= 1
+		hitcount += 1
+		"\1\s[10]\i[202]...! Excuse me?\w8\0\n\n[half]\s[0]Kadan! Are you okay?\w8\1\s[10]\n\n[half]I'm fine, Tegra, just...\w3peeved.\e"
+		"\1\s[10]\i[251]\i[204]Behave yourself, %(username).\e"
+		"\1\s[10]\i[251]\i[204]Are you trying to anger me?\w4 It's working.\e"
+		"\1\s[10]\i[251]\i[204]Stop that.\e"
+		}
+ 	}
+	else //Otherwise if you click anywhere else on Triangle's body
+ 	{
+		OpenKeroMenu //This will open his menu set up in menu.dic.
+	}
+ }
+ 
+ Select.ConfirmHitK
+ {
+		feelings -= 1
+		hitcount += 1
+		"\1\s[10]\i[202]...! Excuse me?\w8\0\s[0]Kadan! Are you okay?\w8\1\s[10]\n\n[half]I'm fine, Tegra, just...peeved.\e"
+		"\1\s[10]\i[251]\i[204]Behave yourself, %(username).\e"
+		"\1\s[10]\i[251]\i[204]Are you trying to anger me? It's working.\e"
+		"\1\s[10]\i[251]\i[204]Stop that.\e"
+ }
+
+ //*********************Advanced User Info*******************************
+ //There are other mouse related functions you could set up much like the above, such as OnMouseDragStart, OnMouseDragEnd, OnMouseWheel, and others which correspond to various things you can do with your mouse. You can probably guess what those functions do just by their names - OnMouseWheel would be if someone spun their mouse wheel over a certain area, for example. If you're interested in these, I'd recommend doing some reading at the CROW-SSP Encyclopedia to get a better idea of them and settle down for some trial and error learning as you try to put them in.
+ //***********************************************************************
