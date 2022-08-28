@@ -10,13 +10,14 @@ Higher or Lower minigame code by: yuyudev@twitter
 Built off the GT template by: Zarla (http://www.ashido.com)
 
 
-Thank you for installing Tegra and Kadan! These ladies are Star Trek fan-characters; U.C. Davis students circa 2376, here to bum around your desktop and banter with each other. They're a an Ukagaka or Ghost, an interactive desktop pet. They can perform a few novelty functions such as emptying your recycling for you, checking your email (provided you configure it), but mostly they're here to stand around and talk your ear off. I hope you have fun playing with them! 
+Thank you for installing Tegra and Kadan! These ladies are Star Trek fan-characters; U.C. Davis students circa 2376-ish, here to bum around your desktop and banter with each other. They're an Ukagaka or Ghost, an interactive desktop pet. They can perform a few novelty functions such as emptying your recycling for you, checking your email (provided you configure it), but mostly they're here to stand around and talk your ear off. I hope you have fun playing with them! 
 
-You'll need a working install of SSP for Windows to run this ghost. You can download it from the SSP website here (look for the pink button at the top left of the page): http://ssp.shillest.net/
+You'll need a working install of SSP for Windows to run this ghost. You can download it from the SSP website here (look for the pink button at the top left of the page): http://ssp.shillest.net/ 
+(For Mac and Linux users, these OSs' respective SSP alternatives appear to be dead or otherwise unmaintained, so your best bet will be running SSP in Wine or Winebottles.)
 
-To install Tegra and Kadan, open SSP, then drag the tegra_and_kadan.nar file onto the existing ghost (the SSP default ghost is Emily, an anime girl). After installation you can right-click Emily to open the SSP menu, then navigate to Change Ghost and select Tegra and Kadan to switch. If the SSP menu is displaying in Japanese, first navigate to the fourth option from the bottom to select the language.
+To install Tegra and Kadan, open SSP, then drag the tegra_and_kadan.nar file onto the existing ghost (the SSP default ghost is Emily, an anime girl). After installation you can right-click Emily to open the SSP menu, then navigate to Change Ghost and select "Tegra and Kadan" to switch. If the SSP menu is displaying in Japanese, first navigate to the fourth option from the bottom to select the language.
 
-CW: Broad-spectrum advisory that while this ghost is generally light-hearted, Tegra and Kadan may have discussions that are adult or upsetting (this goes triple for their "Mirrorverse" shell!) Discussions and interactions may include but aren't limited to sex/sexuality (Tegra is a Ferengi, c'mon now), violence and SA, war, fantasy racism, misogyny, queerphobia. The "Spa Day" shell also features some Barbie-style nonsexual nudity (given they're...in a spa, lol.)
+CW: Broad-spectrum advisory that while this ghost is generally light-hearted, Tegra and Kadan may in current and future versions have discussions that are adult or upsetting (this goes triple for their "Mirrorverse" shell!) Discussions and interactions may include but aren't limited to sex/sexuality (Tegra is a Ferengi, c'mon now), violence and SA, war, fantasy racism, misogyny, queerphobia. The "Spa Day" shell also features some Barbie-style nonsexual nudity (given they're...in a spa, lol.)
 
 To Control:
 

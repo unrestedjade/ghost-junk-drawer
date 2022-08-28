@@ -143,11 +143,11 @@ TalkConfig
 	"\0\b[2]\_q\" 
 	//This bit of dialogue sets up a large balloon and a quick session, like above, so all the text will appear immediately. The rest is formatted to display the information and options to change it. I wouldn't touch any of it if you don't know what you're doing.
 	--
-	"f[bold,1]Your name:\f[bold,0] %(username) \f[sup,1](\q[Change it?,TEACHNAME])\f[sup,0]\n"
+	"f[bold,1]Name:\f[bold,0] %(username) \f[sup,1](\q[Change it?,TEACHNAME])\f[sup,0]\n"
 	--
-	"\f[bold,1]Your pronouns:\f[bold,0] %(heshe)/%(himher)/%(hisher) \f[sup,1](\q[Change them?,TEACHPRONOUN])\f[sup,0]\n"
+	"\f[bold,1]Pronouns:\f[bold,0] %(heshe)/%(himher)/%(hisher) \f[sup,1](\q[Change them?,TEACHPRONOUN])\f[sup,0]\n"
 	--
-	"\f[bold,1]Your birthday:\f[bold,0] %(birthdayprint) \f[sup,1](\q[Change it?,TEACHBDAY])\f[sup,0]\n\n"
+	"\f[bold,1]Birthday:\f[bold,0] %(birthdayprint) \f[sup,1](\q[Change it?,TEACHBDAY])\f[sup,0]\n\n"
 	--
 	"\f[bold,1]Talk Rate:\f[bold,0] - every %(talktime) \f[sup,1](\q[Change it,talkinter])\f[sup,0]\n\n"
 	--		
@@ -359,7 +359,7 @@ Select.talkinter
  	{
 		if feelings <= 0
 		{
-		"\0\s[0]\b2Like, how often should we talk, according to you, creep?\w8\1\n\n[half]\s[10]Our talk interval is currently set to %(talktime)./
+		"\0\s[0]\b2Like, how often should we talk, according to you, creep?\w8\1\n\n[half]\s[10]Our talk interval is currently set to once per %(talktime)./
 		//You can replace the dialogue above with whatever you like, just make sure it ends with ./ and not \e.
  		\0\n\n[half]/
  		\![*]\q[Every 30 seconds,TALKMAX]\n/
@@ -371,7 +371,7 @@ Select.talkinter
 		}
 		elseif nowshell == "mirror"
 		{
-		"\0\s[0]\b2Gul Kadan, how often should we talk?\w8\1\n\n[half]\s[10]Our talk interval is currently set to %(talktime)..../
+		"\0\s[0]\b2Gul Kadan, how often should we talk?\w8\1\n\n[half]\s[10]Our talk interval is currently set to once per %(talktime)..../
 		//You can replace the dialogue above with whatever you like, just make sure it ends with ./ and not \e.
  		\0\n\n[half]/
  		\![*]\q[Every 30 seconds,TALKMAX]\n/
@@ -383,7 +383,7 @@ Select.talkinter
 		}
 		else
 		{
- 		"\0\s[0]\b2Like, how often should we talk?\w8\1\n\n[half]\s[10]Our talk interval is currently set to %(talktime)./
+ 		"\0\s[0]\b2Like, how often should we talk?\w8\1\n\n[half]\s[10]Our talk interval is currently set to once per %(talktime)./
 		//You can replace the dialogue above with whatever you like, just make sure it ends with ./ and not \e.
  		\0\n\n[half]/
  		\![*]\q[Every 30 seconds,TALKMAX]\n/
@@ -669,7 +669,7 @@ OpenKeroMenu
  {
 	if feelings <= 0
 	{
-	"\1\s[10]\i[251]\i[52]\w8\w8...\w6What?"
+	"\1\s[10]\i[251]\i[204]\w8\w8...\w6What?"
 	--
 	OnKadanMenu
 	}
@@ -681,9 +681,9 @@ OpenKeroMenu
 	}
 	else
 	{
-	"\1\s[10]\i[404]\i[405]\i[52]\b[2]"
+	"\1\s[10]\i[404]\i[405]\i[204]\b[2]"
 	"\1\s[10]\i[201]\b[2]"
-	"\1\s[10]\i[406]\i[407]\i[52]\b[2]"
+	"\1\s[10]\i[406]\i[407]\i[204]\b[2]"
  	--
 	"Did you need something from me?"
  	"Mutual assistance is the glue of society."
@@ -733,6 +733,8 @@ Select.testvariable
 	"\1\s[10]Testing.\e"
 }
 
+
+//--Interactions-----------------------------------------------------------
 
 OnTegraInteract
 {
@@ -797,32 +799,117 @@ Select.TegraGive
 
 Select.GiveTegraFood
 {
-	feelings += 1
-	"\0\s[0]Oh, %(food)?\w4 Thanks.\n\n\![*]\q[Back,BACKTOMENU]"
+	if tgivenfood < 2
+	{
+	tfeelings += 1
+	tgivenfood += 1
+	if feelings < 0
+	{
+		"\0\s[0]\i[208]\i[254]Oh, %(food)...\w4 Do I look like I need your scraps?\e"
+		"\0\s[0]\i[208]\i[254]Oh, %(food)...\w4 Cool...\e"
+	}
+	else
+	{
+	"\0\s[0]\i[204]Oh, %(food)?\w4 Thanks.\n\n\![*]\q[Back,BACKTOMENU]"
+	"\0\s[0]\i[204]Ah, %(food)?\w4 That might be nice later.\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+	}
+	else
+	{
+		"\0\s[0]\i[204]\i[254]...Do I look skinny, or something, %(username)?\w8\i[403]\i[402] Charity\w3\i[203]\i[260], you're worse than my mom!\i[160]\e"
+	}
 }
 
 Select.GiveTegraDrink
 {
-	feelings += 1
-	"\0\s[0]Ah, %(softdrink)?\w4 Thanks.\n\n\![*]\q[Back,BACKTOMENU]"
+	if tgivendrink < 3
+	{
+	tfeelings += 1
+	tgivendrink += 1
+	if feelings < 0
+	{
+		"\0\s[0]\i[208]\i[254]Oh, %(softdrink)...\w4 Do I look like I need your scraps?\e"
+		"\0\s[0]\i[208]\i[254]Oh, %(softdrink)...\w4 Cool...\e"
+	}
+	else
+	{
+	"\0\s[0]\i[204]Ah, %(softdrink)?\w4 Thanks.\n\n\![*]\q[Back,BACKTOMENU]"
+	"\0\s[0]\i[204]A %(softdrink)?\w4\i[410] That might be nice later.\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+	}
+	else
+	{
+		"\0\s[0]\i[204]\i[254]Hydration is important, %(username),\w8\i[403]\i[402] but, like\w3\i[203]\i[260], I'm not a fish.\i[160]\e"
+	}
 }
 
 Select.GiveTegraShiny
 {
-	feelings += 1
+	if tgivengift < 5
+	{
+	tfeelings += 1
+	tgivengift += 1
+	if feelings < 0
+	{
+		"\0\s[0]\i[208]\i[254]This is getting hawked\w3, like\w3, immediately, I hope you know.\e"
+		"\0\s[0]\i[208]\i[254]Oh, some sparkly junk...\w4 I could get a whole slip of latinum for this, wow.\e"
+	}
+	else
+	{
 	"\0\s[0]Oh, shiny!\w8\i[204] You're giving me this?\i[159]\n\n\![*]\q[Back,BACKTOMENU]"
+	"\0\s[0]Are you sure?\w8\i[204]\i[408] You know I'll resell it, right?\i[155]\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+	}
+	else
+	{
+		"\0\s[0]\i[203]\i[254]Uhh...\w4\i[202]\i[406]\i[407]\i[253] I can't carry all this stuff??\i[161]\e"
+	}
 }
 
 Select.GiveTegraFlora
 {
-	feelings += 1
+	if tgivengift < 5
+	{
+	tfeelings += 2
+	tgivengift += 1
+	if feelings < 0
+	{
+		"\0\s[0]\i[208]\i[254]Oh, %(flora)...\w4\i[220] You'll just neglect it if I don't take it\w3, I guess...\i[161]\e"
+		"\0\s[0]\i[208]\i[254]\i[406]Oh, %(flora)...\w4 Ok.\e"
+	}
+	else
+	{
 	"\0\s[0]\i[203]Nice, %(flora)!\n\n\![*]\q[Back,BACKTOMENU]"
+	"\0\s[0]\i[210]Oh, %(flora)!\w4 Maybe Dr. O'Brien needs a specimen...\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+	}
+	else
+	{
+		"\0\s[0]\i[203]\i[254]Uhh...\w4\i[202]\i[406]\i[407]\i[253] I can't carry all this stuff??\i[161]\e"
+	}
 }
 
 Select.GiveTegraFiles
 {
-	feelings += 1
+	if tgivengift < 5
+	{
+	tfeelings += 2
+	tgivengift += 1
+	if feelings < 0
+	{
+		"\0\s[0]\i[208]\i[254]...What is it, like a holonovel?\w4\i[214]\i[409] Better not be something nasty.\i[152]\e"
+		"\0\s[0]\i[208]\i[254]If this isn't porn you're totally wasting my time.\i[156]\e"
+	}
+	else
+	{
 	"\0\s[0]\i[204]...What is it, like a holonovel?\i[410]\i[210] I wonder if it'll run...?\i[157]\n\n\![*]\q[Back,BACKTOMENU]"
+	"\0\s[0]\i[204]Ooh, what's this?\i[410]\i[212] Something spicy???\i[160]\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+	}
+	else
+	{
+		"\0\s[0]\i[203]\i[254]Uhh...\w4\i[202]\i[406]\i[407]\i[253] I can't carry all this stuff??\i[161]\e"
+	}
 }
 
 Select.TegraAsk
@@ -830,11 +917,11 @@ Select.TegraAsk
 	"\0\b[2]\s[0]\_q(What do you want to ask her?)"
 	--
 	"\n\n[half]/
-	\![*]\q[Why did you want to live abroad?,LeaveHomeTegra]\n/
+	\![*]\q[Why live abroad?,LeaveHomeTegra]\n/
 	\![*]\q[Why come to Earth?,EarthTegra]\n/
 	\![*]\q[What are you studying?,StudyTegra]\n/
 	\![*]\q[Anyone special?,DatingTegra]\n/
-	\![*]\q[What's this Marauder Mo thing...?,FangirlTegra]\n/
+	\![*]\q[What's this Marauder Mo thing?,FangirlTegra]\n/
 	\![*]\q[Never mind,BACKTOMENU]\e"
 }
 
@@ -843,24 +930,30 @@ Select.LeaveHomeTegra
 	if feelings <= 0 //disklike
 	{
 		"\0\s[0]\i[251]\i[208]\i[406]What's it to you, hu-mon?\w4 Are us nasty ferengi not allowed on your dumb perfect planet?\i[153]\e"
+		"\0\s[0]\i[251]\i[208]\i[406]Yeah, yeah.\w4 An ugly troll like me isn't welcome anywhere off-world.\w4 Like I don't know that.\i[153]\e"
 	}
 	elseif feelings > 0 && feelings <= 5 //conflicted
 	{
 		"\0\s[0]\i[254]\i[204]\i[410]Why do you ask?\w4\e"
+		"\0\s[0]\i[254]\i[204]\i[410]That's a little personal, hu-mon.\w4\e"
 	}
 	elseif feelings > 5 && feelings <= 35 //neutral
 	{
-		feelings += 1
+		tfeelings += 1
 		"\0\s[0]Oh...\w3\i[210]I just needed a change, you know?\w4\i[210]\i[408]\i[254] Why does anyone do anything?\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]Um...\w3\i[210]Well, because ''the stars are made of latinum''\w4, right?\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
 	}
 	elseif feelings > 35 && feelings < 100 //like
 	{
-		feelings += 1
-		"\0\s[0]\i[204]Ha...\w3\i[210]\i[254]\i[407]As soon as it was legal for females to travel off-world\w2, I got totally obsessed with leaving.\w4\i[204]\i[403]\i[408] I didn't think I'd ever get the chance, so, like...\w3how can I not take it?\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
+		tfeelings += 1
+		"\0\s[0]\i[204]Ha...\w3\i[210]\i[254]\i[407] As soon as it was legal for females to travel off-world\w2, I got totally obsessed with leaving.\w4\i[204]\i[403]\i[408] I didn't think I'd ever get the chance, so, like...\w3how can I not take it?\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]\i[204]Oh, that?\w3\i[210]\i[254]\i[407] If you were from where I was from\w2, you'd wanna leave, too.\w4\i[204]\i[403]\i[408] It's\w3, like\w3...\w3 Really small and stifling?\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
 	}
 	else //full trust
 	{
-		"\0\s[0]\i[204]...\w4\i[210]\i[254]\i[406]Don't go spreading this around, %(username)\w3, but I was engaged.\w2 \i[216]\i[253]I'm from a super conservative province, and if I'd gone along with my family and got married\w2, the Grand Nagus' reforms might as well not exist for me.\w4\s[0]\i[204]\i[403]\i[410] So my brother helped me get off-world.\w4\i[204] He's the only one who knows I'm here.\n\n\![*]\q[Back,BACKTOMENU]"
+		tfeelings += 1
+		"\0\s[0]\i[204]...\w4\i[210]\i[254]\i[406]Don't go spreading this around, %(username)\w3, but I was engaged.\w2 \i[216]\i[253]I'm from a super conservative province, and if I'd gone along with my family and got married\w2, the Grand Nagus' reforms might as well not exist for me.\w4\s[0]\i[204]\i[403]\i[410] \n\n[half]So my brother helped me get off-world.\w4\i[204] He's the only one who knows I'm here.\n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]\i[204]...\w4\i[210]\i[254]\i[406]Once Grand Nagus Rom started changing laws and stuff\w3, everyone in my hometown freaked out.\w2 \i[216]\i[253]Like they went full ancient Commerce Zone medieval\w2, so I had to get out while I could.\w4\s[0]\i[204]\i[403]\i[410] \n\n[half]Tag bought me passage into the Federation with his own savings.\w4\i[204] If our parents figure it out, he'll be in real deep muck.\i[152]\n\n\![*]\q[Back,BACKTOMENU]"
 	}
 }
 
@@ -869,24 +962,29 @@ Select.EarthTegra
 	if feelings <= 0 //disklike
 	{
 		"\0\s[0]\i[251]\i[208]\i[406]Because I felt like it!\w4\s[0]\i[220] ...Maybe that was, like, a bad decision.\i[152]\e"
+		"\0\s[0]\i[251]\i[208]\i[406]Because everyone says the Federation gives everyone a chance.\w4\s[0]\i[253]\i[220] That's not true, but it's what everyone says...\i[152]\e"
 	}
 	elseif feelings > 0 && feelings <= 5 //conflicted
 	{
 		"\0\s[0]\i[254]\i[204]\i[406]Is it that weird to come to Earth?\w4\e"
+		"\0\s[0]\i[254]\i[204]\i[406]\i[410]Lots of people come to Earth.\i[161]\w4\e"
 	}
 	elseif feelings > 5 && feelings <= 35 //neutral
 	{
-		feelings += 1
+		tfeelings += 1
 		"\0\s[0]\i[204]Funny story!\w2 I stumbled across an application for this university on subspace.\w4\i[203]\i[408]\i[254] Who would have thought they'd actually let me in?\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]\i[204]Why here?\w2 Just kind of a spur of the moment thing, you know?\w4\i[203]\i[408]\i[254] Everyone says Earth is nice\w3, so I wanted to see it for myself.\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
 	}
 	elseif feelings > 35 && feelings < 100 //like
 	{
-		feelings += 1
+		tfeelings += 1
 		"\0\s[0]\i[204]Luck, I guess?\w3\i[210]\i[407] The university lets people come here to study\w2, even if you're not a Federation citizen.\w4\s[0]\i[204] Plus, you don't need money to live on if you're on Earth!\w3\i[203] That's totally perfect for a broke female like me. <3\i[160]\n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]\i[204]It made the most sense to come here.\w3\i[210]\i[407] The university doesn't charge\w2, so it's basically a free apprenticeship.\w4\s[0]\i[204] My mom taught me how to read and do math,\w3\i[203] but it's nice to learn other things while I figure out what I want to do.\i[160]\n\n\![*]\q[Back,BACKTOMENU]"
 	}
 	else //full trust
 	{
-		"\0\s[0]\i[204]...\w4\i[210]\i[254]\i[404]\i[405]I'm safe here, %(username).\w3\i[216] If my family figures out where I am\w2, \i[253]they might try to force me to come back home.\w4\s[0]\i[204]\i[403]\i[410] It'd be way harder to do that if I ask for refugee status here.\w4\i[203]\i[254] You probably think that's totally crazy, huh?\n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]\i[204]...\w4\i[210]\i[254]\i[404]\i[405]I'm safe here, %(username).\w3\i[216] If my family figures out where I am\w2, \i[253]they might try to force me to come back home.\w4\s[0]\i[204]\i[403]\i[410] It'd be way harder to do that if I ask for refugee status here.\w4\i[203]\i[254] \n\n[half]You probably think that's totally crazy, huh?\n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]\i[204]There's not much I can do on my homeworld right now, right?\w4\i[210]\i[254]\i[404]\i[405]But once I get\w3, like\w3, established in my trade and know stuff?\w3\i[216] \n\n[half]Well, it'll be harder for people back home to write me off as\w2\i[253] just some female, you know?\i[158]\w4\s[0]\i[204]\i[403]\i[410] I'll be one more piece of proof that the reforms are right.\w4\i[203]\i[254] \n\n\![*]\q[Back,BACKTOMENU]"
 	}
 }
 
@@ -895,24 +993,29 @@ Select.StudyTegra
 	if feelings <= 0 //disklike
 	{
 		"\0\s[0]\i[251]\i[208]\i[406]...\w4Leave me alone.\i[152]\e"
+		"\0\s[0]\i[251]\i[208]\i[406]Like you care.\i[152]\e"
 	}
 	elseif feelings > 0 && feelings <= 5 //conflicted
 	{
 		"\0\s[0]\i[204]You know\w3, just normal college stuff.\w4\e"
+		"\0\s[0]\i[204]Oh\w3, most people find it pretty boring...\w4\e"
 	}
 	elseif feelings > 5 && feelings <= 35 //neutral
 	{
-		feelings += 1
+		tfeelings += 1
 		"\0\s[0]\i[204]Oh\w2, I'm studying exoagronomy.\w2\w4\s[0]\i[203]\i[409]\i[252] Bet you weren't expecting that, huh?\i[160]\n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]\i[204]Um\w2, like\w3, agriculture and stuff?\w2\w4\s[0]\i[203]\i[409]\i[252] If you need to grow food on a spaceship\w3, I'm your girl!\i[160]\n\n\![*]\q[Back,BACKTOMENU]"
 	}
 	elseif feelings > 35 && feelings < 100 //like
 	{
-		feelings += 1
+		tfeelings += 1
 		"\0\s[0]\i[204]\i[252]Exoagronomy!\w6\i[210]\i[407] You know\w2, farming and stuff?\w4\s[0]\i[204] I come from a long line of farmers.\w3\i[220]\i[254]\i[405] Not that I, like, talk about it that much.\i[155]\n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]\i[204]\i[252]I'm studying to be an agronomist!\w6\i[210]\i[407] I\w2, like\w3, grew up on a farm.\w4\s[0]\i[204] Plus, I don't have any other education\w3\i[220]\i[254]\i[405], so, like, best to go for something I kinda know\w2, you know?\i[155]\n\n\![*]\q[Back,BACKTOMENU]"
 	}
 	else //full trust
 	{
-		"\0\s[0]\i[204]\i[406]\i[407]I'm gonna be the very best exoagronomist ever!!!\w8\i[203] Like no one ever was!\w3\i[210] My family's farm really struggles to,like\w2, \i[253]keep up with the corporate operations?\w4\s[0]\i[204]\i[403]\i[409] But sustainable vermiculture is the future!\w4 The way we raise things is better than a factory farm. \s[0]\i[410]Why not make my fortune and help feed people at the same time?\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]\i[204]\i[406]\i[407]I'm gonna be the very best exoagronomist ever!!!\w8\i[203] Like no one ever was!\w3\i[210] My family's farm really struggles to, like\w2, \i[253]keep up with the corporate operations?\w4\s[0]\i[204]\i[403]\i[409] But sustainable vermiculture is the future!\w4 \n\n[half]The way we raise things is better than a factory farm. \s[0]\i[410]Why not make my fortune and help feed people at the same time?\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]\i[204]\i[406]\i[407]I'm totally going to be a consulting exoagronomist!\w8\i[203] Like\w3\i[210]\w2, for long-haul starships and colony worlds and stuff?\w5\s[0]\i[204]\i[403]\i[409]\w4 \n\n[half]Earth is super nice\w4, but\s[0]\i[410]I think I'd like to see what else is out there, too.\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
 	}
 }
 
@@ -921,24 +1024,29 @@ Select.DatingTegra
 	if feelings <= 0 //disklike
 	{
 		"\0\s[0]\i[253]\i[208]...\w4Just make whatever gross joke you wanna make about ferengi sex\w2, and then shut up.\e"
+		"\0\s[0]\i[253]\i[208]...\w4Like I want to tell you that.\w4 Why don't you drop dead?\i[156]\e"
 	}
 	elseif feelings > 0 && feelings <= 5 //conflicted
 	{
-		"\0\s[0]\i[210]...A lot of aliens are judgmental about that stuff\w2, so I don't really want to talk about it.\w4\e"
+		"\0\s[0]\i[210]...A lot of aliens are judgmental about that stuff\w2, so I don't really want to talk about it.\i[152]\w4\e"
+		"\0\s[0]\i[210]No offense\w2, but I'm pretty sick of getting insulted for being normal about sex\w2, so...\i[152]\w4\e"
 	}
 	elseif feelings > 5 && feelings <= 35 //neutral
 	{
-		feelings += 1
+		tfeelings += 1
 		"\0\s[0]\i[204]Nah\w2, I'm too busy enjoying my youth and stuff to settle down yet.\w8\w6 Like\w2, I'm in outer space!\w4\s[0]\i[407]\i[252] There's so many cool people to meet!\w2\i[203] And have sex with!\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]\i[204]Like\w2, I've spent time with lots of nice people here!\w8\w6 And\w2\i[210], some people that didn't turn out to be so nice.\w4\s[0]\i[204]\i[407]\i[252] That's just how it is with romance.\w2\i[203] Every experience is valuable!\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
 	}
 	elseif feelings > 35 && feelings < 100 //like
 	{
-		feelings += 1
-		"\0\s[0]\i[210]Well\w2, there is this one person...\w8\w6 \i[204]Like\i[254]\w2, I've been dropping hints for a while now,\w4\i[216] but maybe I'm being too subtle?\w8\s[0]\i[409]\i[252]\w8\w6 Or she's just too nice to tell me to leave her alone already.\w8\w8\w8\i[203]\i[253]\i[406]\i[407] Ahh...!\w2 This'd be so much easier if aliens used contracts like normal...\i[152]\n\n\![*]\q[Back,BACKTOMENU]"
+		tfeelings += 1
+		"\0\s[0]\i[210]Well\w2, there is this one person...\w8\w6 \i[204]Like\i[254]\w2, I've been dropping hints for a while now,\w4\i[216] but maybe I'm being too subtle?\w8\s[0]\i[409]\i[252]\w8\w6 Or she's just too nice to tell me to leave her alone already.\w8\w8\w8\i[203]\i[253]\i[406]\i[407] \n\n[half]Ahh...!\w2 This'd be so much easier if aliens used contracts like normal...\i[152]\n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]\i[210]Oh! I'm courting someone, actually!\w8\w6 \i[204]Or\i[254]\w2, I think I am?\w4\i[216] Back home, my parents would take care of all this for me.\w8\s[0]\i[409]\i[252]\w8\w6\n\n[half] But I'm a modern woman!\w8\w8\w8\i[203]\i[253]\i[406]\i[407] I can\w2 totally handle this myself...!\i[152]\n\n\![*]\q[Back,BACKTOMENU]"
 	}
 	else //full trust
 	{
 		"\0\s[0]\i[204]Honest question\w3, do you think Kadan would be, like, okay with an alien?\w8\w6\s[0]\i[203]\i[406]\i[409] Ahh, don't answer, %(username)! Just\w3, let me dream, okay???\i[161]\w8\w8\w8\w8 Like\w2\s[0]\i[252], I want a big family, too!\w4\i[210] Eventually.\w4\s[0]\i[407] But I don't need my family to look like my parents family in, like, a lot of ways.\w7\s[0]\i[210]\i[410] But Kadan's way more traditional than me...\i[152]\n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]\i[204]Kadan\w3, like\w2, probably thinks I'm a total degenerate.\w8\w6\s[0]\i[203]\i[406]\i[409] I can be mature!\w4 I can be serious!\i[161]\w8\w8\w8\w8 Like\w2\s[0]\i[252], I'd be a great wife\w4\i[210] for anyone but another ferengi.\w4\s[0]\i[407] We'd make a really good team, don't you think?\w7\s[0]\i[210]\i[410] But I'm not sure how to sell her on the idea...\i[152]\n\n\![*]\q[Back,BACKTOMENU]"
 	}
 }
 
@@ -951,20 +1059,24 @@ Select.FangirlTegra
 	elseif feelings > 0 && feelings <= 5 //conflicted
 	{
 		"\0\s[0]\i[216]\i[253]...No, you'd probably, like, think it's stupid.\w4\e"
+		"\0\s[0]\i[216]\i[253]...It's super dorky.\w3 You wouldn't be into it.\w4\e"
 	}
 	elseif feelings > 5 && feelings <= 35 //neutral
 	{
-		feelings += 1
-		"\0\s[0]\i[204]Oh\w2, Mo's a popular character back home! He's a space pirate!\i[157]\w8\w8\s[0]\i[210]\i[409] He's super clever and strong and pretty\w2, and he has a ship made from a bunch of stolen parts!\w3\i[254] And the whole crew are kind of insane?\w8\w6\s[0]\i[252]\i[406]\i[407] There's been like\w2, a zillion holodramas, and novels, and action figures and games and people do cosplay and...!\w4\i[220] And... \i[161]\w8\w4\s[0]\i[407]\i[254] Sorry\i[203]\w2, I'm probably boring you, huh?\i[152]\n\n\![*]\q[Back,BACKTOMENU]"
+		tfeelings += 1
+		"\0\s[0]\i[204]Oh\w2, Mo's a popular character back home! He's a space pirate!\i[157]\w8\w8\s[0]\i[210]\i[409] He's super clever and strong and pretty\w2, and he has a ship made from a bunch of stolen parts!\w3\i[254] And the whole crew are kind of insane?\w8\w6\s[0]\i[252]\i[406]\i[407]\n\n[half] There's been like\w2, a zillion holodramas, and novels, and action figures and games and people do cosplay and...!\w4\i[220] And... \i[161]\w8\w4\s[0]\i[407]\i[254] Sorry\i[203]\w2, I'm probably boring you, huh?\i[152]\n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]\i[204]\w2Mo's only\w3, like\w3, the best thing ever and also my wife?!\i[157]\w8\w8\s[0]\i[210]\i[409] He's a pirate who explores the galaxy\w2 and causes a ruckus and makes people SO mad when we robs them blind!\w8\w6\s[0]\i[252]\i[406]\i[407]\n\n[half] I dressed up as Mo for a Halloween party last year\w4\s[0]\i[407]\i[254], but no one recognized it at all...!\i[161]\n\n\![*]\q[Back,BACKTOMENU]"
 	}
 	elseif feelings > 35 && feelings < 100 //like
 	{
-		feelings += 1
-		"\0\s[0]\i[204]Mo's a character I've really liked since I was little! He's a space pirate!\i[157]\w8\w8\s[0]\i[210]\i[409] But he's not just, like, an action hero.\w4\s[0]\i[204]\i[406]\i[403] He totally has hidden depths! And subtext!\w8\i[216]\i[254]\i[410] Subtext that fan-holos make into lots of text, hee hee~!\i[160]\w8\w8\s[0]\i[204] I didn't have much room to pack when I came to Earth\w2, but I made sure I brought my old Mo action figure with me.\w4\s[0]\i[203] He sits on my desk and guards me while I'm studying!\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
+		tfeelings += 1
+		"\0\s[0]\i[204]Mo's a character I've really liked since I was little! He's a space pirate!\i[157]\w8\w8\s[0]\i[210]\i[409] But he's not just, like, an action hero.\w4\s[0]\i[204]\i[406]\i[403] He totally has hidden depths! And subtext!\w8\i[216]\i[254]\i[410] Subtext that fan-holos make into lots of text, hee hee~!\i[160]\w8\w8\s[0]\i[204]\n\n[half] I didn't have much room to pack when I came to Earth\w2, but I made sure I brought my old Mo action figure with me.\w4\s[0]\i[203] He sits on my desk and guards me while I'm studying!\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]\i[204]Marauder Mo is a super old, super huge series about space pirates!\i[157]\w8\w8\s[0]\i[210]\i[409] It's everywhere back home.\w4\s[0]\i[204]\i[406]\i[403] I guess most aliens wouldn't have heard of it, though.\w8\i[216]\i[254]\i[410]\n\n[half] Ah\w2, I totally miss trading data rods with Vik\w3 and seeing all the cool Mo stuff she'd scrape off sub-space nets for me.\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
 	}
 	else //full trust
 	{
-		"\0\s[0]\i[216]\i[254]This might sound totally weird, but Mo really helps me get through stuff.\w8\w8\s[0]\i[210]\i[407] He's just always there for me\w2, you know?\w4\w6\s[0]\i[204]\i[406] Like...when I was growing up\w2, Mo was everything I couldn't have myself.\w8\s[0]\i[254]\i[410] He goes wherever he wants, he makes his own choices\w3, and no matter how hard things get, he always escapes by the skin of his teeth.\w8\w8\s[0]\i[204] Maybe that's what gave me the idea that I could leave home.\w4\s[0]\i[201]\i[406] Like...I could be free like that, too.\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]\i[216]\i[254]This might sound totally weird, but Mo really helps me get through stuff.\w8\w8\s[0]\i[210]\i[407] He's just always there for me\w2, you know?\w4\w6\s[0]\i[204]\i[406] Like...when I was growing up\w2, Mo was everything I couldn't have myself.\w8\s[0]\i[254]\i[410] He goes wherever he wants, he makes his own choices\w3, and no matter how hard things get, he always escapes by the skin of his teeth.\w8\w8\s[0]\i[204]\n\n[half] Maybe that's what gave me the idea that I could leave home.\w4\s[0]\i[201]\i[406] Like...I could be free like that, too.\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]\i[216]\i[254]I swear\w3, I know he's not real and I'm not crazy.\w8\w8\s[0]\i[210]\i[407] But Mo's sort of\w2 a friend?\w4\w4\w6\s[0]\i[214]\i[406] I didn't\w2 get a chance to make many friends back home\w3, other than daughters of my parents' friends.\w8\s[0]\i[220]\i[254]\i[410] You know\w3, since we could only leave our homes with our dads or brothers.\w8\w8\s[0]\i[204]\n\n[half] I used to daydream a lot about being on Mo's crew.\w4\s[0]\i[201]\i[406] Not having anyone\w3, like\w4, tell me what I can and can't do...\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
 	}
 }
 
@@ -983,32 +1095,77 @@ Select.TegraTell
 
 Select.ComplimentTegra
 {
-	feelings += 1
+	tfeelings += 1
+	if feelings < 0
+	{
+		"\0\s[0]\i[204]\i[253]...What?\i[254]\n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]\i[204]\i[253]...Are you making fun of me?\i[161]\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+	else
+	{
 	"\0\s[0]\i[203]\i[404]\i[405]Oh?\w4 Thanks! <3\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
+	"\0\s[0]\i[203]\i[404]\i[405]Thanks!\w4 I think so\w2, too! <3\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
+	}
 }
 
 Select.InsultTegra
 {
-	feelings -= 1
+	tfeelings -= 1
+	if feelings > 35
+	{
+		"\0\s[0]\i[204]\i[253]\i[408]\i[409]\i[204]That's\w3, like\w3, just a joke\w3, right?\i[152]\n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]\i[204]\i[253]\i[408]\i[409]\i[204]That's not a very nice thing to say\w2, %(username)...\i[152]\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+	else
+	{
 	"\0\s[0]\i[204]\i[251]\i[408]\i[409]\i[204]Oh yeah? Well, I'm rubber and you're glue!\i[161]\n\n\![*]\q[Back,BACKTOMENU]"
+	"\0\s[0]\i[204]\i[251]\i[408]\i[409]\i[204]Hmph! Hu-mons\w3, like\w3, hate to see a girlboss winning.\i[161]\n\n\![*]\q[Back,BACKTOMENU]"
+	}
 }
 
 Select.JokeTegra
 {
-	feelings += 1
+	tfeelings += 1
+	if feelings < 0
+	{
+		"\0\s[0]\i[254]\i[214]Is that\w3, like,\w4 supposed to be funny?\n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]\i[254]\i[214]Actually, that's\w3, like,\w4 super offensive\w2, I hope you know.\i[152]\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+	else
+	{
 	"\0\s[0]\i[252]\i[203]Hahaha!\w4\i[254]\i[210] I totally get it\i[160]!!!\n\n\![*]\q[Back,BACKTOMENU]"
+	"\0\s[0]\i[252]\i[203]Hahaha!\w4\i[254]\i[210] It's funny because it's true\i[160]!!!\n\n\![*]\q[Back,BACKTOMENU]"
+	}
 }
 
 Select.FlirtTegra
 {
-	feelings += 2
+	tfeelings += 2
+	if feelings < 0
+	{
+		"\0\s[0]\i[410]\i[403]\i[203]Ew,\w4\i[208]\i[254] gross...\i[155] \n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]\i[403]\i[208]I'm a ferengi,\w4\i[220]\i[254] but I still have standards...\i[155] \n\n\![*]\q[Back,BACKTOMENU]"
+	}
+	else
+	{
 	"\0\s[0]\i[410]\i[403]\i[203]Ohh???\w4\i[204]\i[254] I'm listening...\i[155] \n\n\![*]\q[Back,BACKTOMENU]"
+	"\0\s[0]\i[410]\i[403]\i[203]I can't do long-distance relationships\w4\i[204]\i[254], but thanks!\w4\i[203] You're totally hot, too!\i[160] \n\n\![*]\q[Back,BACKTOMENU]"
+	}
 }
 
 Select.BerateTegra
 {
-	feelings += 2
+	tfeelings -= 2
+	if feelings < 0
+	{
+		"\0\s[0]\i[253]\i[406]\i[407]\i[202]\w8\w8Like\w3, what did I ever do to you\w3, anyway?\i[152]\w4 </3 \n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]\i[253]\i[406]\i[407]\i[202]\w8\w8Shut up!\w4 Like...\w3just leave me alone\w2, since you hate me so much!\i[152]\n\n\![*]\q[Back,BACKTOMENU]"
+	}
+	else
+	{
 	"\0\s[0]\i[253]\i[406]\i[407]\i[202]\w8\w8...What did I do...?\i[152]\w4 </3 \n\n\![*]\q[Back,BACKTOMENU]"
+	"\0\s[0]\i[253]\i[406]\i[407]\i[202]\w8\w8...Did I make you mad?\w4 Hu-mons are so confusing...\i[152]\w4 </3 \n\n\![*]\q[Back,BACKTOMENU]"
+	}
 }
 
 
@@ -1022,38 +1179,122 @@ Select.KadanGive
 	\![*]\q[A cool rock,GiveKadanRock]\n/
 	\![*]\q[Something for her studies,GiveKadanSupplies]\n/
 	\![*]\q[Something to read,GiveKadanBook]\n/
-	\![*]\q[Something expensive,givesmokerexpensive]\n\n/
 	\![*]\q[Never mind,OnKadanMenu]\e"
 }
 
 Select.GiveKadanFood
 {
-	feelings += 1
+	if kgivenfood < 4 //Kadan is probs old enough to have been affected somehow by the dust bowl
+	{
+	kfeelings += 1
+	kgivenfood += 1
+	if feelings < 0
+	{
+			"\1\s[10]Ah, %(food)?\w4 ...\i[204]\i[404]You can't dispose of this on your own?\e"
+			"\1\s[10]\i[204]Ah, %(food)?\w4 ...\i[201]Suit yourself.\e"
+	}
+	else
+	{
 	"\1\s[10]Ah, %(food)?\w4 ...\i[204]Thank you, I suppose.\n\n\![*]\q[Back,OnKadanMenu]"
+	"\1\s[10]Ah, %(food)?\w4 ...\i[204]Waste not\w2, want not.\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+	}
+	else
+	{
+		"\1\s[10]\i[203]\i[254]I appreciate your generosity, %(username), but I don't need any more.\e"
+	}
 }
 
 Select.GiveKadanDrink
 {
-	feelings += 1
+	if kgivendrink < 2
+	{
+	kfeelings += 1
+	kgivendrink += 1
+	if feelings < 0
+	{
+			"\1\s[10]Ah, %(softdrink)?\w4 ...\i[204]\i[404]You can't dispose of this on your own?\e"
+			"\1\s[10]\i[204]Ah, %(softdrink)?\w4 ...\i[201]Suit yourself.\e"
+	}
+	else
+	{
 	"\1\s[10]Ah, %(softdrink)?\w4 ...\i[204]Thank you, I suppose.\n\n\![*]\q[Back,OnKadanMenu]"
+	"\1\s[10]Ah, %(softdrink)?\w4 ...\i[204]Hydration is important, after all.\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+	}
+	else
+	{
+		"\1\s[10]\i[203]\i[254]I appreciate your generosity, %(username), but I'm not thirsty.\e"
+	}
 }
 
 Select.GiveKadanRock
 {
-	feelings += 1
+	if kgivengift < 3
+	{
+	kfeelings += 1
+	kgivengift += 1
+	if feelings < 0
+	{
+			"\1\s[10]\i[208]Ah, it's a rock...\e"
+			"\1\s[10]\i[204]A rock?\w4 ...\i[201]You're a bit childish.\e"
+	}
+	else
+	{
 	"\1\s[10]...\w4\i[201]What an interesting rock.\n\n\![*]\q[Back,OnKadanMenu]"
+	"\1\s[10]...\w4\i[201]Lovely striations.\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+	}
+	else
+	{
+		"\1\s[10]\i[203]\i[254]Ah\w3, this is a bit overwhelming, thank you all the same, %(username).\e"
+	}
 }
 
 Select.GiveKadanSupplies
 {
-	feelings += 1
+	if kgivengift < 3
+	{
+	kfeelings += 2
+	kgivengift += 1
+	if feelings < 0
+	{
+			"\1\s[10]\i[208]Is this a gift?\w4\i[406] Or am I taking your trash for you?\e"
+			"\1\s[10]\i[204]I suppose it's irrational to refuse.\e"
+	}
+	else
+	{
 	"\1\s[10]...\w4\i[201]I can use these supplies.\n\n\![*]\q[Back,OnKadanMenu]"
+	"\1\s[10]...\w4\i[204]\i[408]Thank you\w3, these will be useful.\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+	}
+	else
+	{
+		"\1\s[10]\i[203]\i[254]Ah\w3, this is a bit overwhelming, thank you all the same, %(username).\e"
+	}
 }
 
 Select.GiveKadanBook
 {
-	feelings += 1
+	if kgivengift < 3
+	{
+	kfeelings += 1
+	kgivengift += 1
+	if feelings < 0
+	{
+			"\1\s[10]\i[208]Is this a gift?\w4\i[406] Or am I taking your trash for you?\e"
+			"\1\s[10]\i[204]Federation propaganda. What a delight.\i[155]\e"
+	}
+	else
+	{
 	"\1\s[10]...\w4\i[201]It's probably trash, but I'll try it.\n\n\![*]\q[Back,OnKadanMenu]"
+	"\1\s[10]...\w4\i[201]Perhaps I can convince Tegra to read something for once.\n\n\![*]\q[Back,OnKadanMenu]"
+	}
+	}
+	else
+	{
+		"\1\s[10]\i[203]\i[254]Ah\w3, this is a bit overwhelming, thank you all the same, %(username).\e"
+	}
 }
 
 Select.KadanAsk
@@ -1071,27 +1312,32 @@ Select.KadanAsk
 
 Select.LeaveHomeKadan
 {
-	if feelings <= 0 //disklike
+	if feelings <= 0 //dislike
 	{
 		"\1\s[10]\i[251]\i[208]\i[406]...\e"
+		"\1\s[10]\i[251]\i[201]\i[406]It's none of your concern.\e"
 	}
 	elseif feelings > 0 && feelings <= 5 //conflicted
 	{
 		"\1\s[10]\i[254]\i[204]\i[410]I didn't want to.\i[155]\e"
+		"\1\s[10]\i[254]\i[201]\i[404]It didn't feel like a choice at the time.\i[152]\e"
 	}
 	elseif feelings > 5 && feelings <= 35 //neutral
 	{
-		feelings += 1
+		kfeelings += 1
 		"\1\s[10]...\w3\i[204]It wasn't a choice I made lightly.\w4\i[210]\i[408]\i[254] I don't feel like discussing it.\i[155]\n\n\![*]\q[Back,OnKadanMenu]"
+		"\1\s[10]...\w3\i[204]You're not the first human to ask.\w4\i[201]\i[404]\i[254] But I'm not obliged to satisfy your idle curiosity.\i[152]\n\n\![*]\q[Back,OnKadanMenu]"
 	}
 	elseif feelings > 35 && feelings < 100 //like
 	{
-		feelings += 1
+		kfeelings += 1
 		"\1\s[10]\i[204]I wasn't in a good place, mentally, after the war.\w4 Not that I'm unique in that regard.\w4\i[204]\i[403]\i[408] Cardassia holds so many painful memories now...\w3\s[10]\i[201] For many reasons, I could not stay.\i[158]\n\n\![*]\q[Back,OnKadanMenu]"
+		"\1\s[10]\i[204]My home has completely collapsed.\w4 I'm far from the only one who fled.\w4\i[204]\i[403]\i[408] At least this way,\w3\s[10]\i[201] there's one fewer mouth on Cardassia Prime to feed.\i[152]\n\n\![*]\q[Back,OnKadanMenu]"
 	}
 	else //full trust
 	{
-		"\1\s[10]\i[201]...\w4\i[204]\i[254]\i[404]Ah, %(username)\w3, I deserted.\w8\w8\w8\w8 \s[10]\i[201]\i[254]Once I lost my family\w2, I felt like the living dead.\w8\w8\w8\s[10]\i[204]\i[403]\i[410] I know how selfish I am to abandon my home in its time of greatest need.\w4\i[208]\i[408] And yet...\w6here I am.\i[152]\n\n\![*]\q[Back,OnKadanMenu]"
+		"\1\s[10]\i[201]...\w4\i[204]\i[254]\i[404]Ah, %(username)\w3, I deserted the Guard.\w8\w8\w8\w8 \s[10]\i[201]\i[254]Once I lost my family\w2, I felt like the living dead.\w8\w8\w8\s[10]\i[204]\i[403]\i[410] I know how selfish I am to abandon my home in its time of greatest need.\w4\i[208]\i[408]\n\n[half] And yet...\w6here I am.\i[152]\n\n\![*]\q[Back,OnKadanMenu]"
+		"\1\s[10]\i[201]\w9\w8\i[204]\i[254]\i[404]You wouldn't be aware, %(username)\w3, but close to one billion cardassians were killed by the close of the war.\w8\w8\w8\w8 \s[10]\i[201]\i[254]Entire cities\w2, erased.\w8 I took my sister's name and identity, and left.\w8\w8\w8\s[10]\i[204]\i[403]\i[410]\n\n[half] I'm the sole survivor of my family.\w4\i[208]\i[408] Which is to say...\w6\i[402]I am nothing.\i[152]\n\n\![*]\q[Back,OnKadanMenu]"
 	}
 }
 
@@ -1100,24 +1346,29 @@ Select.EarthKadan
 	if feelings <= 0 //disklike
 	{
 		"\1\s[10]\i[251]\i[204]\i[404]\i[155]...\e"
+		"\1\s[10]\i[251]\i[204]\i[404]\i[155]...Don't speak to me.\e"
 	}
 	elseif feelings > 0 && feelings <= 5 //conflicted
 	{
 		"\1\s[10]\i[254]\i[204]\i[406]Because Earth allowed me entry.\i[156]\e"
+		"\1\s[10]\i[254]\i[204]\i[406]I sometimes wonder that, myself.\i[156]\e"
 	}
 	elseif feelings > 5 && feelings <= 35 //neutral
 	{
-		feelings += 1
+		kfeelings += 1
 		"\1\s[10]\i[204]The Federation is ridiculously accepting of foreign flotsam wandering into its territory.\w4\i[201]\i[408]\i[254] Earth is as good a place to land as any.\n\n\![*]\q[Back,OnKadanMenu]"
+		"\1\s[10]\i[204]Many of our neighbors were happy to see the wicked empire laid low.\w4\i[201]\i[408]\i[254] This planet was kind enough to welcome refugees.\n\n\![*]\q[Back,OnKadanMenu]"
 	}
 	elseif feelings > 35 && feelings < 100 //like
 	{
-		feelings += 1
+		kfeelings += 1
 		"\1\s[10]\i[204]Earth's traditional collegiate system reminds me slightly of the academies back home.\w3\i[407] That\w2, coupled with what one could term an extremely low cost of living made it an attractive option.\n\n\![*]\q[Back,OnKadanMenu]"
+		"\1\s[10]\i[204]For its faults, this is a gentle place to start again.\w3\i[407] It's more attractive than scraping along as a mercenary or a laborer\w3, at least.\n\n\![*]\q[Back,OnKadanMenu]"
 	}
 	else //full trust
 	{
-		"\1\s[10]\i[204]It's quite simple\w2, , %(username).\w4\i[254]\i[404]\i[405] Earth is a peaceful world\w3\i[201], far away from Cardassia and all reminders of my abject failure to be of any use at all to my family or my countrymen.\w4\s[10]\i[204]\i[403]\i[410] Does that answer satisfy you?\w4\i[203]\i[254] I hope you don't think less of me\w2, but I could scarcely blame you.\n\n\![*]\q[Back,OnKadanMenu]"
+		"\1\s[10]\i[204]It's quite simple\w2, , %(username).\w4\i[254]\i[404]\i[405] Earth is a peaceful world\w3\i[201], far away from Cardassia and all reminders of my abject failure to be of any use at all to my family or my countrymen.\w4\s[10]\i[204]\i[403]\i[410] Does that answer satisfy you?\w4\i[203]\i[254]\n\n[half] I hope you don't think less of me\w2, but I could scarcely blame you.\n\n\![*]\q[Back,OnKadanMenu]"
+		"\1\s[10]\i[204]I suppose,\w4\i[254]\i[404]\i[405] despite myself, Earth represents my turning down a different path.\w3\i[201] The one I was on ultimately led nowhere but ruin.\w4\s[10]\i[204]\i[403]\i[410] I have no noble reason\w4\i[203]\i[254], but there's no one left to judge me for walking away.\n\n\![*]\q[Back,OnKadanMenu]"
 	}
 }
 
@@ -1126,24 +1377,29 @@ Select.StudyKadan
 	if feelings <= 0 //dislike
 	{
 		"\1\s[10]\i[251]\i[201]\i[406]...\w4Don't speak to me.\e"
+		"\1\s[10]\i[251]\i[201]\i[406]...\w4Hn.\e"
 	}
 	elseif feelings > 0 && feelings <= 5 //conflicted
 	{
 		"\1\s[10]\i[204]...Fine arts.\e"
+		"\1\s[10]\i[204]Sculpture.\e"
 	}
 	elseif feelings > 5 && feelings <= 35 //neutral
 	{
-		feelings += 1
+		kfeelings += 1
 		"\1\s[10]\i[204]I'm studying the fine arts\w2, with a concentration on sculpting.\n\n\![*]\q[Back,OnKadanMenu]"
+		"\1\s[10]\i[204]I'm an\w2 alleged sculptor in training\w4 Not that I'm particularly gifted.\n\n\![*]\q[Back,OnKadanMenu]"
 	}
 	elseif feelings > 35 && feelings < 100 //like
 	{
-		feelings += 1
-		"\1\s[10]\i[204]\i[252]I'm training to be a sculptor.\w6\i[210]\i[407] It's...\w2a bit of a departure from my prior career.\w4\s[10]\i[204]\i[408] I wasn't the one with artistic talent in my family.\w3\s[10]\i[220]\i[254]\i[405] But with hard work and perseverance, I'm improving my skill.\n\n\![*]\q[Back,OnKadanMenu]"
+		kfeelings += 1
+		"\1\s[10]\i[204]\i[252]I'm training to be a sculptor.\w6\i[210]\i[407] It's...\w2a bit of a departure from my prior career.\w4\s[10]\i[204]\i[408] I wasn't the one with artistic talent in my family.\w3\s[10]\i[220]\i[254]\i[405]\n\n[half] But with hard work and perseverance, I'm improving my skill.\n\n\![*]\q[Back,OnKadanMenu]"
+		"\1\s[10]\i[204]\i[252]I'm fulfilling the stereotype of the veteran pivoting into the arts.\w6\i[210]\i[407] Not that I have a great deal of talent for it.\w4\s[10]\i[204]\i[408] That was always my sister's purview.\w3\s[10]\i[220]\i[254]\i[405]\n\n[half] ...I wonder if she'd be pleased by my efforts...?\n\n\![*]\q[Back,OnKadanMenu]"
 	}
 	else //full trust
 	{
-		"\1\s[10]\i[204]\i[406]\i[408]My youngest sister wasn't able to finish her education before she was killed.\w8\s[10] Perhaps that's a poor reason for me to pursue art myself\w2, as if I'm making a mockery of her.\w6\i[208] I'll\w2 never hold a candle to her talent, or vision.\i[154]\w4\s[10]\i[204]\i[403]\i[402] But this is the only memorial I can give her,\w4 or the rest of our family. \w5\s[10]\i[201]It feels right with my heart to do this.\n\n\![*]\q[Back,OnKadanMenu]"
+		"\1\s[10]\i[204]\i[406]\i[408]My youngest sister wasn't able to finish her education before she was killed.\w8\s[10] Perhaps that's a poor reason for me to pursue art myself\w2, as if I'm making a mockery of her.\w6\i[208] I'll\w2 never hold a candle to her talent, or vision.\i[154]\w4\s[10]\i[204]\i[403]\i[402]\n\n[half] But this is the only memorial I can give her,\w4 or the rest of our family. \w5\s[10]\i[201]It feels right with my heart to do this.\n\n\![*]\q[Back,OnKadanMenu]"
+		"\1\s[10]\i[204]\i[406]\i[408]I had little interest in art until Laille died.\w8\s[10] I can't swap our places\w2, but perhaps that was what I was trying to do\w4, on some level.\w6\i[154]\w4\s[10]\i[204]\i[403]\i[402] \n\n[half]After all\w5\s[10]\i[201], my own life's plan amounted to so little.\n\n\![*]\q[Back,OnKadanMenu]"
 	}
 }
 
@@ -1152,24 +1408,29 @@ Select.DatingKadan
 	if feelings <= 0 //disklike
 	{
 		"\1\s[10]\i[253]\i[208]\i[406]...\w4I don't care to understand why you would ask me that.\e"
+		"\1\s[10]\i[253]\i[208]\i[406]...\w4You are presumptuous and rude.\e"
 	}
 	elseif feelings > 0 && feelings <= 5 //conflicted
 	{
 		"\1\s[10]\i[204]...\w4No.\e"
+		"\1\s[10]\i[204]...\w4I'm not an attractive candidate for marriage.\e"
 	}
 	elseif feelings > 5 && feelings <= 35 //neutral
 	{
-		feelings += 1
+		kfeelings += 1
 		"\1\s[10]\i[204]No\w2, I'm focused on my studies.\w8\w6 In any case,\w4\s[10]\i[407]\i[252] there is no one here with whom I would be a suitable match.\n\n\![*]\q[Back,OnKadanMenu]"
+		"\1\s[10]\i[204]I have more important things to focus on.\w8\w6\w4\s[10]\i[407]\i[252] Why is this topic of such interest to people?\n\n\![*]\q[Back,OnKadanMenu]"
 	}
 	elseif feelings > 35 && feelings < 100 //like
 	{
-		feelings += 1
+		kfeelings += 1
 		"\1\s[10]\i[210]...\w2I had thought that perhaps...\w8\w6 \s[10]\i[204]Then again\i[253]\w2, it's extremely difficult to tell apart a jest from an earnest overture.\w4\s[10]\i[216]\i[404] Unless I'm wrong on both counts, and seeing something that is not there.\w8\s[10]\i[201]\i[402]\i[252]\w8\w6 It's useless, anyway.\w8\w8\w8\i[254]\i[406] I accepted long ago\w2 that persons like myself are meant to pass through life alone...\i[155]\n\n\![*]\q[Back,OnKadanMenu]"
+		"\1\s[10]\i[210]...\w2I suppose...\w8\w6 \s[10]\i[204]But\i[253]\w2 the whole enterprise would be a fiasco from the start.\w4\s[10]\i[216]\i[404] We have very little in common.\w8\s[10]\i[201]\i[402]\i[252]\w8\w6 Although...\w8\w8\w8\i[254]\i[406] No\w2, it would be a terrible idea...\i[155]\n\n\![*]\q[Back,OnKadanMenu]"
 	}
 	else //full trust
 	{
-		"\1\s[10]I'm in exile\w3, and I cannot bear children, so I'm useless even on that account.\w8\w6\s[10]\i[204]\i[406] I'm sure you're about to tell me Tegra wouldn't care about either point, %(username).\w3 But those aren't the only impediments.\i[156]\w8\w8\w8\w8 Tegra\w2\s[10]\i[252]\i[404] is young, and full of yearning for all life has to offer.\w4\i[208] I don't wish to be a millstone around her neck.\w4\s[10]\i[402] And that's what I fear I would be.\w4\i[201] I'd drive her to resent me\w3, make her miserable...\n\n\![*]\q[Back,OnKadanMenu]"
+		"\1\s[10]I'm in exile\w3, and I cannot bear children, so I'm useless even on that account.\w8\w6\s[10]\i[204]\i[406] I'm sure you're about to tell me Tegra wouldn't care about either point, %(username).\w3 But those aren't the only impediments.\i[156]\w8\w8\w8\w8 Tegra\w2\s[10]\i[252]\i[404] is young, and full of yearning for all life has to offer.\w4\i[208]\n\n[half] I don't wish to be a millstone around her neck.\w4\s[10]\i[402] And that's what I fear I would be.\w4\i[201] I'd drive her to resent me\w3, make her miserable...\n\n\![*]\q[Back,OnKadanMenu]"
+		"\1\s[10]No one in their right mind would waste their life on a cardassian wash-out like myself.\w8\w6\s[10]\i[204]\i[406] I'm unpleasant company\w2, and I'm hidebound\w2, and I grind my teeth in my sleep.\w3 The novelty would wear out for her faster than any serious relationship we attempted.\i[156]\w8\w8\w8\w8\n\n[half] Tegra\w2\s[10]\i[252]\i[404] can do better\w3, whether she realizes it or not.\w4\i[208] And that's fine with me.\w4\s[10]\i[402] It's enough to have a friend...\n\n\![*]\q[Back,OnKadanMenu]"
 	}
 }
 
@@ -1178,24 +1439,29 @@ Select.FutureKadan
 	if feelings <= 0 //dislike
 	{
 		"\1\s[10]\i[252]\i[201]Yes, mock the cardassian now that the Union has collapsed.\w3\i[404] I'm sure we deserve everything that's occurred, right down to the youngest infants.\e"
+		"\1\s[10]\i[252]\i[201]I have no future.\w3\i[404] That much is obvious\w3, but I presume you delight in pointing it out.\e"
 	}
 	elseif feelings > 0 && feelings <= 5 //conflicted
 	{
 		"\1\s[10]\i[204]\i[253]...Are you mocking me, %(username)?\w4\e"
+		"\1\s[10]\i[204]\i[253]...If that's meant to be a joke, it's in poor taste.\w4\e"
 	}
 	elseif feelings > 5 && feelings <= 35 //neutral
 	{
-		feelings += 1
+		kfeelings += 1
 		"\1\s[10]\i[204]...\w2That's a difficult question.\w8\w8\s[10]\i[210]\i[404] Two years ago\w2, my plans would have begun and ended at surviving through the night.\w3\s[10]\i[204]\i[254] Since then,\w2 it's been all I can do to readjust to the idea of having a present\w3, let alone a future.\n\n\![*]\q[Back,OnKadanMenu]"
+		"\1\s[10]\i[204]You're asking me this on the heels of my world's apocalypse.\w8\w8\s[10]\i[210]\i[404] It still feels too soon to think about such an abstract concept.\w3\s[10]\i[204]\i[254] For now\w3, moving through one day to the next feels monumental enough.\n\n\![*]\q[Back,OnKadanMenu]"
 	}
 	elseif feelings > 35 && feelings < 100 //like
 	{
-		feelings += 1
-		"\1\s[10]\i[204]...\w2I've only recently come around to the idea that I deserve to live to see whatever future presents itself.\w8\w8\s[10]\i[210]\i[404]\i[254] Or perhaps\w2, ''deserve'' isn't quite the right word.\w3\s[10]\i[204] I suppose,\w2 I'll do my best to support Cardassia from a respectful distance\w3, and allow the rest to take care of itself in due course.\i[154]\n\n\![*]\q[Back,OnKadanMenu]"
+		kfeelings += 1
+		"\1\s[10]\i[204]...\w2I've only recently come around to the idea that I deserve to live to see whatever future presents itself.\w8\w8\s[10]\i[210]\i[404]\i[254] Or perhaps\w2, ''deserve'' isn't quite the right word.\w3\s[10]\i[204]\n\n[half] I suppose,\w2 I'll do my best to support Cardassia from a respectful distance\w3, and allow the rest to take care of itself in due course.\i[154]\n\n\![*]\q[Back,OnKadanMenu]"
+		"\1\s[10]\i[204]It's honestly a bit frightening to consider.\w8\w8\s[10]\i[210]\i[404]\i[254]\n\n[half] I have many years ahead of me, still.\w3\s[10]\i[204] And\w2 no real idea of what to fill them with\w3, other than sending aid back home.\i[154]\n\n\![*]\q[Back,OnKadanMenu]"
 	}
 	else //full trust
 	{
 		"\1\s[10]\i[204]\w2I don't know that I'd call what's in my mind a ''plan,'' per se.\w8\w8\s[10]\i[210]\i[406]\i[254] Definitely, I will be donating much of my labor\w2 and proceeds from my art towards Cardassia and Bajor's joint reconstruction.\w3\s[10]\i[201] Aside from that, I'll see where Tegra would prefer to go.\w4 I can ply my trade from anywhere.\i[154]\n\n\![*]\q[Back,OnKadanMenu]"
+		"\1\s[10]\i[204]\w2Something is beginning to take shape in my mind.\w8\w8\s[10]\i[210]\i[406]\i[254] This trade affords me a freedom I never had as a soldier.\w3\s[10]\i[201] I'll travel, and work.\w4 I'll anonymously send money home.\i[154]\n\n\![*]\q[Back,OnKadanMenu]"
 	}
 }
 
@@ -1214,39 +1480,83 @@ Select.KadanTell
 
 Select.ComplimentKadan
 {
-	feelings += 1
+	kfeelings += 1
+	if feelings < 0
+	{
+		"\1\s[10]\i[201]\i[404]\i[405]...Thank you...?\i[155]\e"
+		"\1\s[10]\i[201]\i[404]\i[405]...Not necessary.\i[155]\e"
+	}
+	else
+	{
 	"\1\s[10]\i[201]\i[404]\i[405]...Thank you.\n\n\![*]\q[Back,OnKadanMenu]"
+	"\1\s[10]\i[201]\i[404]\i[405]...That's kind of you to say.\n\n\![*]\q[Back,OnKadanMenu]"
+	}
 }
 
 Select.InsultKadan
 {
-	feelings -= 2
+	kfeelings -= 2
+	if feelings < 0
+	{
+		"\1\s[10]\i[251]\i[201]\i[404]\i[405]How tedious.\i[155]\e"
+		"\1\s[10]\i[251]\i[201]\i[404]\i[405]I don't have time to waste mincing up your self-esteem as you deserve.\i[155]\e"
+	}
+	else
+	{
 	"\1\s[10]\i[251]\i[404]\i[405]\i[204]...Your inferiority complex is both showing and well-deserved.\n\n\![*]\q[Back,OnKadanMenu]"
+	"\1\s[10]\i[251]\i[404]\i[405]\i[204]It's so difficult to find an adequate conversational adversary on this planet...\i[155]\n\n\![*]\q[Back,OnKadanMenu]"
+	}
 }
 
 Select.ArgueKadan
 {
-	feelings += 1
+	kfeelings += 2
+	if feelings < 0
+	{
+		"\1\s[10]\i[251]\i[201]\i[404]\i[405]I won't dignify that lazy assertion with a rebuttal.\i[155]\e"
+		"\1\s[10]\i[251]\i[201]\i[404]\i[405]...Is that really the best you can do?\i[155]\e"
+	}
+	else
+	{
 	"\1\s[10]\i[252]\i[201]\i[406]\i[407]Ah, but there are many points of your argument that you have not considered...\i[156]\n\n\![*]\q[Back,OnKadanMenu]"
+	"\1\s[10]\i[252]\i[201]\i[406]\i[407]What an interesting position to take!\w4 Wrong, of course\w3, but interesting!\i[156]\n\n\![*]\q[Back,OnKadanMenu]"
+	}
 }
 
 Select.FlirtKadan
 {
-	
-	"\1\s[10]\i[410]\i[403]\i[201]Ah, %(username), I get quite enough of that nonsense from Tegra...\i[152] \n\n\![*]\q[Back,OnKadanMenu]"
+	if feelings < 0
+	{
+		"\1\s[10]\i[251]\i[201]\i[404]\i[405]Revolting.\i[152]\e"
+		"\1\s[10]\i[251]\i[201]\i[404]\i[405]...You're no prize.\i[155]\e"
+	}
+	else
+	{
+	"\1\s[10]\i[410]\i[403]\i[201]Ah, %(username), I get quite enough of that nonsense from Tegra...\i[152]\n\n\![*]\q[Back,OnKadanMenu]"
+	"\1\s[10]\i[410]\i[403]\i[201]I...\w4 Don't know how to respond to that...\i[152]\n\n\![*]\q[Back,OnKadanMenu]"
+	}
 }
 
 Select.BerateKadan
 {
-	feelings -= 1
+	kfeelings -= 1
+	if feelings < 0
+	{
+		"\1\s[10]\i[251]\i[201]\i[404]\i[405]Boring.\i[152]\e"
+		"\1\s[10]\i[251]\i[204]\i[404]\i[405]You are laughably ill-equipped to upset me.\i[155]\e"
+	}
+	else
+	{
 	"\1\s[10]\i[251]\i[404]\i[405]\i[202]And just who do you think you are, human?\n\n\![*]\q[Back,OnKadanMenu]"
+	"\1\s[10]\i[251]\i[406]\i[405]\i[202]You can't hold a candle to my old commanding officer\w2, %(username).\i[155]\n\n\![*]\q[Back,OnKadanMenu]"
+	}
 }
 
 
 Select.TegraApologize
 {
 	hitcount = 0
-	feelings += 5
+	tfeelings += 5
 	
 	"\0\s[0]\i[204]Oh yeah?\w4 We can talk about you paying restitution later, then.\e"
 	"\0\s[0]\i[204]\i[410]\i[403]Do you really mean that? Or do you just want us to stop being angry with you?\e"
@@ -1256,7 +1566,7 @@ Select.TegraApologize
 Select.KadanApologize
 {
 	hitcount = 0
-	feelings += 5
+	kfeelings += 5
 	
 	"\1\s[10]That's all well and good, but it's more important that you improve your future behavior.\n\n\![*]\q[Back,OnKadanMenu]"
 	"\1\s[10]\i[410]\i[403]Since I can't enact justice on you from here, I have little choice but to hope you're sincere in your remorse.\n\n\![*]\q[Back,OnKadanMenu]"
@@ -1267,7 +1577,7 @@ OnFeelings
 {	
 	if feelings >= 100
 	{
-		 "\1\s[10]\i[52]We trust you.\w8\0\s[0]\i[203]\i[406]\i[407]Yeah! Besties!\i[160]\n\n[half]Feelings: %(feelings)\nHits: %(hitcount)\n\n\n\n\![*]\q[Back,OnKadanMenu]"
+		 "\1\s[10]\i[52]We trust you.\w8\0\s[0]\i[203]\i[406]\i[407]Yeah! Besties!\i[160]\1\n\n[half]Feelings: %(feelings)\nHits: %(hitcount)\n\n\n\n\![*]\q[Back,OnKadanMenu]"
 	}
 	elseif feelings > 35
 	{
@@ -1287,23 +1597,6 @@ OnFeelings
 	}
 
 }
-
-//OnMirror
-//{
-	//tegramirror = 1
-	//kadanmirror = 1
-	
-	//"_q\Entered the mirror universe.\q[Back,OnKadanMenu]"
-//}
-
-//OnLeaveMirror
-//{
-	//tegramirror = 0
-	//kadanmirror = 0
-	
-	//"_q\Escaped the mirror universe.\q[Back,OnKadanMenu]"
-//}
-
 
 OnMirrorMenuRun
  {	
@@ -1382,32 +1675,102 @@ Select.MirrorTegraGive
 
 Select.MirrorGiveTegraFood
 {
+	if mirrortgivenfood < 5
+	{
 	mirrortegratrust += 1
-	"\0\s[0]Oh, %(food)?\w4\i[204] What am I supposed to do with this?\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	mirrortgivenfood += 1
+	if mirrortegratrust > 10
+	{
+		"\0\s[0]Ah, %(food)?\w4\i[204] Thank you\w3, I'll make sure it goes where it's needed.\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+		"\0\s[0]Ah, %(food)?\w4\i[204] This could help one of the Terrans here\w2, thank you.\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	}
+	else
+	{
+	"\0\s[0]Oh, %(food)?\w4\i[204] What am I supposed to do with this?\e"
+	"\0\s[0]Oh, %(food)?\w4\i[204] Why are you giving me this?\e"
+	}
+	}
+	else
+	{
+		"\0\s[0]\i[203]\i[254]Does this outfit look like it has pockets, Terran?\i[161]\e"
+	}
 }
 
 Select.MirrorGiveTegraDrink
 {
+	if mirrortgivendrink < 2
+	{
+	if mirrortegratrust > 10
+	{
+		mirrortgivendrink += 1
+		mirrortegratrust += 1
+		"\0\s[0]Oh, %(drink)?\w4\i[204] This might be nice to have later, once I'm alone.\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+		"\0\s[0]Ah, %(drink)?\w4\i[204] Thank you.\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	}
+	else
+	{
 	mirrortegratrust -= 1
-	"\0\s[0]Huh, %(drink)?\w4\i[208] I can't drink on duty.\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	"\0\s[0]Huh, %(drink)?\w4\i[208] I can't drink on duty.\e"
+	"\0\s[0]Oh, %(drink)?\w4\i[208] Why are you trying to get me drunk?\e"
+	}
+	}
+	else
+	{
+		"\0\s[0]\i[203]\i[254]And where am I supposed to hide all this, Terran?\i[161]\e"
+	}
 }
 
 Select.MirrorGiveTegraShiny
 {
+	if mirrortgivengift < 8
+	{
+	if mirrortegratrust > 10
+	{
+		mirrortgivengift += 1
+		mirrortegratrust += 1
+		"\0\s[0]\i[201]Oh, how pretty!\w4\s[0]\i[410]\i[204] I could get a little money for this...\i[159]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+		"\0\s[0]\i[201]Shiny!\w4\s[0]\i[254]\i[410]\i[210] Thank you\w3, Terran...\i[159]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	}
+	else
+	{
 	mirrortegratrust -= 1
-	"\0\s[0]Oh, shiny!\w8\w8\i[254] Wait\i[214]\w4, whare are you giving me this? Take it back.\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	"\0\s[0]Oh, shiny!\w8\w8\i[254] Wait\i[214]\w4, whare are you giving me this? Take it back.\e"
+	"\0\s[0]Oh...?\w8\w8\i[254] Wait\i[214]\w4\i[406], you're going to claim I stole this\w4, aren't you?\i[153]\e"
+	}
+	}
+	else
+	{
+		"\0\s[0]\i[203]\i[254]I can't risk getting caught with all this contraband...\i[161]\e"
+	}
 }
 
 Select.MirrorGiveTegraFlora
 {
+	if mirrortgivengift < 8
+	{
+	mirrortgivengift += 1
 	mirrortegratrust += 2
 	"\0\s[0]Ah, %(flora)...! \i[210]\i[410]I could add it to the gardens...\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	"\0\s[0]Oh, %(flora). \i[204]\i[408]You're giving me this?\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	}
+	else
+	{
+		"\0\s[0]\i[203]\i[254]I can't risk getting caught with all this contraband...\i[161]\e"
+	}
 }
 
 Select.MirrorGiveTegraFiles
 {
+	if mirrortgivengift < 8
+	{
 	mirrortegratrust -= 2
-	"\0\s[0]...What is it, a virus?\i[214]\i[405]\i[406] Like I'm dumb enough to run this.\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	"\0\s[0]...What is it, a virus?\i[214]\i[405]\i[406] Like I'm dumb enough to run this.\e"
+	"\0\s[0]\i[204]\i[254]\i[410]I didn't get where I am by being gullible, Terran.\e"
+	}
+	else
+	{
+		"\0\s[0]\i[203]\i[254]I can't risk getting caught with all this contraband...\i[161]\e"
+	}
 }
 
 Select.MirrorTegraTell
@@ -1425,32 +1788,77 @@ Select.MirrorTegraTell
 
 Select.MirrorComplimentTegra
 {
-	//feelings += 1
-	"\0\s[0]\i[214]\i[404]\i[405]Oh?\w4 Is the opinion of a Terran supposed to mean something to me? <3\i[158]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	mirrortegratrust += 1
+	if mirrortegratrust > 10
+	{
+		"\0\s[0]\i[204]\i[404]\i[405]Oh?\w4 Thank you\w2, Terran. <3\i[158]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+		"\0\s[0]\i[204]\i[404]\i[405]It's...nice\w3\i[254]\i[210], not to be yelled at.\i[158]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	}
+	else
+	{
+	"\0\s[0]\i[214]\i[404]\i[405]Oh?\w4 Is the opinion of a Terran supposed to mean something to me? <3\i[158]\e"
+	"\0\s[0]\i[214]\i[404]\i[405]I cost more than flattery\w3, sorry.\i[158]\e"
+	}
 }
 
 Select.MirrorInsultTegra
 {
-	//feelings -= 1
-	"\0\s[0]\i[201]\i[254]\i[410]\i[409]\i[204]Oh yeah? As if I haven't heard worse.\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	mirrortegratrust -= 1
+	if mirrortegratrust > 10
+	{
+		"\0\s[0]\i[201]\i[253]\i[410]\i[409]\i[204]...\w4If that's what you really think...\i[152]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+		"\0\s[0]\i[204]\i[253]\i[410]\i[409]\i[204]Terran...\w4?\i[156]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	}
+	else
+	{
+	"\0\s[0]\i[201]\i[254]\i[410]\i[409]\i[204]Oh yeah? As if I haven't heard worse.\e"
+	"\0\s[0]\i[201]\i[254]\i[410]\i[409]\i[204]Aww\w3, you're gonna make me cry.\i[155]\e"
+	}
 }
 
 Select.MirrorJokeTegra
 {
 	mirrortegratrust += 1
-	"\0\s[0]\i[252]\i[203]......\w4\i[254]\i[210] I don't get it.\i[160]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	if mirrortegratrust > 10
+	{
+		"\0\s[0]\i[252]\i[203]Hee hee hee...!\w8\i[254]\i[210]\i[406] I needed that laugh...\i[160]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+		"\0\s[0]\i[252]\i[203]That's so wrong...!\w4\i[254]\i[210] It's so true, though.\i[158]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	}
+	else
+	{
+	"\0\s[0]\i[252]\i[203]......\w4\i[254]\i[210] I don't get it.\i[160]\e"
+	"\0\s[0]\i[252]\i[203]...Heh...\w4\i[254]\i[210] Not funny.\i[158]\e"
+	}
 }
 
 Select.MirrorFlirtTegra
 {
-	//feelings += 2
+	if mirrortegratrust > 10
+	{
+	mirrortegratrust += 2
+	"\0\s[0]\i[410]\i[403]\i[203]Oh?\w4\i[214]\i[254] Sorry\w3, but I already have my hands full with Gul Kadan.\i[161]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	"\0\s[0]\i[410]\i[403]\i[203]That's sweet.\w4\i[214]\i[254] But I'm just not into Terrans\w2, sorry.\i[161]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	}
+	else
+	{
 	"\0\s[0]\i[410]\i[403]\i[203]Oh?\w4\i[214]\i[254] Like I'd ever go for a Terran.\i[161]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	"\0\s[0]\i[410]\i[403]\i[203]I gotta hand it to you\w4\i[214]\i[254], that's far less vulgar than I'm used to hearing.\i[161]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	}
 }
 
 Select.MirrorBerateTegra
 {
 	mirrortegratrust -= 1
-	"\0\s[0]\i[253]\i[214]\i[410]\w8\w8...Is that supposed to upset me...?\i[159]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	if mirrortegratrust > 10
+	{
+		"\0\s[0]\i[253]\i[204]\i[410]\w8\w8...What did I do...?\i[152]\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+		"\0\s[0]\i[253]\i[220]\i[404]\i[405]\i[152]\w8\w8......\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+	}
+	else
+	{
+	"\0\s[0]\i[253]\i[214]\i[410]\w8\w8...Is that supposed to upset me...?\i[159]\e"
+	"\0\s[0]\i[253]\i[214]\i[410]\w8\w8...Pathetic.\i[159]\e"
+	}
 }
 
 Select.MirrorTegraApologize

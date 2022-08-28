@@ -80,11 +80,11 @@ OnFileDrop2
 		}
 		when ".mid", ".wav", ".mp3", ".wma", ".au" //Other file formats you might want to give your ghost a specific response to.
 		{
-			"\0\s[0]Ooh, %(_filename)%(_fileext) is an audio file!\e"
+			"\0\s[0]\i[406]Ooh, %(_filename)%(_fileext) is an audio file!\e"
 		}
 		others //Any other file format. As a note here, if you drop something ghost-related on them that does not have an install.txt, then they won't install it and will just say this response. If you are testing your balloon or nar files and you get this response instead of a proper installation, you should check and make sure you have an install.txt in the file!
 		{
-			"\0\s[0]Oh??? This is %(_filename)%(_fileext)!\e"
+			"\0\s[0]\i[410]\i[254]Oh??? This is %(_filename)%(_fileext)!\e"
 		}
 	}
 }
@@ -93,19 +93,19 @@ OnFileDrop2
 
 Select.SetWallpaper_0
 {
-	"\![set,wallpaper,%(Wallpaperfile),center]\0\s[0]There!\w8\1\n\n[half]\s[10]Perfectly centered.\e"
+	"\![set,wallpaper,%(Wallpaperfile),center]\0\s[0]There!\w8\1\n\n[half]\s[10]Perfectly centered.\i[154]\e"
 }
 Select.SetWallpaper_1
 {
-	"\![set,wallpaper,%(Wallpaperfile),tile]\0\s[0]We tiled the image for you!\w8\1\n\n[half]\s[10]Very meditative.\e"
+	"\![set,wallpaper,%(Wallpaperfile),tile]\0\s[0]\i[204]We tiled the image for you!\w8\1\n\n[half]\s[10]\i[201]Very meditative.\e"
 }
 Select.SetWallpaper_2
 {
-	"\![set,wallpaper,%(Wallpaperfile),stretch]\0\s[0]Done!\w8\1\n\n[half]\s[10]...Hopefully the image didn't get distorted.\e"
+	"\![set,wallpaper,%(Wallpaperfile),stretch]\0\s[0]\i[203]Done!\w8\1\n\n[half]\s[10]...Hopefully the image didn't get distorted.\e"
 }
 Select.SetWallpaper_Cancel
 {
-	"\0\s[0]You don't want to set the file as your desktop background?\w8\1\n\n[half]\s[10]Understood.\e"
+	"\0\s[0]\i[410]You don't want to set the file as your desktop background?\w8\1\n\n[half]\s[10]Understood.\e"
 }
 
 
@@ -114,7 +114,7 @@ Select.SetWallpaper_Cancel
  
 OnInstallBegin
  {
-	"\0\s[0]We'll totally install this file!\w8\1\n\n[half]\s[10]This zip or nar contains an install.txt file, so make sure you read it.\e"
+	"\0\s[0]\i[204]\i[406]We'll totally install this file!\w8\1\n\n[half]\s[10]\i[204]This zip or nar contains an install.txt file, so make sure you read it.\e"
  }
 
  //---- OnInstallComplete -------------------------------------------------------
@@ -124,54 +124,52 @@ OnInstallComplete
  {
 	"\0" //this means your main character will be speaking first, therefore the \s[] at the beginning of each line will be defining your main character's pose.
  	--
-	if reference0 == "shell" //This is checking to see if what you installed is classified as a shell in the install.txt. Remember the line in install.txt that said type,ghost or type,shell? This is why that line is important, that's what tells the program what it's installing like so.
+	if reference0 == "shell" 
  	{	
-		if reference1 == "Tegra and Kadan Spa Day Shell" //This is the name of your shell as you defined in descript.txt in the shell folder.
+		if reference1 == "Tegra and Kadan Spa Day Shell" 
 		{
-		"\s[0]We installed %(reference1)!\w8\1\n\n[half]\s[10]Huzzah.\e"
+		"\s[0]\i[203]We installed %(reference1)!\w8\1\n\n[half]\s[10]Huzzah.\e"
 		//Replace if needed.
 		}
-		elseif reference1 == "Another totally real shell wow" //As in other files, you can use elseif to expand a list like this to include as many shells as you have or think you'll make. See bootend.dic for more details about elseif.
+		elseif reference1 == "Tegra and Kadan Mirrorverse Shell" 
 		{
-		"\s[0]We have installed another totally real shell.\e"
-		//Replace if needed.
+		"\s[0]\i[203]We installed %(reference1)!\w8\1\n\n[half]\s[10]\i[210]Sounds a bit edgy.\e"
 		}
 		else //For any other shell they may install.
 		{
-		"\s[0]We've installed a new shell.\w8\1\n\n[half]\s[10]It's called  %(reference1).\e"
-		//%(reference1) here would be the name of the shell they installed. Replace if needed.
+		"\s[0]\i[203]We've installed a new shell.\w8\1\n\n[half]\s[10]It's called  %(reference1).\e"
 		}
  	}
 	elseif reference0 == "ghost" //if the type of the file they're installing is a ghost.
  	{
-		"\s[0]We installed a new Ghost!\w8\1\n\n[half]\s[10]It's called %(reference1).\e"
+		"\s[0]\i[203]We installed a new Ghost!\w8\1\n\n[half]\s[10]It's called %(reference1).\e"
 		//Reference1 here would be the name of the ghost. Replace as needed.
  	}
 	elseif reference0 == "balloon" //if the type of file is a balloon
  	{
-		"\s[0]We installed a new balloon!\w8\1\n\n[half]\s[10]It's called %(reference1).\e"
+		"\s[0]\i[203]We installed a new balloon!\w8\1\n\n[half]\s[10]It's called %(reference1).\e"
 		//Reference1 here would be the name of the balloon. Replace as needed.
  	}
 	elseif reference0 == "plugin" //if the type of file is a plug-in, like a saori of some kind.
  	{
-		"\s[0]We installed a plug-in!\w8\1\n\n[half]\s[10]It's called %(reference1).\e"
+		"\s[0]\i[203]We installed a plug-in!\w8\1\n\n[half]\s[10]It's called %(reference1).\e"
 		//Reference1 here would be the name of the plug-in. Replace as needed.
  	}
 	elseif reference0 == "calendar skin" //if the type of file is a calendar skin
 	{
-		"\s[0]We installed a calendar skin!\w8\1\n\n[half]\s[10]It's called %(reference1)."
+		"\s[0]\i[203]We installed a calendar skin!\w8\1\n\n[half]\s[10]It's called %(reference1)."
 	}
 	elseif reference0 == "headline" //if the file/url you drop on them is counted as a headline. To be honest with you I don't know what determines whether a url is a headline or what.
 	{
-		"\0\s[0]We set up a headline!\w8\1\n\n[half]\s[10]It's called %(reference1).\e"
+		"\0\s[0]\i[203]We set up a headline!\w8\1\n\n[half]\s[10]It's called %(reference1).\e"
 	}
 	elseif reference0 == "rss" //this is more clearly for when you drag an rss feed onto your ghost. you can find rss feeds on sites by looking for the little rss icon, it kind of looks like a little satellite. you can google more info on rss feeds if you're curious!
 	{
-		"\0\s[0]We set up a headline!\w8\1\n\n[half]\s[10]It's called %(reference1).\e"
+		"\0\s[0]\i[203]We set up a headline!\w8\1\n\n[half]\s[10]It's called %(reference1).\e"
 	}
 	else //for any other file they'd install
 	{
-		"\s[0]We installed %(reference1)!"
+		"\s[0]\i[203]We installed %(reference1)!"
 	}
 }
 
@@ -182,15 +180,13 @@ OnInstallFailure
  {
 	"\0\s[0]\i[202]\i[253]Oops! The installation failed.\n\n[half]\w5" //this first bit of dialogue begins the explanation of what happened. You can replace this with an appropriate intro statement.
 	--
-	if reference0 == "unsupported" //These if statements determine how it happened to finish the piece of dialogue. This checks if the reason it failed is because it was unsupported.
+	if reference0 == "unsupported" 
 	{
 	"It looks like this file is unsupported...\e"
-	//Replace with whatever dialogue for an unsupported file you may come up with.
 	}	
 	elseif reference0 == "extraction" //This checks if the file didn't extract properly.
 	{
 	"The file couldn't be extracted properly...\e"
-	//See above but for a failed extraction.
 	}
  }
  
@@ -199,22 +195,18 @@ OnInstallFailure
  
 OnInstallRefuse
  {
-	"\0\s[0]We can't install this! \w4It might be for %(reference0) instead...?\e"
-	
-	//reference0 in this function refers to the ghost this file is associated with, probably the name of the ghost listed in its install.txt file. You would see this if you dropped a shell made for a different ghost on your current ghost, for example. They can't install a shell for themselves they can't use, right? Anyway, replace this with what you wish, you can use the reference0 envelope or not if you want.
+	"\0\s[0]\i[202]\i[253]\i[410]We can't install this! \w4It might be for %(reference0) instead...?\e"
  }
-
 
 //**** Uninstallation ******************************************
 //You may have noticed in the configuration menus in menu.dic an option to turn Uninstall on or off, as well as a greyed out option to uninstall in the right click menu. These following functions relate to the uninstallation process when it's on. Replace the dialogue in each function as we go along.
-
 
 //--OnVanishSelecting
 //When you select the uninstall option in the menu.
 
 OnVanishSelecting
 {
-	"\0\s[0]Oh, %(username) is deciding whether or not to uninstall our Ghost.\w8\1\n\n[half]\s[10]Just be mindful of what you select here, %(username), if you don't intend to uninstall.\e"
+	"\0\s[0]\i[410]Oh, %(username) is deciding whether or not to uninstall our Ghost.\w8\1\n\n[half]\s[10]\i[204]Just be mindful of what you select here, %(username)\w4, if you don't intend to uninstall.\e"
 }
 
 //OnVanishSelected
@@ -231,7 +223,7 @@ OnVanishSelected
 
 OnVanishCancel
 {
-	"\0\s[0]I guess our Ghost isn't getting uninstalled after all.\w8\1\n\n[half]\s[10]Fine.\e"
+	"\0\s[0]\i[410]I guess our Ghost isn't getting uninstalled after all.\w8\1\n\n[half]\s[10]\i[201]Fine.\e"
 }
 
 //--OnVanishButtonHold
@@ -239,7 +231,7 @@ OnVanishCancel
 
 OnVanishButtonHold
 {
-	"\1\s[10]Oh, have you changed your mind, %(username)?\e"
+	"\1\s[10]\i[204]Oh, have you changed your mind, %(username)?\e"
 }
 
 
@@ -248,33 +240,25 @@ OnVanishButtonHold
  
 OnVanished
  {
-	"\0\s[0]\1\s[10]%(reference0) has been uninstalled, it seems.\w8\0\n\n[half]\s[0]Kadan and I are on deck to pick up the slack!\e"
-	
-	//reference0 here is the name of the other ghost.
+	"\0\s[0]\1\s[10]\i[201]%(reference0) has been uninstalled, it seems.\w8\0\n\n[half]\s[0]\i[204]Kadan and I are on deck to pick up the slack!\i[158]\e"
 }
 
 
 //**** Mail Checking *******************************************************************
 //The next set of functions have to do with checking your email. This function is a slippery little thing - I've had people test it following my directions and have it work, but I've never actually gotten it to report back the right amount of emails myself. Very frustrating. But perhaps you'll have more luck with it, haha.
-//Girl and Triangle can't actually read your email, they can just tell you how many emails you have. I've seen ghosts that can read the HEADERS of email, but I still don't think ghosts can actually display the contents of an email. You should be using your actual email client for that. It's still kind of a neat feature though.
-
-
 //*********************Advanced User Info*******************************
-//These text boxes are meant for those who have an interest in expanding or using more complicated functions in their ghost. Also for my own reference in the future since I plan on using this template too, haha. If you have no interest in any of this and just want to keep things as simple as possible, feel free to skip these boxes.
-
 //If you want to set up your ghost to check your mail so you can more easily check these messages instead of just writing the dialogue and moving on, it's a little bit tricky, but not super hard.
 //Basically, you're going to need to find your POP settings for your email account. Googling your provider + POP should bring it up pretty quick. Once you have the info, you'll go to the right click menu, options, then preferences. A big menu should pop up, and you should see POP in the left side. Click that, and input all the info from the POP page you looked up for your account. Tell your ghost to check your email, and if it works, then congratulations!
 //***********************************************************************
-
 
  //---- OnBIFFBegin ---------------------------------------------------------------
  //When you first tell the ghost to check your email. An intro statement, if you will. Replace with whatever you like.
  
 OnBIFFBegin
  {
-	"\0\s[0]Let's see if you have any mail, %(username)!\e"
+	"\0\s[0]\i[204]Let's see if you have any mail, %(username)!\e"
 	
-	"\1\s[10]Keeping up on your correspondence, how reliable.\e"
+	"\1\s[10]\i[204]Keeping up on your correspondence\w3, how reliable.\e"
  }
 
  
@@ -291,10 +275,9 @@ OnBIFFComplete
  	{
  		"\0\s[0]You have one new email.\e"
 	}
-	elseif reference0 > 1 && reference0 < 11 //If you have more than one email but less than eleven.
+	elseif reference0 > 1 && reference0 < 11 
 	{
 		"\0\s[0]You have %(reference0) emails!\e"
-		//reference0 here stores the amount of new email it finds.
 	}
 	elseif reference0 > 100 //If there are over one hundred new emails.
 	{
@@ -302,7 +285,7 @@ OnBIFFComplete
 	}
  	else //For any other number of emails.
 	{
-		"\0\s[0]You have %(reference0) emails!\e"
+		"\0\s[0]\i[204]You have %(reference0) emails!\e"
  	}
 }
 
@@ -313,22 +296,20 @@ OnBIFFFailure
  {
 	if reference0 == "timeout" //If the connection times out.
  	{
- 		"\0\s[0]\i[251]Aw, charity! The connection timed out.\i[161]\e"
+ 		"\0\s[0]\i[251]\i[203]\i[406]\i[407]Aw, charity!\w3 The connection timed out.\i[161]\e"
 	}
  	elseif reference0 == "kick" //If the account blocks the ghost from accessing it. I think gmail may do this at first to try and protect your account from unapproved applications using it. It gives you the option to change the setting in the warning email they send you about it.
 	{
-		"\0\s[0]\i[254]\i[202]Whoops!\s[0] We can't access your mail account.\e"
+		"\0\s[0]\i[254]\i[202]Whoops!\w4\s[0]\i[204]\i[410] We can't access your mail account.\e"
  	}
 	elseif reference0 == "defect" //If the information put into the POP menu is wrong.
  	{
  		"\0\s[0]\i[254]\i[410]No offense, but I don't think your email account was set up right.\w8\1\n\n[half]\s[10]You can reset it at the POP menu.\w8\![open,configurationdialog]\e"
-		
 		//Note that this ends with \![open,configurationdialog]. This will open up the preferences menu I described above automatically. More on \! functions in the walkthrough. You can delete the \! tag here if you want to.
 	}
  	else //if there's some other kind of error.
 	{
 		"\0\s[0]Ah, we can't connect to the account...\i[152]\w8\1\n\n[half]\s[10]The error returned was '%(reference[0])', just so you know.\e"
-		
 		//reference0 here stores the error message the email server would have given the ghost, hopefully.
  	}
 }
@@ -337,17 +318,14 @@ OnBIFFFailure
  //**** Network Update *****************************************************************
  //The following functions are for the Network Update of your ghost, where it will connect to your website, check for new files, and update itself. This is a handy feature, but tricky to set up. If you have no intention of using Network Update, you can disregard these, but it won't hurt to fill them out anyway just in case. More details about how to set up Network Update are in the walkthrough (http://www.ashido.com/ukagaka/).
  
- //Replace the dialogue in the next set of functions as appropriate. You can easily test these messages using the Developer panel. Go to Open at the bottom of it and choose one of the four Update Event options to simulate a Ghost's update process. I highly recommend doing this at LEAST once if you're going to use this feature to make sure it flows well.
-
- 
  //---- OnUpdateBegin -------------------------------------------------------------
  //When you first tell your ghost to update. An introductory statement, like OnBIFFBegin above. Replace or add more dialogue as appropriate. Note that they end with \w8 to give a little breather time.
  
 OnUpdateBegin
  {
-	"\0\s[0]We're starting the update process, okay?\w8\e"
+	"\0\s[0]\i[204]\i[406]We're starting the update process, okay?\w8\e"
 	
-	"\1\s[10]We'll be starting the update process now. You're welcome.\w8\0\n\n[half]\s[0]I hope %(username) followed the instructions.\w4\i[212] I get confused...\w8\1\s[10]\n\n[half]And quite easily,\0\s[0]\i[202]\i[254]\i[152]\1\s\[10] at that.\e"
+	"\1\s[10]\i[204]\i[404]We'll be starting the update process now. You're welcome.\w8\0\n\n[half]\s[0]I hope %(username) followed the instructions.\w4\i[254]\i[212] I get confused...\w8\1\s[10]\n\n[half]And quite easily,\0\s[0]\i[202]\i[254]\i[152]\1\s\[10] at that.\e"
  }
 
  //---- OnUpdateReady ---------------------------------------------------------
@@ -358,7 +336,7 @@ OnUpdateReady
  
 	reference0++ //makes sure it starts at 1 instead of 0
 	
-    "\1\s[10]There are %(reference0) new files available.\w8\e"
+    "\1\s[10]\i[406]\i[201]There are %(reference0) new files available.\w8\e"
 	
 	//reference0 here storing the number of new files. You don't have to use it if you don't want to.
  }
@@ -371,13 +349,13 @@ OnUpdateComplete
  {
 	if reference0 == "none" //if the ghost had nothing to update with
  	{
- 		"\1\s[10]There are no new files available.\e"
+ 		"\1\s[10]\i[201]There are no new files available.\e"
 		
-		"\1\s[10]We have no new files to update with.\e"
+		"\1\s[10]\i[201]We have no new files to update with.\e"
 	}
  	else //if the ghost has updated successfully
 	{
-		"\1\s[10]Update successful. How satisfying.\w8\0\n\n[half]\s[0]Yaay!! <3\e"
+		"\1\s[10]Update successful.\i[201] How satisfying.\i[154]\w8\0\n\n[half]\s[0]\i[203]Yaay!! <3\i[160]\e"
  	}
 }
 
@@ -396,7 +374,7 @@ OnUpdateFailure
  	}
 	else //for other errors
  	{
- 		"\1\s[10]The update could not be completed. Our apologies.\w8\0\n\n[half]\s[0]\i[210]Hmm...The error is '%(reference0)'..?\e"
+ 		"\1\s[10]The update could not be completed.\w3\i[201] Our apologies.\w8\0\n\n[half]\s[0]\i[210]Hmm...The error is '%(reference0)'..?\e"
 	}
  }
 
@@ -407,15 +385,15 @@ OnUpdateFailure
  
 OnUpdate.OnDownloadBegin
  {
- 	if "aitalk" _in_ reference0 //this is checking to see what kind of files are being downloaded. In this case, it's looking for files called aitalk in the download queue. If you want to have a specialized bit of dialogue for each type of file, you can expand this with elseifs and by replacing aitalk with whatever file you have in mind. Keep in mind my warning above though.
+ 	if "aitalk" _in_ reference0 
  	{
- 		"\0\s[0]We're going to download more dialogue!\w8\1\n\n[half]\s[10]\i[201]As if she needs to talk even more... It's in the aitalk file.\e"
+ 		"\0\s[0]\i[204]\i[252]We're going to download more dialogue!\i[160]\w8\1\n\n[half]\s[10]\i[201]As if she needs to talk even more...\i[404] It's in the aitalk file.\i[152]\e"
  	}
  	else //for files not specified above
  	{
-	"\1\s[10]We've found a new file.\e"
+	"\1\s[10]\i[406]\i[204]We've found a new file.\e"
 	
-	"\0\s[0]Oooooh, a shiny new file!\e"
+	"\0\s[0]\i[203]Oooooh, a shiny new file\i[160]e"
 	}
  }
 
@@ -424,7 +402,7 @@ OnUpdate.OnDownloadBegin
  
 OnUpdate.OnMD5CompareBegin
  {
-	"\1\s[10]Checking the MD5 value.\e"
+	"\1\s[10]\i[201]Checking the MD5 value.\e"
  }
 
  //---- OnUpdate.OnMD5CompareComplete --------------------------------------------------
@@ -432,7 +410,7 @@ OnUpdate.OnMD5CompareBegin
  
 OnUpdate.OnMD5CompareComplete
  {
-	"\0\s[0]MD5 check okay!!! <3\e"
+	"\0\s[0]\i[203]MD5 check okay!!! <3\i[158]\e"
 }
 
  //---- OnUpdate.OnMD5CompareFailure ---------------------------------------------------
@@ -440,10 +418,9 @@ OnUpdate.OnMD5CompareComplete
  
 OnUpdate.OnMD5CompareFailure
  {
-	"\0\s[0]\i[253]\i[202]The MD5 values don't match!\w8\1\n\n[half]\s[10]\i[204]A file could be missing or incomplete. Please check on it.\e"
+	"\0\s[0]\i[253]\i[202]The MD5 values don't match!\w8\1\n\n[half]\s[10]\i[204]\i[402]A file could be missing or incomplete. Please check on it.\e"
  }
 
- 
  
  //**** Headlines and RSS Feeds *********************************************************
  //This section has to do with the RSS feeds option on your ghost. If you drag and drop a url on them, they'll add it to a list you can access via the right-click menu, and they'll tell you the last set of updates for the site. This works best with RSS feeds I think, but you can experiment with other sites to see how it works.
@@ -455,7 +432,7 @@ OnUpdate.OnMD5CompareFailure
  
 OnHeadlinesenseBegin
  {
-	"\0\s[0]You picked %(reference0)!\e"
+	"\0\s[0]\i[204]You picked %(reference0)!\e"
  }
 
  //---- OnHeadlinesense.OnFind --------------------------------------------------------
@@ -500,8 +477,7 @@ OnHeadlinesense.OnFind
 
 Select.Headline_Cancel
 {
-	"\0\s[0]Done looking at headlines! <3\e"
-	//Actually I take that back, you can change this line of dialogue here for when you're done looking at a headline to something else if you want.
+	"\0\s[0]\i[203]Done looking at headlines! <3\i[158]\e"
 }
 
  //---- OnHeadlinesenseComplete -------------------------------------------------------
@@ -509,8 +485,7 @@ Select.Headline_Cancel
  
 OnHeadlinesenseComplete
  {
-	"\0\s[0]I didn't find any updates! %(reference0).\e"
-	//reference0 here supposedly always stores the value no update? Again this isn't hugely clear from what I can see. Anyway, this dialogue has never come up for me while using a ghost, so perhaps someone else who runs into it can offer more clarity. For now, you can leave it as is, or write up something else in here if you like.
+	"\0\s[0]\i[204]I didn't find any updates! %(reference0).\e"
  }
 
  //---- OnHeadlinesenseFailure ---------------------------------------------------------
@@ -518,7 +493,7 @@ OnHeadlinesenseComplete
  
 OnHeadlinesenseFailure
   {
-	"\0\s[0]...I can't update the feed...?\w8\1\n\n[half]\s[10]Why is that, Tegra?\w8\0\n\n[half]\s[0]\n\n[half]" //This sets up an exchange between the two characters. The final part of the exchange continues below in the if statements.
+	"\0\s[0]\i[210]\i[410]...I can't update the feed...?\w8\1\n\n[half]\s[10]\i[406]Why is that, Tegra?\i[156]\w8\0\n\n[half]\s[0]\n\n[half]" //This sets up an exchange between the two characters. The final part of the exchange continues below in the if statements.
  	--
 	if reference0 == "can't download" //if they can't download the rss feed for some reason
  	{
@@ -533,7 +508,7 @@ OnHeadlinesenseFailure
 		"I don't know?!"
  	}
 	--
- 	"\e" //And here is the final /e, so you don't need to include it in the if statements above. Another one of the very rare cases this occurs.
+ 	"\e" 
 }
 
 
@@ -547,7 +522,7 @@ OnHeadlinesenseFailure
  
 OnUpdatedataCreating
  {
-	"\1\s[10]Creating the updates2.dau file.\e"
+	"\1\s[10]\i[201]Creating the updates2.dau file.\e"
  }
 
  //---- OnUpdatedataCreated -------------------------------------------------------------
@@ -555,7 +530,7 @@ OnUpdatedataCreating
  
 OnUpdatedataCreated
  {
-	"\0\s[0]Success~! We created updates2.dau!\e"
+	"\0\s[0]\i[203]Success~!\w3 We created updates2.dau!\i[158]\e"
  }
 
  //---- OnNarCreating ------------------------------------------------------------------
@@ -563,7 +538,7 @@ OnUpdatedataCreated
  
 OnNarCreating
  {
-	"\0\s[0]Creating the .nar file!\e"
+	"\0\s[0]\i[203]Creating the .nar file!\e"
  }
 
  //---- OnNarCreated -------------------------------------------------------------------
@@ -571,8 +546,7 @@ OnNarCreating
  
 OnNarCreated
  {
-	"\1\s[10]Successfully created '%(reference0)'.\e"
-	//reference0 here will be the filename of the nar you just created. It should drop the nar in the folder where all your ghosts are listed, ssp\ghost\.
+	"\1\s[10]\i[201]Successfully created '%(reference0)'.\e"
  }
 
  //****　Clock Synchronization　**********************************************************
@@ -580,7 +554,6 @@ OnNarCreated
 //This set of functions was done by the above Korean coder, I think. I'll leave their comment there untouched. 
 //If you right click your ghost and go into the Utilities menu, there's an option called NTP Time Sync. That's what this is for!
  
-
  //----OnSNTPBegin ------------------------------------------------------------------
  //As with the others you've seen above, this is the beginning bit of dialogue for this process.
  
@@ -589,7 +562,6 @@ OnSNTPBegin
 	"\0\s[0]We're going to check the time!\w9\1\n\n[half]\s[10]We are connecting to %(reference0).\e"
 	//%(reference0) here is the site they'll be using to check your clock. I wouldn't worry too much about what the site is or where it's defined, it should be accurate. Replace the dialogue with what you need, you don't have to use reference0 if you don't want to.
  }
-
 
  //----　OnSNTPCompare----------------------------------------------------------
  //Now the ghost is going to compare the current time of your computer's system to the time of the site they connected to. Most of this you don't have to touch, just replace the dialogue as indicated.
@@ -602,12 +574,11 @@ OnSNTPCompare
 	--
  	if reference3 == 0 //if your clock is already accurate.
 	{
- 		"\0\s[0]Nice! Your clock is accurate!\e" //replace this with whatever message you like.
+ 		"\0\s[0]\i[203]Nice! Your clock is accurate!\i[158]\e" 
 	}
  	else //if your clock doesn't match
 	{
-	//you can redo this top line up to the \n\n[half] part, but leave the \q options alone.
- 		"\1\s[10]Your clock doesn't match!\w6\nShould we fix it for you?\n\n[half]/
+ 		"\1\s[10]Your clock doesn't match. \w6\nShould we fix it for you?\n\n[half]/
 		\![*]\q[Fix it,OnSNTPEXECUTE]\n/
  		\![*]\q[Leave it alone,OnSNTPCANCEL]\e"
 	}
@@ -618,7 +589,7 @@ OnSNTPCompare
  
 OnSNTPEXECUTE
  {
-	"\1\s[10]The clock has been fixed. You're welcome.\6\e"
+	"\1\s[10]The clock has been fixed.\w4\i[204] You're welcome.\6\e"
  }
 
  //----　OnSNTPCANCEL ------------------------------------------------------------------
@@ -626,7 +597,7 @@ OnSNTPEXECUTE
  
 OnSNTPCANCEL
  {
-	"\0\s[0]Okay, %(username), we won't change the clock.\e"
+	"\0\s[0]\i[204]Okay, %(username), we won't change the clock.\e"
  }
 
  //----　OnSNTPFailure ------------------------------------------------------------------
@@ -634,7 +605,7 @@ OnSNTPCANCEL
  
 OnSNTPFailure
  {
-	"\0\s[0]Ummm, we couldn't change the clock.\w8\1\n\n[half]\s[10]Something went wrong, it seems.\e"
+	"\0\s[0]\i[210]Ummm, we couldn't change the clock.\w8\1\n\n[half]\s[10]Something went wrong, it seems.\e"
  }
 
 
@@ -655,8 +626,7 @@ OnDisplayChange
  
 OnScreenSaverStart
  {
-	"\0\s[0]The screensaver is starting?! What's that???\w7\1\n\n[half]\s[10]Some primitive tech feature...?\e"
-	//Replace with what you want.
+	"\0\s[0]\i[254]The screensaver is starting?!\w4 What's that???\w7\1\n\n[half]\s[10]\i[253]\i[406]Some primitive tech feature...?\e"
  }
 
  //---- OnScreenSaverEnd -------------------------------------------------------
@@ -664,17 +634,15 @@ OnScreenSaverStart
  
 OnScreenSaverEnd
  {
-	"\0\s[0]The screensaver is gone?! That was weird!\e"
-	//Replace with what you want.
+	"\0\s[0]\i[254]The screensaver is gone?!\w4 That was weird!\e"
  }
-
 
  //---- OnApplicationBoot ---------------------------------------------------------------
  //This supposedly is for when a program starts but I have honestly never gotten it to work or seen it happen. I wouldn't sweat these three related functions too much.
  
 OnApplicationBoot
  {
-	"\0\s[0]%(reference0) booted!\e"
+	"\0\s[0]\i[252]\i[203]%(reference0) booted!\e"
  }
 
  //---- OnApplicationClose --------------------------------------------------------------
@@ -682,7 +650,7 @@ OnApplicationBoot
  
 OnApplicationClose
  {
-	"\0\s[0]%(reference0) closed.\e"
+	"\0\s[0]\i[201]%(reference0) closed.\e"
  }
 
  //---- OnApplicationFileOpen ----------------------------------------------------------
@@ -690,7 +658,7 @@ OnApplicationClose
  
 OnApplicationFileOpen
  {
-	"\0\s[0]Opening %(reference1).\e"
+	"\0\s[0]\i[203]Opening %(reference1).\e"
  }
 
 
@@ -701,7 +669,7 @@ OnApplicationFileOpen
  
 OnBatteryLow
  {
-	"\1\s[10]Ah, %(username), it appears your laptop's battery is low. \w8\0\n\n[half]\s[0]Umm, there's %(reference0) power left.\e"
+	"\1\s[10]\i[204]Ah, %(username), it appears your laptop's battery is low. \w8\0\n\n[half]\s[0]\i[212]Umm, there's %(reference0) power left.\e"
 	//reference0 here is the amount of battery power. Replace as you like.
  }
  
@@ -710,36 +678,14 @@ OnBatteryLow
  
 OnBatteryCritical
 {
-	"\0\s[0]Oh!!! You better plug in your laptop, %(username)!\e"
+	"\0\s[0]\i[204]\i[252]Oh!!! You better plug in your laptop, %(username)!\e"
 }
- 
-//--OnBatteryNotify--------------------------------------------------------------------
-//This I believe checks to see if your laptop is plugged in or not. Originally this bit of code was commented out, so I suspect it may not work. It may need a plug-in of some sort. Either way, you can delete it or fill it out as you like.
-//Actually investigating this, leaving this in makes it so the ghost updates you about whether or not your computer is plugged-in constantly, which makes no sense for desktops. No doubt why it was commented out. You can delete it or just leave it be.
-
-/*
-OnBatteryNotify
-{
-	if reference2 == "online" //If your laptop is plugged in
-	{
-		"\0\s[0]The laptop is plugged in.\e"
-	}
-	elseif reference2 == "offline" //If you unplug your laptop
-	{
-		"\1\s[10]The laptop is not plugged in.\w8\0\s[0]Watch your battery.\e"
-	}
-}
-*/
-
-
- //--OnShellScaling
- //This is a function however that you may actually use! Or at least, I often use it when desktop space is at a premium (which it always is on my computer). If you right click the ghost, you can go to Shell Scaling, which lists a number of different percentages. Those are the percentages your ghost can be scaled in size up or down. You can try them out yourself to get an idea of what I mean. I often scale mine down to get them out of the way sometimes. This adds dialogue whenever you change their scale. You don't have to do this if you don't want to, in which case they will just stay silent when you size them up or down. If that's what you want, just delete the whole thing or leave "" instead of any dialogue.
  
 OnShellScaling
 {
 	if reference0 >= 150 //this number is the percentage that you're scaling the ghost up to. In this case, it's 150%.
 	{
-		"\0\s[0]We're now 150% our original size!\w8\1\s[10]*sigh* I don't care for closeups.\e"
+		"\0\s[0]\i[203]We're now 150% our original size!\w8\1\s[10]\f[italic,true]*sigh*\f[italic,false]\w4\i[201] I don't care for closeups.\e"
 	}
 	elseif reference0 == 100 //this is 100%
 	{
@@ -747,7 +693,7 @@ OnShellScaling
 	}
 	elseif reference0 == 50 //this is 50%. You can add any percentage that's listed under shell scaling if you want using more elseifs.
 	{
-		"\0\s[0]We're now 50% our original size!\w8\1\s[10]I feel more distant.\e"
+		"\0\s[0]\i[252]We're now 50% our original size!\i[154]\w8\1\s[10]I feel more distant.\e"
 	}
 }
 

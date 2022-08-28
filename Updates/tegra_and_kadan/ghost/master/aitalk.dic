@@ -43,20 +43,7 @@ if mirrorverse == 1 //This works so don't touch it, me.
 	OnMirrorRandomTalk
 }
 else
-{
-	
-	//All sentiment levels
-
-	
-	
-	//"\0\s[0]\f[height,20]These words are really large.\f[height,default]\w8\1\s[10]These words are a normal size. \w8\f[height,6]These words are small.\f[height,default]\e"
-	
-	//You can use other fancier SakuraScript bits in your dialogue if you want to get font effects, although I won't get too much into them here. In this case, \f[height,20] changes the height of the font, in this case to 20 or to 6, and then \f[height,default] changes them back to normal. 
-	
-	//"\0\s[0]\f[strike,true]These words are struck out.\f[strike,default]\w8\1\s[10]\f[sub,true]These words are a subscript.\f[sub,false] \f[sup,true]These words are a superscript.\f[sup,false] \f[underline,true]These words are underlined.\f[underline,default] \f[bold,true]These words are bold.\f[bold,false] \f[italic,true]These words are italic.\f[italic,false] \f[color,186,146,112]These words are a color.\f[color,default] This tag would return to default.\f[default]\e"
-	
-	//For the \f[color] tag, the three colors listed are the RGB values of the color you want to use for your text. Change them to whatever color you want to use. \f[default] can be an easy way to quickly go back to the default word setting in your balloon after messing with colors and effects a lot.
-	
+{	
 	//Time of day pools
 	if tegrasleep == "off" && kadansleep == "off"
 	{
@@ -67,7 +54,6 @@ else
 	parallel Pool("Pool_EveningDialogue",timeslot == 'evening' && feelings > 0)
 	parallel Pool("Pool_LateNightDialogue",timeslot == 'latenight' && feelings > 0)
 	parallel Pool("Pool_MidNightDialogue",timeslot == 'midnight' && feelings > 0)
-	
 	//Month pools
 	parallel Pool("Pool_JanuaryDialogue",month == 1 && feelings > 0)
 	parallel Pool("Pool_FebuaryDialogue",month == 2 && feelings > 0)
@@ -81,8 +67,6 @@ else
 	parallel Pool("Pool_OctoberDialogue",month == 10 && feelings > 0)
 	parallel Pool("Pool_NovemberDialogue",month == 11 && feelings > 0)
 	parallel Pool("Pool_DecemberDialogue",month >= 12 && feelings > 0)
-	
-	
 	//Day of week pools
 	parallel Pool("Pool_SundayDialogue",weekday == 0 && feelings > 0)
 	parallel Pool("Pool_MondayDialogue",weekday == 1 && feelings > 0)
@@ -91,18 +75,20 @@ else
 	parallel Pool("Pool_ThursdayDialogue",weekday == 4 && feelings > 0)
 	parallel Pool("Pool_FridayDialogue",weekday == 5 && feelings > 0)
 	parallel Pool("Pool_SaturdayDialogue",weekday == 6 && feelings > 0)
-	}
 	//Sentiment pools
 	parallel Pool("Pool_Dislikeyou",feelings <= 0)
-	parallel Pool("Pool_Likeyou",feelings > 35)
-	parallel Pool("Pool_Neutraltoyou",feelings > 5)
 	parallel Pool("Pool_Conflictedwithyou",feelings > 0 && feelings <= 5)
-	parallel Pool("Pool_Trustyou",feelings > 100)
-
+	parallel Pool("Pool_Neutraltoyou",feelings > 5)
+	parallel Pool("Pool_Likeyou",feelings > 35)
+	parallel Pool("Pool_Trustyou",feelings >= 100)
+	}
+	//Sleep pools
+	parallel Pool("Pool_TegraSleep",tegrasleep == "on" && kadansleep == "off")
+	parallel Pool("Pool_KadanSleep",kadansleep == "on" && tegrasleep == "off")
+	parallel Pool("Pool_BothSleep",kadansleep == "on" && tegrasleep == "on")
 	}
 	
 }
-
 
 //--Chains
 achain
@@ -201,7 +187,7 @@ reincarnationchain
 {{CHAIN
 	"\0\s[0]Um, if reincarnation isn't real, then how do you explain my whole species, huh?\i[155]\w8\1\n\n[half]\s[10]Tegra, that doesn't-\0\s[0]\i[410]\i[403]\i[201]\n\n[half]Checkers, atheist~!\i[156]\w8\1\s[10]\i[251]\i[404]\i[405]\n\n[half]First of all, the phrase is ''checkmate, atheist''\w3, and you've done no such thing.\w5 Your people can't \f[italic,true]really\f[italic,false] think children are reincarnations of prior lives in this day and age?\e"
 	
-	"\0\s[0]If people don't get reborn over and over, then what's happens to everyone who dies?\w8\1\n\n[half]\s[10]Simple:\w3 once we die\w2, we cease to exist.\w8\w8\0\s[0]\i[254]\i[201]\n\n[half]Well, that's just\w2, like\w4, stupid.\i[155]\e"
+	"\0\s[0]If people don't get reborn over and over, then what happens to everyone who dies?\w8\1\n\n[half]\s[10]Simple:\w3 once we die\w2, we cease to exist.\w8\w8\0\s[0]\i[254]\i[201]\n\n[half]Well, that's just\w2, like\w4, stupid.\i[155]\e"
 	
 	"\1\s[10]\i[251]And how is that stupid?\w2 It's the logical conclusion.\w8\0\n\n[half]\s[0]Like, okay then, Vulcan Science Directorate. Why does everything else circulate around except people?\w4 It's like the water cycle\w2, or latinum moving through the economy.\e"
 	
@@ -235,7 +221,7 @@ speciesnamechain
 
 mochain
 {{CHAIN
-	"\0\s[0]No, no, I mean the\i[406]\i[407] \f[italic,true]premise\f[italic,false]...!\w8\1\n\n[half]\s[10]My universal translator must be malfunctioning.\w8\0\s[0]\n\n[half]Nit and Mo! You know, how Nit keeps \i[408]\i[403]''accidentally'' saving Mo's life \i[406]\i[212]even though it'd be way more profitable for Nit to let him die so he can take over as DaiMon?\e"
+	"\0\s[0]No, no, I mean the\i[406]\i[407] \f[italic,true]premise\f[italic,false]...!\w8\1\n\n[half]\s[10]My universal translator must be malfunctioning.\w8\0\s[0]\n\n[half]Nit and Mo! You know, how Nit keeps \i[408]\i[403]''accidentally'' saving Mo's life \s[0]\i[406]even though it'd be way more profitable for Nit to let him die so he can take over as DaiMon?\i[158]\e"
 	
 	"\0\s[0]\i[254]\i[406]\i[407]Don't tell me you like Mobus better than Nitmo.\w6\i[201] Bus Betar is such a boring character.\i[156]\w8\1\n\n[half]\s[10]\i[253]You make less sense the longer you speak.\i[155]\e"
 	
@@ -246,11 +232,13 @@ partychain
 {{CHAIN
 	"\1\s[10]I don't \w2, but do tell.\w8\0\n\n[half]\s[0]\i[410]I wish they'd stop asking about Ferenginar, you know?\w4 They don't actually care about anything going on with us.\w4\s[0]\i[220] They just want to, like, insult us and brag about how perfect they are.\i[156]\w8\1\s[10]\n\n[half]\i[201]\i[253]Hm. That is indeed extremely ill-mannered.\e"
 
-	"\0\s[0]At least you're honest about thinking Cardassia's better than everywhere else.\w8\1\n\n[half]\s[10]Which it is.\w8\0\s[0]\n\n[half]But they were all\w2\i[212]\i[406] ''oh nooooo\w2, I.D.I.C. or whatever\w2, we're all just people and junk''\w4\s[0]\i[254]\i[206] and then spent like half an hour talking down to me about how horrible my homeworld is right to my face.\w2\i[409] Like, I'm a ferengi, too?\w2 Hello?\w3 I'm not an idiot.\e"
+	"\0\s[0]At least you're honest about thinking Cardassia's better.\w8\1\n\n[half]\s[10]Which it is.\w8\0\s[0]\n\n[half]But they were all\w2\i[212]\i[406] ''oh noooo\w2, I.D.I.C. or whatever\w2, we're all just people''\w4\s[0]\i[254]\i[206] and then spent like half an hour talking down to me about how horrible my homeworld is\w4 right to my face!\w2\i[409] Like\w3, I'm a ferengi, too?\w2 Hello?\w3 I'm not an idiot.\e"
 
-	"\1\s[10]\i[404]Federation arrogance is its own special breed.\i[156]\0\n\n[half]\s[0]\i[203]Like...!\w4\s[0]\i[408]\i[407] I know \f[italic,true]way\f[italic,false] better than them what's wrong with Ferenginar!\w6 Instead\w2 I end up having to defend a planet I left the first chance I got because I feel too gross agreeing with the hu-mons.\w8\w8\s[0]\i[206]\i[253] And it's a waste of time to explain anything about the reforms or the protests or \f[italic,true]any\f[italic,false] of it. They don't care.\w8\1\s[10]\n\n[half]I've noticed the people on Earth are quite sheltered when it comes to interstellar geopolitics.\e"
+	"\1\s[10]\i[404]Federation arrogance is its own special breed.\i[156]\0\n\n[half]\s[0]\i[203]Like...!\w4\s[0]\i[408]\i[407] I know \f[italic,true]way\f[italic,false] better than them what's wrong with Ferenginar!\w6 Instead\w2 I end up having to defend it because I feel too gross agreeing with the hu-mons.\e"
+	
+	"\s[0]\i[206]\i[253] And it's a waste of time to explain anything about the reforms or the protests or \f[italic,true]any\f[italic,false] of it. They don't care.\w8\1\s[10]\n\n[half]I've noticed the people on Earth are quite sheltered when it comes to interstellar geopolitics.\e"
 
-	"\0\s[0]Like, that thing male ferengi do where they wait for you to stop talking and like\w4, pat you on the head and go\w2\i[201]\i[408] ''that's nice, my dear.''\w6\i[158]\w8\s[0]\i[206] They'll do the same\w4\i[251] \f[italic,true]frinxing\f[italic,false]\w4 thing here, just less obvious.\w4\s[0]\i[254] But if you say that\w3 they act like you bit them\w2, or something.\w8\1\s[10]Oh, do bite them next time.\w3 I'd like to see that.\i[154]\e"
+	"\0\s[0]Like\w3, that thing male ferengi do where they wait for you to stop talking and like\w4, pat you on the head and go\w2\i[201]\i[408] ''that's nice, my dear.''\w6\i[158]\w8\s[0]\i[206] They'll do the same\w4\i[251] \f[italic,true]frinxing\f[italic,false]\w4 thing here, just less obvious.\w4\s[0]\i[254] But if you say that\w3 they act like you bit them\w2, or something.\w8\1\s[10]Oh, do bite them next time.\w3 I'd like to see that.\i[154]\e"
 
 	"\1\s[10]Sounds like an irritating way to while away an evening.\w8\0\n\n[half]\s[0]It super was!\w8\w8\i[210]\i[410] Thanks for letting me, like\w3\s[0]\i[254], vent at you, Kadan.\i[161]\w8\1\s[10]\n\n[half]\i[406]Oh, any time, Tegra. You know I enjoy a good airing of greivances.\i[154]\0\s[0]\i[158]\i[201]\e"
 }}CHAIN
@@ -276,15 +264,40 @@ bothsleepstart
 	"\0\s[1]Zzzz...\1\s[11]...Zzzz...\e:chain=end"
 }}CHAIN
 
+//Variable reset chains
+tegrawake
+ {{CHAIN
+	tegrasleep = "off"
+	
+	"\0\s[1]...zzz...\w5 Mmm?\w5\s[0]\i[254]\i[152]\i[201]\i[406]\i[407]\w8\w8\w8 Oh,\w4\s[0]\i[254] wow, was I asleep?\w4 Haha, whoops! <3\i[158]\e:chain=end"
+ }}CHAIN
+
+kadanwake
+{{CHAIN
+	kadansleep = "off"
+	
+	"\1\s[11]...zzz...\w5 Snrk?\w5\s[10]\i[252]\i[152]\i[201]\i[406]\i[407]\w8\w8\w8 Oh,\w4\s[10]\i[252] Oh dear, I drifted off...\w4 I mean...\i[55]\i[404]\i[405] I was just resting my eyes...!\e:chain=end"
+}}CHAIN
+
+bothwake
+{{CHAIN
+	tegrasleep = "off"
+	kadansleep = "off"
+	
+	"\1\s[11]\0\s[1]\1\s[10]\i[202]\i[410]\i[403]...Gah!\w4\0\n\n[half]\s[0]\i[251]\i[406]\i[407]Eek!!!\w3 W-what???\i[152]\e:chain=end"
+}}CHAIN
+
 tegrasleepend
 {{CHAIN
 	tegrasleep = "off"
+	kadansleep = "off"
 	"\1\s[10]\i[201]\i[404]Such a ridiculous girl...\w8\w8 Tegra, wake up.\0\n\n[half]\s[1]...zzz...zzz...zzz...\1\s[10]\n\n[half]\i[251]\i[402]\f[bold,true]Tegra!\f[bold,false]\w8\0\s[0]\n\n[half]\i[202]\i[406]\i[407]Aaaa!\i[154]\w8\1\s[10]\n\n[half]\i[251]\i[406]Don't just doze off like that, it's rude.\i[152]\w8\0\s[0]\n\n[half]\i[410]Oh, was I asleep???\e:chain=end"
 }}CHAIN
 
 kadansleepend
 {{CHAIN
 	kadansleep = "off"
+	tegrasleep = "off"
 	"\0\s[0]...I guess I should, like\w4\i[254], wake her up...?\1\n\n[half]\s[11]......zzz......\w8\0\s[0]\n\n[half]Kadan?\w6\i[210]\i[410] Hey, is there an exam today?\i[156]\w8\1\s[10]\n\n[half]...! \w4\i[202]\i[254]Exam?! When?\w4\i[408] What time is it?!\i[152]\w8\0\s[0]\n\n[half]\i[212]Oh, silly Tegra!\w4\i[404]\i[405] I was looking at the wrong section of my calendar.\w4\s[0]\i[203] Never mind!\i[155]\w8\1\s[10]\n\n[half]Ah, that's good then.\w8\w8\i[404] I'm so drowsy.\w4\i[253] I didn't fall asleep, did I?\i[156]\w8\0\s[0]\n\n[half]What?\w5 Nooooo\w3\i[203], of course not!\i[157] <3\e:chain=end"
 }}CHAIN
 
@@ -296,13 +309,17 @@ bothsleepend
 	"\1\s[10]\w8\w8\i[202]Oh dear, is that the time?\w8\0\n\n[half]\s[1]...Mmm? Is what the what?\i[155]\w8\1\s[10]\n\n[half]\i[251]\i[404]\f[bold,true]Tegra, wake up!\f[bold,false]\w8\0\s[0]\n\n[half]\i[202]\i[252]Aah! I'm up!\w3 Don't yell at me!\i[152]\w8\w8\w8\i[201]\i[253]\i[406]\i[407] You were asleep too...\i[155]\w8\1\s[10]\n\n[half]\i[210]\i[408]...How embarrassing, dozing off life that.\i[155]\w8\0\s[0]\n\n[half]\i[254]\i[206]\i[410]Kadan, it wasn't even for that long. Like, calm down.\w8\1\s[10]\n\n[half]\i[251]\i[404]\i[202]This is because you're always interfering with my sleep schedule.\i[152]\e:chain=end"
 }}CHAIN
 
+//Hidden question chains
+tegratoothsnafu
+{{CHAIN
+	"\0\s[0]\i[152]\i[203]\i[253]\i[406]\i[407]\1\s[10]\i[204]\i[404]\i[403]\![set,choicetimeout,0]Ah, %(username), assist me in talking Tegra down\w3, please? Reassure her that she has perfectly cromulent teeth.\n\n[half]\![*]\q[All teeth are valid,teethvalid]\n\![*]\q[They're snaggled and gross,teethgross]\e:chain=end"
+}}CHAIN
+
 //Pools
 //***************************************************************************
 //Sentiment pools
 Pool_Neutraltoyou : array //feelings > 5
 {
-	if tegrasleep == "off" && kadansleep == "off"
-	{
 	//Feelings up or down
 	"\0\s[0]\i[204]\i[410]\i[403]\![set,choicetimeout,0]Hey, %(username), do you like holonovels? Or, like, whatever they call them in your time?\n\n[half]\![*]\q[Love them!,hololove]\n\![*]\q[They're okay,holomeh]\n\![*]\q[They're stupid,holohate]\e"
 	
@@ -311,6 +328,8 @@ Pool_Neutraltoyou : array //feelings > 5
 	"\0\s[0]\i[204]\i[410]\i[403]\![set,choicetimeout,0]Hey, %(username), do you like listen to a lot of music?\n\n[half]\![*]\q[I listen a lot!,musiclove]\n\![*]\q[Sometimes,musicmeh]\n\![*]\q[I don't like music,musichate]\e"
 
 	"\1\s[10]\i[204]\i[410]\i[403]\![set,choicetimeout,0]I'm preparing for a gallery show, %(username).\w4 Do you appreciate art at all?\n\n[half]\![*]\q[Waste of time,arthate]\n\![*]\q[I don't like modern art much,artmeh]\n\![*]\q[Art is so important,artlove]\e"
+
+	"\0\s[0]\i[201]\i[251]\i[407]Ugh!\w4 Why do people here keep mistaking me for a male?\w8\s[0]\i[204] %(Capitalize(username))\w3, do you think my ears look that big?\n\n[half]\![*]\q[What? No!,smallear]\n\![*]\q[You could fly away with those,bigear]\e"
 		
 	//USER focused	
 	"\0\s[0]What do you think of %(username), Kadan?\w8\1\n\n[half]\s[10]I'd prefer not to discuss the matter while %(heshe) can hear us.\e"
@@ -445,7 +464,6 @@ Pool_Neutraltoyou : array //feelings > 5
 	"\0\s[0]\i[406]\i[407]Kadan, what's your favorite color?\w8\1\n\n[half]\s[10]\i[410]\i[403]My favorite color? I suppose it's %(color).\w8\0\n\n[half]\s[0]I guess that's a nice color.\w8\1\n\n[half]\s[10]Indeed.\e"	
 	
 	//Shells
-	
 	if nowshell == "master" 
 	{
 	"\0\s[0]\i[406]\i[407]Kadan, you always look so elegant!\w8\1\n\n[half]\s[10]It's simply the same practical dress I normally wear...\e"
@@ -485,60 +503,6 @@ Pool_Neutraltoyou : array //feelings > 5
 	"\1\s[10]\i[208]I'm not tired...\w8...\w8 At all.\w8\w8\s[11]\e:chain=kadansleepstart"
 	
 	"\0\s[0]\i[253]...Like, I'm so\w4\i[218] tired all of a sudden...\s[1]\1\n\n[half]\s[10]\i[404]\i[405]It's because...\w4\i[208]you stay up too late...\w4at night...\s[11]\e:chain=bothsleepstart"
-	}
-	//Sleep
-	elseif tegrasleep == "on" && kadansleep == "off"
-	{
-		"\0\s[1]...Don't fall out... ...hydrofoil again...\w8\1\n\n[half]\s[10]\i[404]\i[405]...Silly girl...\i[156]\w8\0\s[1]\i[254]\n\n[half]Tag... ...you silly...\i[158]\e"
-		
-		"\0\s[1]...Hmmm\w5... \f[italic,true]Fafa\f[italic,false], can't Tag clean the grow-out tanks today...\w8...did it last time...\i[152]\e"
-		
-		"\0\s[1]\i[260]\i[407]...zzz... \1\n\n[half]\s[10]What is she dreaming about, I wonder.\w8\0\s[1]\n\n[half]\i[254]\i[407]Zzzzz...zzz...\e"
-		
-		"\0\s[1]\1\s[10]How ridiculous.\w8\0\n\n[half]\s[1]\i[406]\i[407]...Horse...scary...\i[152]\w8\1\s[10]\n\n[half]\i[253]Honestly...\w8\0\s[1]\n\n[half]\i[253]...Where... ...rest of its legs\i[152]...?\e"
-		
-		"\0\s[1]...Vik...?\w5\i[254] ...mad at...?\w8\1\i[254]\i[404]\i[405]\0\s[1]\i[252]\i[408]\n...'cause I left...?\w8\w8 ...\n\f[italic,true]yop-im too\f[italic,false]...\w7\i[406] ...just...\i[253]\w5\n ...my messages...\w4please?\w8\w8\n ...answer\i[152]...?\e"
-		
-		"\0\s[1]\i[254].....Zzzz\w4 ...\e:chain=tegrawake"
-		
-		"\0\s[1]\i[253]\i[410]...Eyes\w4...without...\w5 ... \_a[https://www.youtube.com/watch?v=9OFpfTd0EIs] a face\_a...~\i[159]\e"
-		
-		"\1\s[10]\i[404]\i[405]I hope she doesn't sing in her sleep this time,\w4 it's so disquieting...\i[212]\w8\0\n\n[half]\s[1]\i[254]...Big...\w4shot... \w6Now's your...\w4\_a[https://www.youtube.com/watch?v=uivFFnCI8tM] chance~\_a\i[159]\w8\1\s[10]\i[406]\i[407]\i[252]\n\n[half]...\i[201]So disquieting.\i[152]\e"
-		
-		"\0\s[1]...zzz...they only\w6 ...you're...\w417...\w8\w8 ...when...\w4 ...21...\w4\_a[https://www.youtube.com/watch?v=s6jaYJx7yeI] \i[253]...You're no fun...~\_a\e"
-		
-		"\0\s[1]...zzz...you can\w6 ...everything...\w4...\w8\w8 ...you...\w4 ...got...\w4\_a[https://www.youtube.com/watch?v=hvnTVruvwWM] ...strawberry skies...~\_a\i[158]\e"
-		
-		"\0\s[1]...zzz...are weak\w6\i[254] ...carry...\w4...\w8\w8 ...me...\w4 ...strong...\w4 cry...\w4\_a[https://www.youtube.com/watch?v=ptSGHC2ikd0] ...let...me go...~\_a\i[159]\e"
-	}
-	elseif kadansleep == "on" && tegrasleep == "off"
-	{
-		"\0\s[0]\i[254]\i[410]...?\w8\1\n\n[half]\s[10]\i[254]\i[201]\i[408]......Laille... ...don't fret now...\w8\0\s[0]\i[254]\i[406]\i[407]\n\n[half]\i[252]\i[159]...!\e"
-		
-		"\1\s[11]\i[404]...Teg..ra...\w8\0\n\n[half]\s[0]\i[252]\i[203]\i[410]\i[403]Oh??? <3\i[157]\w8\1\s[11]\i[251]\i[404]...hold still...\w5 Need...\w5 sanding...\w8\0\s[0]\i[254]\n\n[half]Hey, I'm not a statue!\w4\i[406]\i[407] Kadan\w2, have a normal dream about me!!!\i[161]\w8\1\s[11]\n\n[half]\i[253]...zzz...\w4 Behave...\i[156]\e"
-		
-		"\1\s[11]\0\s[0]\i[254]\i[410]How is she sleeping upright like that?\i[159]\e"
-		
-		"\1\s[11]...Mmrmph... Zzz...zzz...\w8\i[252] Can we...\w4 get a wompat...\w4 Mother...?\w8\0\n\n[half]\s[0]\i[254]\i[406]\i[403]O.\w8\w4M.\w8\w4\E.\w8\w8\s[0]\i[203] That's adorable...!\i[158]\w8\1\s[11]\n\n[half]\i[251]...'Course I'll...\w4 ...care of it\i[156]...\e"
-		
-		"\1\s[11]Zzzz....\w8 ...zzz...\w8\0\n\n[half]\s[0]\i[253]\i[406]\i[407]Wow, she must be really tired...\i[154]\e"
-		
-		"\1\s[11].....Zzzz...\e:chain=kadanwake"
-	}
-	elseif tegrasleep == "on" && kadansleep == "on"
-	{
-		"\0\s[1]......zzzzz....\w8\1\s[11]....zzz.......zzz....\e"
-		
-		"\0\s[1]Zzz...\w4 ...Wiggles...\w4\i[254] ...have in your mouth...?\w8\1\n\n[half]\s[11]\n\n[half]...zzz...\w4\i[251] ...Nothing...\i[152]\w8\0\s[1]\n\n[half]\i[406]\i[407]...back here...\w4\i[251] ...drop it...!\i[161]\e"
-		
-		"\0\s[1]\1\s[11].....Snrk!\0\n\n[half]...?\e:chain=bothwake"
-		
-		"\1\s[11].....Snrk!\w6 ...?\e:chain=kadanwake"
-		
-		"\0\s[1].....Snrk!\w6\i[254] ...?\e:chain=tegrawake"
-	}
-	
-
 }
 
 Pool_Dislikeyou : array //feelings < 0
@@ -583,8 +547,9 @@ Pool_Conflictedwithyou : array //feelings > 0 && feelings <= 5
 
 Pool_Likeyou : array //feelings > 35
 {
-	if tegrasleep == "off" && kadansleep == "off"
-	{
+	//Feelings up or down
+	"\0\s[0]\i[204]\i[410]\i[403]\![set,choicetimeout,0]Hey, %(username), would you smooch an alien?\n\n[half]\![*]\q[Who wouldn't?!,smoochyes]\n\![*]\q[It depends,smoochmaybe]\n\![*]\q[Ew! Gross!,smoochno]\e"
+
 	//USER focused
 	"\0\s[0]\i[203]\i[404]\i[405]Even when we're not talking directly, you're so nice to have around, %(username).\i[158]\w8\1\n\n[half]\s[10]\i[252]There is something oddly reassuring about this temporal anomaly we're sharing, true.\i[154]\i[201]\e"
 	
@@ -627,6 +592,8 @@ Pool_Likeyou : array //feelings > 35
 	"\0\s[0]Kadan, you're from a military family, right?\1\n\n[half]\s[10]\w8That's correct, going many generations back.\0\s[0]\w8\n\n[half]\i[408]\i[409]\i[252]Teach me martial arts!\i[154]\1\s[10]\i[404]\i[405]\w8\n\n[half]That's not-\0\s[0]\w8\n\n[half]\i[406]\i[407]Teach me \i[202]swords!!!\1\s[10]\i[208]\w8\w8\n\n[half]...Tegra\w4, no.\i[155]\e"
 	
 	"\1\s[10]Your family farms\w4, isn't that right\w2, Tegra?\0\n\n[half]\s[0]\i[252]Yep!\w4 We're one of the last family-owned farms in the province.\1\s[10]\w8\n\n[half]The others being state-run?\0\s[0]\w8\n\n[half]Huh?\w4 No, they're corporate\w3, natch.\1\s[10]\i[210]\w8\n\n[half]Of course\w4, my mistake.\e"
+
+	"\0\s[0]\i[254]Kadan, why did you and your sister have the same name?\w6\i[410] Is that common?\i[156]\w8\1\n\n[half]\s[10]\i[404]...No, it's not.\w4\i[408]\i[210] You needn't overthink it, though.\e"
 	
 	"\0\s[0]...Kadan, you have siblings, right?\1\n\n[half]\s[10].\w3.\w3.\w3.\w3.\w3.\e:chain=siblingchain"
 	
@@ -672,16 +639,10 @@ Pool_Likeyou : array //feelings > 35
 	
 	"\0\s[0]\i[252]Let's get married\w2, Kadan!\i[158] <3\1\n\n[half]\s[10]You do realize that cardassian marriages have no end date\w2, yes?\w3 They're forever.\w8\0\s[0]\i[410]\i[403]\n\n[half]Forever?\i[254]\w8\1\s[10]\i[201]\i[406]\i[407]\n\n[half]Yes\w3, forever.\w8\0\s[0]\i[254]\i[212]\i[406]\i[403]\n\n[half]For\f[italic,true]ever\f[italic,false] ever?\w8\1\s[10]\i[251]\i[404]\i[405]\n\n[half]What's not clicking?\w8\0\s[0]\i[253]\i[202]\i[406]\i[407]\n\n[half]Forever \w4\f[italic,true]ever\f[italic,false] ever?\i[152]\e"
 	
-	
-	}
 }
-
-
 
 Pool_Trustyou : array //feelings > 100
 {
-	if tegrasleep == "off" && kadansleep == "off"
-	{
 	//College
 	"\0\s[0]...\w8\i[204]This one time, last year, Kadan got locked out of the fine arts building in the middle of winter without her coat.\w8\i[253]\i[216]\w8 By the time she got back to our quarters, she was practically a popsicle with scales.\i[152]\e:chain=hypothermchain"
 	
@@ -695,15 +656,18 @@ Pool_Trustyou : array //feelings > 100
 	"\1\s[10]Tell me Tegra\w2, is your twin brother much like you?\w8\0\n\n[half]\s[0]Oh, no way!\i[254] I mean\w3, I guess we look kind of similar?\w4 \i[252]But I'm way smarter.\i[157]\w8\1\s[10]\n\n[half]How perfectly terrifying.\e"
 	
 	"\0\s[0]Tag must be done with his apprenticeship by now. \i[410]\i[403]\i[210]...I wonder how he's doing...\e"
+
+	"\0\s[0]Is it okay if I call you Laille sometimes?\w8\1\n\n[half]\s[10]\i[408]If we're alone\w3, I suppose.\e"
 	
 	//Politics
 	"\0\s[0]You ever wonder how things are going back home?\w8\1\n\n[half]\s[10]Every moment of every day, yes.\w8\0\s[0]\i[210]]\n\n[half]Sometimes I feel a little guilty, like, being here.\w8\1\s[10]\i[201]\n\n[half]...As do I, every moment of every day.\e"
 
 	"\1\s[10]\i[253]\i[406]How did you enjoy that party you went you yesterday evening?\w8\0\s[0]\i[254]\i[203]\i[407]Ugh, like...\w4\s[0]\i[251] The people here are nice, but they're so annoying sometimes.\w4\i[220] Especially hu-mons.\i[152]\e:chain=partychain"
+
+
 	
 	//Relationships
-	
-	"\0\s[0]\i[410]\i[403]Kadan, do you avoid dating because you're inexperienced?\w8\1\n\n[half]\s[10]\i[251]\i[202]\i[410]\i[403]\f[italic,true]Excuse me?!\i[152]\f[italic,false]\w8\0\s[0]\n\n[half]I'm just saying, you can totally practice on me if you want! I'm a judgment-free zone.\w8\1\s[10]\i[251]\i[404]\i[405]\n\n[half]Leaving aside how wildly inappropriate it is to broach such a personal subject in public\w5, why in the world would you proposition one of your friends?\i[157]\w8\0\s[0]\i[254]\i[404]\i[405]\n\n[half]\w4...Um\w4,duh? Because we're friends??? Do cardassians not have friends?\i[156]\e"
+	"\0\s[0]\i[410]\i[403]Kadan, do you avoid dating because you're sexually inexperienced?\w8\1\n\n[half]\s[10]\i[251]\i[202]\i[410]\i[403]\f[italic,true]Excuse me?!\i[152]\f[italic,false]\w8\0\s[0]\n\n[half]I'm just saying, you can totally practice on me if you want! I'm a judgment-free zone.\w8\1\s[10]\i[251]\i[404]\i[405]\n\n[half]Leaving aside how wildly inappropriate it is to broach such a personal subject in public\w5, why in the world would you proposition one of your friends?\i[157]\w8\0\s[0]\i[254]\i[404]\i[405]\n\n[half]\w4...Um\w4, duh? Because we're friends??? Do cardassians not have friends?\i[156]\e"
 	
 	"\1\s[10]\i[252]\i[404]\i[405]Tegra, you really must stop introducing me to people as your girlfriend.\w8\0\n\n[half]\s[0]\i[410]\i[403]How come?\w8\1\s[10]\i[251]\i[410]\i[403]\i[202]\n\n[half]Because it's untrue!\0\s[0]\i[201]\n\n[half]Ohhhh, okay.\w8\1\s[10]\n\n[half]Was that really so difficult?\0\s[0]\i[406]\i[407]\i[212]\n\n[half]...So, if I introduce you as my future wife instead, that won't be \f[italic,true]un\f[italic,false]true...\i[500]\i[155]\w8\1\s[10]\i[201]\n\n[half]You're incorrigible.\w5\i[55]\i[406]\i[407] If I ever say yes, you're going to have a nervous breakdown.\i[154]\e"
 	
@@ -711,7 +675,68 @@ Pool_Trustyou : array //feelings > 100
 	
 	"\1\s[10]Will D'eklaar be joining us for tea again next time?\w8\0\n\n[half]\s[0]\i[252]I'll totally ask her!\w4 I'm glad you two get along. <3\i[158]\w8\1\s[10]\i[410]\i[403]\n\n[half]It's nice to have another non-Federationer to talk to.\w8\0\s[0]\i[203]\n\n[half]I still say we should all share quarters next year.\i[158]\w8\1\s[10]\n\n[half]Hn.\w6\i[404]\i[405] D'eklaar is a fine woman, but I don't know if can withstand living with a klingon.\w8\i[201] A ferengi is enough trouble.\i[154]\0\s[0]\i[254]\i[202]\i[408]\i[409]\i[154]\e"
 
-	}
+}
+
+//Sleep pools (test)
+Pool_KadanSleep : array
+{
+	"\0\s[0]\i[254]\i[410]...?\w8\1\n\n[half]\s[10]\i[254]\i[201]\i[408]......Laille... ...don't fret now...\w8\0\s[0]\i[254]\i[406]\i[407]\n\n[half]\i[252]\i[159]...!\e"
+		
+	"\1\s[11]\i[404]...Teg..ra...\w8\0\n\n[half]\s[0]\i[252]\i[203]\i[410]\i[403]Oh??? <3\i[157]\w8\1\s[11]\i[251]\i[404]...hold still...\w5 Need...\w5 sanding...\w8\0\s[0]\i[254]\n\n[half]Hey, I'm not a statue!\w4\i[406]\i[407] Kadan\w2, have a normal dream about me!!!\i[161]\w8\1\s[11]\n\n[half]\i[253]...zzz...\w4 Behave...\i[156]\e"
+		
+	"\1\s[11]\0\s[0]\i[254]\i[410]How is she sleeping upright like that?\i[159]\e"
+		
+	"\1\s[11]...Mmrmph... Zzz...zzz...\w8\i[252] Can we...\w4 get a wompat...\w4 Mother...?\w8\0\n\n[half]\s[0]\i[254]\i[406]\i[403]O.\w8\w4M.\w8\w4\E.\w8\w8\s[0]\i[203] That's adorable...!\i[158]\w8\1\s[11]\n\n[half]\i[251]...'Course I'll...\w4 ...care of it\i[156]...\e"
+		
+	"\1\s[11]Zzzz....\w8 ...zzz...\w8\0\n\n[half]\s[0]\i[253]\i[406]\i[407]Wow, she must be really tired...\i[154]\e"
+		
+	"\1\s[11].....Zzzz...\e:chain=kadanwake"
+}
+
+Pool_TegraSleep : array
+{
+	"\0\s[1]...Don't fall out... ...hydrofoil again...\w8\1\n\n[half]\s[10]\i[404]\i[405]...Silly girl...\i[156]\w8\0\s[1]\i[254]\n\n[half]Tag... ...you silly...\i[158]\e"
+		
+	"\0\s[1]...Hmmm\w5... \f[italic,true]Fafa\f[italic,false], can't Tag clean the grow-out tanks today...\w8...did it last time...\i[152]\e"
+		
+	"\0\s[1]\i[260]\i[407]...zzz... \1\n\n[half]\s[10]What is she dreaming about, I wonder.\w8\0\s[1]\n\n[half]\i[254]\i[407]Zzzzz...zzz...\e"
+		
+	"\0\s[1]\1\s[10]How ridiculous.\w8\0\n\n[half]\s[1]\i[406]\i[407]...Horse...scary...\i[152]\w8\1\s[10]\n\n[half]\i[253]Honestly...\w8\0\s[1]\n\n[half]\i[253]...Where... ...rest of its legs\i[152]...?\e"
+		
+	"\0\s[1]...Vik...?\w5\i[254] ...mad at...?\w8\1\i[254]\i[404]\i[405]\0\s[1]\i[252]\i[408]\n...'cause I left...?\w8\w8 ...\n\f[italic,true]yop-im too\f[italic,false]...\w7\i[406] ...just...\i[253]\w5\n ...my messages...\w4please?\w8\w8\n ...answer\i[152]...?\e"
+		
+	"\0\s[1]\i[254].....Zzzz\w4 ...\e:chain=tegrawake"
+		
+	"\0\s[1]\i[253]\i[410]...Eyes\w4...without...\w5 ... \_a[https://www.youtube.com/watch?v=9OFpfTd0EIs] a face\_a...~\i[159]\e"
+		
+	"\1\s[10]\i[404]\i[405]I hope she doesn't sing in her sleep this time,\w4 it's so disquieting...\i[212]\w8\0\n\n[half]\s[1]\i[254]...Big...\w4shot... \w6Now's your...\w4\_a[https://www.youtube.com/watch?v=uivFFnCI8tM] chance~\_a\i[159]\w8\1\s[10]\i[406]\i[407]\i[252]\n\n[half]...\i[201]So disquieting.\i[152]\e"
+		
+	"\0\s[1]...zzz...they only\w6 ...you're...\w417...\w8\w8 ...when...\w4 ...21...\w4\_a[https://www.youtube.com/watch?v=s6jaYJx7yeI] \i[253]...You're no fun...~\_a\e"
+			
+	"\0\s[1]...zzz...you can\w6 ...everything...\w4...\w8\w8 ...you...\w4 ...got...\w4\_a[https://www.youtube.com/watch?v=hvnTVruvwWM] ...strawberry skies...~\_a\i[158]\e"
+		
+	"\0\s[1]...zzz...are weak\w6\i[254] ...carry...\w4...\w8\w8 ...me...\w4 ...strong...\w4 cry...\w4\_a[https://www.youtube.com/watch?v=ptSGHC2ikd0] ...let...me go...~\_a\i[159]\e"
+}
+
+Pool_BothSleep : array
+{
+	"\0\s[1]......zzzzz....\w8\1\s[11]....zzz.......zzz....\e"
+		
+	"\0\s[1]Zzz...\w4 ...Wiggles...\w4\i[254] ...have in your mouth...?\w8\1\n\n[half]\s[11]\n\n[half]...zzz...\w4\i[251] ...Nothing...\i[152]\w8\0\s[1]\n\n[half]\i[406]\i[407]...back here...\w4\i[251] ...drop it...!\i[161]\e"
+
+	"\0\s[1]Zzz...\w4 ...wooly slug...\w4\i[254] ...into the mushroom plot again...\w8\1\n\n[half]\s[11]\n\n[half]...zzz...\w4\i[251] ...catch it...\i[152]\w8\0\s[1]\n\n[half]\i[406]\i[407]...all... slimy now...\w4\i[251] ...bad slug...!\i[161]\e"
+		
+	"\0\s[1]\1\s[11].....Snrk!\0\n\n[half]...?\e:chain=bothwake"
+		
+	"\1\s[11].....Snrk!\w6 ...?\e:chain=kadanwake"
+		
+	"\0\s[1].....Snrk!\w6\i[254] ...?\e:chain=tegrawake"
+
+	"\0\s[1]......zzzzz....\w8\1\s[11]....zzz.......zzz....\e:chain=bothsleepend"
+
+	"\0\s[1]......zzzzz....\w8\1\s[11]....zzz.......zzz....\e:chain=kadansleepend"
+
+	"\0\s[1]......zzzzz....\w8\1\s[11]....zzz.......zzz....\e:chain=tegrasleepend"
 }
 
 //Time of Day pools
@@ -1015,24 +1040,25 @@ OnMirrorRandomTalk : nonoverlap
 //Answers for feelings
 Select.hololove
 {
-	feelings +=1
+	tfeelings +=1
 	"\0\s[0]\i[252]\i[203]Same!!!\w4\s[0]\i[204]\i[406] Isn't it so fun to, like, sorta be someone else for a while?\i[158]\w8\1\n\n[half]\s[10]\i[201]\i[254]I hope you're not about to treat us to a debrief of your latest pornographic escapades...\i[152]\w8\0\s[0]\n\n[half]\i[206]\i[410]Um...first of all, erotic art is totally valid, miss ma'am.\w4\s[0]\i[408] And there's lots of not-porn!\i[410]\i[212] Tons of them don't even show\w4\s[0]\i[410]\i[407]\i[201], like\w4, a single butt!\i[161]\e"
 }
 
 Select.holomeh
 {
+	kfeeling += 1
 	"\1\s[10]A measured response, how refreshing.\w8\0\n\n[half]\s[0]\i[410]\i[403]\i[204]Huh.\w4 I mean\w3, that's totally okay.\i[161]\e"
 }
 
 Select.holohate
 {
-	feelings -=1
+	tfeelings -=1
 	"\0\s[0]\i[253]\i[408]\i[409]\i[204]Wow, like, tell me how you really feel, haha.\i[156]\e"
 }
 
 Select.teamnitmo
 {
-	feelings +=1
+	tfeelings +=2
 	"\0\s[0]\i[204]\i[252]\i[406]\i[407]Exactly!!!\i[154]\w8\w8\w8\s[0]\i[203]\i[406]\i[403] Don't Mo and Nit have\w3, like\w3, the best chemistry?\w8\1\n\n[half]\s[10]I don't know what you two are talking about\w3\i[251]\i[201]\i[404]\i[405], but I feel a headache coming on...\w8\0\s[0]\i[204]\i[410]\i[403]\n\n[half]Don't listen to Kadan, %(username).\w4\i[201]\i[254] She doesn't understand about blorbos.\i[158]\e"
 }
 
@@ -1043,13 +1069,13 @@ Select.teammobus
 
 Select.teamnobody
 {
-	feelings -=1
+	tfeelings -=1
 	"\0\s[0]\i[253]\i[410]\i[405]Oh...\w4 Yeah\w4, I guess it was silly to think you'd be into that stuff\w3\i[210], haha.\i[154]\e"
 }
 	
 Select.musiclove
 {
-	feelings +=1
+	tfeelings +=1
 	"\0\s[0]\i[252]\i[203]Yeah!!!\w4\s[0]\i[204]\i[409] A lot of hu-mon music is kinda simple\w4, but it's still fun to dance to.\i[158]\w8\1\n\n[half]\s[10]\i[201]\i[254]Much of it is quite insipid and uninspiring...\i[156]\w8\0\s[0]\n\n[half]\i[206]There's music other than nationalist ballads\w2, Kadan.\w4\s[0]\i[408] And don't pretend you don't have like,\i[410]\i[212]\i[260] a ton of hu-mon symphonic metal on your PADD.\i[160]\w8\1\s[10]\n\n[half]Ugh\w3\i[202]\i[404], stop snooping through my things!\i[152]\e"
 }
 
@@ -1060,13 +1086,13 @@ Select.musicmeh
 
 Select.musichate
 {
-	feelings -=1
+	tfeelings -=1
 	"\1\s[10]\i[204]As vapid as human music is\w4, I don't know that I entirely trust a self-admitted philistine.\w8\0\n\n[half]\s[0]\i[253]\i[406]\i[212]Yeah, and %(heshe) doesn't even appreciate music\w3, either...\i[154]\e"
 }
 
 Select.artlove
 {
-	feelings +=1
+	kfeelings +=1
 	"\1\s[10]\i[201]\i[254]\i[404]Yes, it adds such meaning and context to our lives\w4, does it not?\i[154]\w8\0\n\n[half]\s[0]\n\n[half]\i[410]Like that big stone egg you made last year!\w8\1\s[10]\n\n[half]\i[408] Stone egg?\w4\i[253]\i[208] You mean ''Cardassia, Reborn''\w3 I assume?\i[155]\w8\0\s[0]\n\n[half]\i[407]\i[203]Yeah!\w4 That cool giant egg!\i[160]\e"
 }
 
@@ -1077,10 +1103,55 @@ Select.artmeh
 
 Select.arthate
 {
-	feelings -=1
+	kfeelings -=1
 	"\1\s[10]\i[253]\i[408]\i[409]\i[204]Ah.\w4 How disappointing\w3, %(username).\e"
 }
 
+Select.smallear
+{
+	tfeelings +=2
+	"\0\s[0]\i[204]\i[407]Right??? Thank you!\w4 Like\w2\i[203]\i[254], at least one hu-mon around here has eyes that work!\i[160]\e"
+}
+
+Select.bigear
+{
+	tfeelings -= 2
+	"\0\s[0]\i[208]\i[254]Are you\w3, like\w3, trying to neg me, or something?\w6 \s[0]\i[201]\i[410]You'll have to do better than that!\w4\s[0]\i[212]\i[406]\i[407] I'm in pretty high demand around here, you know?\i[160]\w8\1\s[10]\n\n[half]\i[208]\i[404]Only natural to be in high demand when you're so cheap.\i[156]\w8\0\n\n[half]\s[0]\i[204]\i[409]See?\w4\i[214] \f[italic,true]That's\f[italic,false] a top-quality neg\w2, %(username)!\i[155]\e"
+}
+
+Select.smoochyes
+{
+	tfeelings +=2
+	"\0\s[0]\i[216]See\w3, Kadan?\w4\i[201]\i[409] It's totally normal\w2, %(username) agrees with me.\i[160]\w8\1\s[10]\n\n[half]\i[210]\i[404]That just means you're both libertines.\i[156]\e"
+}
+
+Select.smoochmaybe
+{
+	tfeelings += 1
+	kfeelings += 2
+	"\0\s[0]\i[204]Oh?\w3 Depends?\w4\i[410]\i[210] Could you be dodging the question a little\w3, %(username)?\i[158]\w8\1\s[10]\n\n[half]\i[406]\i[253]Of course %(hesshes) dodging! You asked a rude question\w3, and %(heshe) gave you a polite answer.\e"
+}
+
+Select.smoochno
+{
+	tfeelings -= 2
+	kfeelings -= 1
+	"\0\s[0]\i[204]No?\w3 How come?\w4\i[406]\i[407]\i[202]\i[253] Because the alien has ''creepy sharp teeth''???\i[152]\w8\1\s[10]\n\n[half]\i[406]Alright\w2, who told you your teeth are creepy?\w8\0\s[0]\n\n[half]\i[253]\i[404]\i[405]\i[210]Nobody!\w4 \i[410]It's totally hypothetical!\e:chain=tegratoothsnafu"
+}
+
+Select.teethvalid
+{
+	tfeelings += 2
+	kfeelings += 2
+	"\0\s[0]\i[204]\i[253]\i[406]You really think so\w3, %(username)?\w8\1\s[10]\n\n[half]\i[406]Why would %(heshe) lie to you?\w3 Accept %(hisher) reassurances and let's move on.\w8\0\s[0]\n\n[half]\i[214]Thanks\w2, %(username).\w3\i[220]\i[405]\i[254] Since I got here\w3, people criticize my features a lot and it's giving me\w3, like\w3, a little bit of a complex.\i[153]\e"
+}
+
+Select.teethgross
+{
+	tfeelings -= 2
+	kfeelings -= 5
+	"\0\s[0]\i[202]\i[253]\i[408]\i[409]See?\w4 Even %(username) thinks they're disgusting.\i[162]\w8\1\s[10]\n\n[half]\i[204]\i[251]\i[404]Unbelievable.\w3 How was that necessary\w2, %(username)?\i[155]\w8\w8\s[10]\i[408] Tegra\w3, your teeth are fine.\w4\i[254] Don't you spend an hour each night making sure they're cared for and sharpened?\i[154]\w8\w8\0\s[0]\n\n[half]\i[253]Uh-huh.\w4 You got me that nice cuttlebone to chew on.\i[158]\e"
+}
 
 //Keeps track of if an hour has passed. Just ignore this.
 HourCheck
@@ -1094,13 +1165,19 @@ if passmin >= 59
 	}
 }
 
-
 OnMinuteChange //This is what will trigger time-based dialogue for your Ghost.
  {
 	HourCheck 
 	--
  	if minute == 0 
 	{
+		//Clearing hourly cooldown variables
+		tgivenfood = 0
+		kgivenfood = 0
+		tgivendrink = 0
+		kgivendrink = 0
+		mirrortgivenfood = 0
+		mirrortgivendrink = 0
  		if hour == 12 && nowshell != "mirror"
 		{
  			"\0\s[0]It's noon exactly!\w8\1\n\n[half]\s[10]\i[252]Is that significant in some way?\w8\0\n\n[half]\s[0]\i[406]\i[403]No, I just think it's neat.\i[160]\e"
@@ -1130,7 +1207,6 @@ OnMinuteChange //This is what will trigger time-based dialogue for your Ghost.
 
 //--OnSecondChange
 //Like the above, this handles what happens every time a second goes by. Most of this you will not have to touch.
-
 OnSecondChange
  {
 	if passsec == 59
@@ -1154,9 +1230,7 @@ OnSecondChange
 	}
 	mikireflag = reference1 //reference1 is if the ghost is offscreen or not
 	if reference2 == 1 && nowshell != "mirror"
-	{
- 		//This dialogue is for when the two characters are overlapping each other. If you don't want your characters to care, you can just leave this blank.
-		
+	{		
  		"\0\s[0]Haha! Hi, Kadan! <3\w8\1\s[10]Tegra, please stand a bit farther away; we're in public.\4\e"
 		
 		"\1\s[10]Tegra, how are you constantly getting underfoot? You're worse than a child.\w8\0\s[0]What? I'm literaly, like, standing here.\w8\1\s[10]\4\n\n[half]Well, don't.\e"
@@ -1173,7 +1247,6 @@ OnSecondChange
 
  //---- MikireTalk ---------------------------------------------------------------------
  //MikireTalk is dialogue for when your main character is off-screen. Like if you dragged Girl over to the side of your monitor until she was partially concealed by it.
- 
 MikireTalk
  {
 	"\0\s[0]Whaaaa, where am I...?\w8\1\n\n[half]\s[10]Hn...%(username), you should be able to press Ctrl-Shift-F12 to bring that fool back into view."
@@ -1181,7 +1254,6 @@ MikireTalk
 
  //----EndMikireTalk--------------------------------------------------------------------
  //For after you bring the character back on screen.
- 
 EndMikireTalk
  {
 	"\0\s[0]Oh, that's better!\w8\1\n\n[half]\s[10]Not sure why you couldn't fix that on your own, Tegra.\w8\0\s[0]\i[253]\i[406]\i[407]\i[202]\n\n[half]I!\w4 Don't know how!!!\i[152]\e"
@@ -1189,12 +1261,6 @@ EndMikireTalk
 
 
 //**** OnSurfaceRestore *****************************************************************
-
-//*********************Advanced User Info*******************************
-//You can put if statements in OnSurfaceRestore to make exceptions for certain poses, or to make sure that once they're in a certain pose, they stay in that pose. For example, if you turn my Hunter and Smoker ghost into eggplants, there's a check for the their eggplant pose numbers to make sure they STAY eggplants when OnSurfaceRestore is called.
-//You can also use OnSurfaceRestore to clean up things that might be left on the screen, primarily from using p[number]\s[] to call up other objects or characters. Just make sure to add a p[number]\s[-1] to OnSurfaceRestore, and that should get rid of it each time the ghost cleans itself up.
-//***********************************************************************
-
 OnSurfaceRestore
  {
  	if reference0 == 1 && reference1 != 11  //This is checking what poses they are in. 
@@ -1223,32 +1289,7 @@ OnSurfaceRestore
 	}
  }
  
- //Variable reset chains
-tegrawake
- {{CHAIN
-	tegrasleep = "off"
-	
-	"\0\s[1]...zzz...\w5 Mmm?\w5\s[0]\i[254]\i[152]\i[201]\i[406]\i[407]\w8\w8\w8 Oh,\w4\s[0]\i[254]wow, was I asleep?\w4 Haha, whoops! <3\i[158]\e:chain=end"
- }}CHAIN
-
-kadanwake
-{{CHAIN
-	kadansleep = "off"
-	
-	"\1\s[11]...zzz...\w5 Snrk?\w5\s[10]\i[252]\i[152]\i[201]\i[406]\i[407]\w8\w8\w8 Oh,\w4\s[10]\i[252]Oh dear, I drifted off...\w4 I mean...\i[55]\i[404]\i[405] I was just resting my eyes...!\e:chain=end"
-}}CHAIN
-
-bothwake
-{{CHAIN
-	tegrasleep = "off"
-	kadansleep = "off"
-	
-	"\1\s[11]\0\s[1]\1\s[10]\i[202]\i[410]\i[403]...Gah!\w4\0\n\n[half]\s[0]\i[251]\i[406]\i[407]Eek!!!\w3 W-what???\i[152]\e:chain=end"
-}}CHAIN
- 
- //--OnKeyPress
- //This defines the hotkeys your ghost will use. You can change these to whatever you want, but I don't really know why you would. I'd just leave this alone. Advanced Users can add new hotkeys attached to whatever function if you want.
- 
+ //--OnKeyPress 
 OnKeyPress
 {
 	if reference0 == "t"

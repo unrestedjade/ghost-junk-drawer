@@ -452,7 +452,7 @@ animation150.pattern0,overlay,150,0,0,0
 animation0.interval,random,4
 animation0.pattern0,overlay,-1,100,0,0
 animation0.pattern1,overlay,201,50,0,0
-animation0.pattern2,overlay,216,100,0,0
+animation0.pattern2,overlay,201,100,0,0
 animation0.pattern3,overlay,-1,30,0,0
 
 //--Talking-----------------------------------------------------------------------------
@@ -878,13 +878,9 @@ collision0,86,66,115,101,Face
 collision1,59,38,82,87,Head
 
 //Dressups
-//Glasses
-animation350.interval,bind
-animation350.pattern0,add,401,0,0,0
-
-//Hairpin
+//Head - Orange
 animation50.interval,bind
-animation50.pattern0,add,402,0,0,0
+animation50.pattern0,add,950,0,0,0
 
 //Base element
 element0,overlay,surface11.png,0,0

@@ -46,13 +46,24 @@ OnFirstBoot
 	talktime = "every 5 minutes" //How the value aitalkinterval will display in the config menu.
 	deleteshitai = "OFF" 
 	nowshell = "master" 
-	feelings = 10
+	tfeelings = 5
+	kfeelings = 5
+	feelings = tfeelings + kfeelings
 	hitcount = 0
 	mirrorverse = 0
 	mirrortegratrust = 0
 	mirrorhitcount = 0
+	mirrortgivenfood = 0
+	mirrortgivendrink = 0
+	mirrortgivengift = 0
 	tegrasleep = "off"
 	kadansleep = "off"
+	tgivenfood = 0
+	kgivenfood = 0
+	tgivendrink = 0
+	kgivendrink = 0
+	tgivengift = 0
+	kgivengift = 0
 	
 	firstboot = 1 //This marks that this is the first time you've run the ghost. It's so it won't reroute to general name changing dialogue when the user inputs their name.
 	
@@ -60,7 +71,7 @@ OnFirstBoot
  	{
 		
 		
-		"\![enter,passivemode]\1\s[10]\0\s[0]...Hm. Tegra, are you seeing some primitive human nonsense, too?\w5 Honestly, the last thing I need today is indirect temporal anomaly shenanigans.\w8\0\n\n[half]\s[0]I see it too!\i[204] Oh my gosh, hi~!\w5\i[0] Kadan, look, an old-timey hu-mon!\w5 Time-travel pal!!! <3 \w8\1\n\n[half]\s[10]Tegra, do you suppose the temporal prime directive applies to foreign civilians?\w8\0\s[0]\i[254]\i[33]\n\n[half]The what to the who? \w5\i[252]\i[204]...Do you think the hu-mon can see us?\s[0]\w8\1\n\n[half]\s[10]\i[201]...And I've lost her to yet another shiny new thing. \i[31]\i[52]\w8Human, I've no idea how this happened or how to fix it, so I suppose we might as well make the best of it.\x\c\0\s[0]\i[32]New friend!!!\i[160]\w8\1\c\s[10]\i[52]At the very least, we should find out how to refer to you, human.\w8\0\s[0]\n\n[half]Yeah!\i[33]\i[204] Hu-mon, what pronouns should we use for you?\x\w8\1\c\s[10]Given the limitations of our translators, which works best?\n\n[half]/
+		"\![enter,passivemode]\1\s[10]\0\s[0]\1\s[10]\i[204]...Hm. Tegra, are you seeing some primitive human nonsense, too?\w5\i[201]\i[406] Honestly, the last thing I need today is indirect temporal anomaly shenanigans.\w8\0\n\n[half]\s[0]I see it too!\i[204] Oh my gosh, hi~!\w9\s[0] Kadan, look, an old-timey hu-mon!\w5\i[203] Time-travel pal!!! <3 \i[160]\w8\1\n\n[half]\s[10]Tegra, do you suppose the temporal prime directive applies to foreign civilians?\w8\0\s[0]\i[254]\i[410]\n\n[half]The what to the who? \w5\i[252]\i[204]\i[410]...Do you think the hu-mon can see us?\i[159]\w8\w8\w8\1\n\n[half]\s[10]\i[201]...And I've lost her to yet another shiny new thing. \i[404]\i[204]\w8Human, I've no idea how this happened or how to fix it, so I suppose we might as well make the best of it.\x\c\0\s[0]\i[406]\i[407]New friend!!!\i[160]\w8\1\c\s[10]\i[204]At the very least, we should find out how to refer to you, human.\w8\0\s[0]\n\n[half]Yeah!\i[410]\i[204] Hu-mon, what pronouns should we use for you?\x\w8\1\c\s[10]Given the limitations of our translators, which works best?\n\n[half]/
 		\w5\_q\![*]\q[He/Him/His,choicefirsthehim]\n/
 		\![*]\q[She/Her/Hers,choicefirstsheher]\n/
 		\![*]\q[They/Them/Their,choicefirsttheythem]\e"
@@ -175,6 +186,15 @@ OnBoot
 	passsec = 0
 	tegrasleep = "off"
 	kadansleep = "off"
+	tgivenfood = 0
+	kgivenfood = 0
+	tgivendrink = 0
+	kgivendrink = 0
+	tgivengift = 0
+	kgivengift = 0
+	mirrortgivenfood = 0
+	mirrortgivendrink = 0
+	mirrortgivengift = 0
 	
  	"\0\s[0]\1\s[10]" //This sets them up in their neutral pose for now.
 	
@@ -527,17 +547,22 @@ OnShellChanging
  {
 	if reference0 == "Tegra and Kadan Spa Day Shell" 
 	{
+		if nowshell == "Tegra and Kadan Mirrorverse Shell"
+		{
+			"\1\s[10]\i[201]Privacy at last.\w8\0\s[0]\n\n[half]\i[220]...\w8\e"
+		}
+	else
+	{
 	"\1\s[10]\i[251]This really couldn't have waited until we had some privacy?\w8\0\n\n[half]\w8\s[0]Nope!\i[158]\w8\e"
 	
 	"\0\s[0]\i[203]\i[406]\i[407]Yay! I love the spa!\i[160]\w8\1\n\n[half]\s[10]\i[404]\i[405]...Do all these other people need to be here?\w8\0\s[0]\i[254]\i[206]\n\n[half]Um, it's a public spa, you big weirdo...\i[158]\e"
+	}
 	}
 	else 
 	{
 	"\1\s[10]Ah, did you feel that? The anomaly was active for a moment.\w8\0\n\n[half]\s[0]Yeah, somthing's happening...?!!\w8\e"
 	
 	"\0\s[0]\i[254]\i[210]Oh, my stomach flipped for a second!\w8\1\n\n[half]\s[10]\i[201]The anomaly is up to its usual mischief, I see.\e"
-	
-	
 	}
  }
  
