@@ -1,0 +1,259 @@
+﻿//---------------------------Envelopes--------------------------
+//This .dic file is probably one of the simplest you will have to edit, and in fact, if the way it works doesn't appeal to you, you can completely ignore it if you like!
+//Basically, what this file does is set up some things that, for the purposes of this file, I'll call envelopes (this is what they're referred to as on the CROW-SSP Dictionary site... at least, that's what I remember, it's been a while since I've checked it). They are technically functions and can do many things, but this file is mostly an organizational tool for storing lists you may use.
+//For the purposes of this file, an envelope is a list that you can populate with items, and this list can be called later during dialogue with the %(name) format. If you've read the walkthrough or gone through any of the other .dic files, you've probably seen these before. %(username) is one, which displays the user's name, and %(heshe) is another, which displays the right pronoun depending on what the user selected in bootend.dic or menu.dic. Other ones include %(passmin), which shows how many minutes have passed since the ghost was started, %(screenheight) which shows the height of the display they're currently on, and %(keroname) for the name of the second character, among many, many others. Many of these are predefined by the AYA scripting and will be listed on the CROW-SSP site mentioned above, and many of them you will never have to use.
+
+feeshlist
+{
+	"Glub glub..."
+	"Could really go for some %(fishfood)..."
+	"Various fish noises..."
+	"Cheep cheep!"
+	"Feesh used Thrash! \n\n[half]\w8...It's not very effective."
+	"Lift with your legs, or you may suffer a herniated Discus."
+	"Glass...or acrylic? \w6LEDs or T5s...? \w6To Feesh...or not to Feesh? \w8\n\n[half]Many such dilemmas."
+}
+
+fishfood
+{
+	"TetraMin(TM)"
+	"blood worms"
+	"algae wafers"
+	"brine shrimp"
+	"daphnia"
+	"Hikari BioGold(TM)"
+	"frozen beefheart"
+	"fruit flies"
+	"blanched zucchini"
+	"fry\w6... Or fries?"
+}
+
+genrelist
+{
+	"ska"
+	"symphonic metal"
+	"new wave"
+	"bluegrass"
+	"drum and bass"
+	"nightcore"
+	"chiptune"
+	"dark ambient"
+	"witch house"
+	"acid jazz"
+	"bossa nova"
+	"cumbia"
+	"reggaeton"
+	"sludge"
+	"opera"
+	"new jack swing"
+	"doo wop"
+	"dub"
+	"glam rock"
+	"kizomba"
+	"J-pop"
+	"zydeco"
+	"easy listening"
+	"synthwave"
+	"Memphis blues"
+	"crunk"
+	"emo rap"
+	"horrorcore"
+	"baroque pop"
+	"disco"
+	"psychedelic funk"
+	"visual kei"
+	"\_a[https://www.youtube.com/watch?v=uTHYnk3KUAI]\_aCaptain Dan and the Scurvy Crew"
+}
+
+dorsallist
+{
+	"was harvested for Feesh-fin soup"
+	"sprouted legs and walked off"
+	"got taken by the Fin Fairy for a shiny silver dollar"
+	"was lost in a tragic %(tragiclist)-related accident"
+	"never grew in. Feesh is the next evolution in aquadynamics"
+	"was donated to science"
+	"was sold for a tricked-out van"
+	"was traded for these sweet gams"
+	"dried up and blew away"
+	"was absconded with in the night"
+	"reached critical mass"
+	"fell victim to a transporter malfunction"
+	"phase-shifted to another plane of reality"
+	"turned invisible"
+	"inverted"
+	"exploded"
+	"imploded"
+	"hatched"
+}
+
+tragiclist
+{
+	"banana bread"
+	"Boston fern"
+	"Boston creme pie"
+	"go-kart"
+	"laser tag"
+	"cosmic bowling"
+	"virgin dacquiri"
+	"fishing"
+	"mountaineering"
+	"white-water rafting"
+	"BMX"
+	"interpretive dance"
+	"tee-ball"
+	"skee-ball"
+	"mime"
+	"houseplant"
+	"bikini car wash"
+	"haircut"
+	"hop-scotch"
+	"butterscotch"
+	"lightbulb"
+	"haunted doll"
+	"cardboard boat regatta"
+	"rubber duck derby"
+	"afternoon nap"
+	"sea monkey"
+}
+
+//This envelope in particular I think is fun. You can use this in dialogue to pretend like your ghost is looking through your user's files!
+
+usersfolder
+{
+	"%(username)'s Recycle Bin"
+	"%(username)'s Documents"
+	"%(username)'s secret folder"
+	"%(username)'s Music"
+	"%(username)'s desktop"
+}
+
+reaction
+{
+	"shocking"
+	"effervescent"
+	"dank"
+	"damp"
+	"curious"
+	"humbling"
+	"inspiring"
+	"terrible"
+	"uplifting"
+	"tragicomic"
+	"abundant"
+	"nutritious"
+	"decadent"
+	"dry"
+	"electrifying"
+	"crisp"
+	"refreshing"
+	"dense"
+	"chewy"
+	"astonishing"
+	"awesome"
+	"auspicious"
+	"sus"
+	"incredible"
+	"credible"
+	"dumb-founding"
+}
+
+
+
+carlist
+{
+	"1994 Honda Accord"
+	"1998 Oldsmobile '88"
+	"1979 Dodge Nova"
+	"2003 Honda CR-V"
+	"1985 Ford Tempo with 5-speed manual transmission"
+	"2010 Chevy Silverado"
+	"1968 Volkswagon Beetle as seen in The Love Bug"
+	"2012 Daihatsu Hijet"
+	"1995 Dodge Viper"
+	"1983 Mercedes-Benz 380 SL"
+	"1982 DeLorean DMC-12"
+}
+
+
+
+advice
+{
+	"clean out the lint trap without fail"
+	"use cotton swabs on your ears...on occasion"
+	"watch a bug crawl about when you can"
+	"eat something green each day to regain health points"
+	"read any one phone directory cover to cover"
+	"never feud with a fishmonger"
+	"run outside and dodge the rain"
+	"read books, if you like reading or books"
+	"eat some vitamins, or something"
+	"make a little hat out of paper"
+	"sleep at least seven hours per year"
+	"don't eat spare change"
+	"look at a plant, or something"
+	"sit as close as possilbe to the TV screen"
+	"poke holes in the potato before you microwave it"
+	"never attempt to repair a CRT yourself"
+	"thrash about at least once per day, in whatever manner you prefer"
+	"consider what color various numbers might taste like"
+	"store your sweaters in a chest of fine cedar"
+	"all ways you'se spell cheque"
+}
+
+
+dream
+{
+	"the river"
+	"the ocean"
+	"a pond"
+	"a puddle"
+	"the lake"
+	"a lagoon"
+	"mangroves"
+	"the swamp"
+	"a swift current"
+	"a great typhoon"
+	"streams"
+	"algae"
+	"a tide pool"
+	"the abyss"
+	"the high seas"
+	"the Great Pacific Garbage Patch"
+}
+
+gameost
+{
+	"\_a[https://www.youtube.com/watch?v=RRvYkrrpMKo]Waterworld\_a"
+	"\_a[https://www.youtube.com/watch?v=xzdShv9Rfv4]Ecco the Dolphin\_a"
+	"\_a[https://www.youtube.com/watch?v=8_xVl5_yezc]Wetrix\_a"
+	"\_a[https://www.youtube.com/watch?v=4k5sMe9mdPU]Wave Race 64\_a"
+	"\_a[https://www.youtube.com/watch?v=5gK44op7N4w&list=PL72614359D5258CCF]Aquaria\_a"
+	"\_a[https://www.youtube.com/watch?v=OJ9Xzo1ME6U&list=PLfF_Ww_riDems4C_h-UTuS9-y2FHJBCJi]E.V.O.: Search for Eden\_a"
+	"\_a[https://www.youtube.com/watch?v=53RKsr4euwM]Freddi Fish\_a"
+	"\_a[https://www.youtube.com/watch?v=aT9_-P7N950]Subnautica\_a"
+	"\_a[https://www.youtube.com/watch?v=mCL0jRV_xb4]Abzu\_a"
+}
+
+
+//--Higher or Lower variables
+oldcarddisp{
+
+    "\f[color,%(oldcard[3])]%(oldcard[2])%(oldcard[0])\f[color,default]"
+
+}
+
+newcarddisp {
+
+    "\f[color,%(card[3])]%(card[2])%(card[0])\f[color,default]"
+
+}
+
+
+ //**** Don't touch this ***************************************************************
+ //This is code stuff and nothing for you to worry about, just save the .dic and move on! You're done!
+ 
+ On_\person
+{
+ 	person
+}

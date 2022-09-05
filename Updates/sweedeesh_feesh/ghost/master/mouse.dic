@@ -1,0 +1,102 @@
+﻿//---------------------------Mouse Functions--------------------------
+
+
+
+
+//--OnMouseMove
+//This is a bunch of code determining who the mouse is over. Don't touch any of it.
+
+OnMouseMove
+ {
+		//---- reference3 determines the character in question
+		if reference3 == 0 //if the character is 0, aka the main character
+		{
+			//---- it will run the mouse functions for that character
+			MouseMoveSakura
+		}
+		else //if the character isn't 0, then it must be the side character.
+		{
+			//---- this will run the mouse functions for the side character.
+			MouseMoveKero
+		}
+ }
+ 
+
+
+ //--MouseMoveSakura
+ //The petting function for your main character. Remember how it was referred to as sakura in some of the descript.txt and install.txt files?
+ 
+MouseMoveSakura
+ {
+	if reference4 != "" //ignore
+ 	{
+ 		stroke++ 
+ 		if stroke >= 50 
+		{
+ 			stroke = 0 
+			if reference4 == "Body" 
+ 			{
+				"\0\s[0]Thank you, citizen.\e"
+				"\0\s[0]Admiring my protective slime coat...\e"
+				"\0\s[0]Next best thing to shiatzu.\e"
+				
+ 			}
+ 			elseif reference4 == "Feet" 
+ 			{
+ 				"\0\s[0]That tickles...\e"
+ 				"\0\s[0]Evolution and your tax dollars at work.\e"
+ 				"\0\s[0]My \w4dogs \w4are \w4killin' me.\e"
+				
+ 			}
+			
+ 		}
+	}
+ 	else
+	{
+ 		// If the mouse isn't over the ghost, it'll zero out the stroke value.
+		stroke = 0
+ 	}
+}
+
+
+
+//---- OnMouseDoubleClick -------------------------------------------------------
+//This is set up much like OnMouseMove above, except this is checking to see if the user is double clicking on the ghost. You also don't need to touch any of this. 
+//Advanced users adding a third character, the same principles from OnMouseMove apply here as well! Make sure to add an elseif with the right number for your third character.
+
+OnMouseDoubleClick
+ {
+	//---- like with the OnMouseMove function above, this determines who the user is clicking on.
+	if reference5 == 0 //checks which button is being used for the click
+	{
+	 	if reference3 == 0 //if the character is 0, aka your main character
+		{
+		MouseDoubleClickSakura
+		}
+		else
+		{
+ 		MouseDoubleClickKero
+		}
+	}
+ }
+
+ //---- MouseDoubleClickSakura ----------------------------------------------------------
+ 
+MouseDoubleClickSakura
+ {
+ 	if reference4 == "Feet" 
+	{
+		"\0\s[0]Don't tap the glass...\w8\e"
+		"\0\s[0]Yes?\e"
+		"\0\s[0]Settle down, okay?\e"
+		"\0\s[0]This isn't even my final form.\e"
+		
+ 	}
+	else
+ 	{
+		//Otherwise, if the user doubleclicks somewhere else on the character, they will open their menu as detailed in menu.dic.
+ 		OpenSakuraMenu
+	}
+ }
+
+ 
