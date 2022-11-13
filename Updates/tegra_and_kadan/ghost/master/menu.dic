@@ -20,7 +20,7 @@ OpenSakuraMenu
 		tegrasleep = "off"
 		"\0\s[1]Come on down...\w4play the Price is Right...\w4\s[0] Huh?"
 		"\0\s[1]...Zzz...Chef's special today is...\w4 Hmm?\s[0]"
-		"\0\s[1]...Mhm? \w4\s[1]\i[252]Oh, was I asleep? Sorry!\w4 What's up?\i[158]"
+		"\0\s[1]...Mhm? \w4\s[0]\i[252]Oh, was I asleep? Sorry!\w4 What's up?\i[158]"
 		--
 		MenuRun
 	}
@@ -1019,7 +1019,7 @@ Select.EarthTegra
 	else //full trust
 	{
 		"\0\s[0]\i[204]...\w4\i[210]\i[254]\i[404]\i[405]I'm safe here, %(username).\w3\i[216] If my family figures out where I am\w2, \i[253]they might try to force me to come back home.\w4\s[0]\i[204]\i[403]\i[410] It'd be way harder to do that if I ask for refugee status here.\w4\i[203]\i[254] \n\n[half]You probably think that's totally crazy, huh?\n\n\![*]\q[Back,BACKTOMENU]"
-		"\0\s[0]\i[204]There's not much I can do on my homeworld right now, right?\w4\i[210]\i[254]\i[404]\i[405]But once I get\w3, like\w3, established in my trade and know stuff?\w3\i[216] \n\n[half]Well, it'll be harder for people back home to write me off as\w2\i[253] just some female, you know?\i[158]\w4\s[0]\i[204]\i[403]\i[410] I'll be one more piece of proof that the reforms are right.\w4\i[203]\i[254] \n\n\![*]\q[Back,BACKTOMENU]"
+		"\0\s[0]\i[204]There's not much I can do on my homeworld right now, right?\w4\i[210]\i[254]\i[404]\i[405] But once I get\w3, like\w3, established in my trade and know stuff?\w3\i[216] \n\n[half]Well, it'll be harder for people back home to write me off as\w2\i[253] just some female, you know?\i[158]\w4\s[0]\i[204]\i[403]\i[410] I'll be one more piece of proof that the reforms are right.\w4\i[203]\i[254] \n\n\![*]\q[Back,BACKTOMENU]"
 	}
 }
 
@@ -1407,7 +1407,7 @@ Select.EarthKadan
 	}
 	else //full trust
 	{
-		"\1\s[10]\i[204]It's quite simple\w2, , %(username).\w4\i[254]\i[404]\i[405] Earth is a peaceful world\w3\i[201], far away from Cardassia and all reminders of my abject failure to be of any use at all to my family or my countrymen.\w4\s[10]\i[204]\i[403]\i[410] Does that answer satisfy you?\w4\i[203]\i[254]\n\n[half] I hope you don't think less of me\w2, but I could scarcely blame you.\n\n\![*]\q[Back,OnKadanMenu]"
+		"\1\s[10]\i[204]It's quite simple\w2, %(username).\w4\i[254]\i[404]\i[405] Earth is a peaceful world\w3\i[201], far away from Cardassia and all reminders of my abject failure to be of any use at all to my family or my countrymen.\w4\s[10]\i[204]\i[403]\i[410] Does that answer satisfy you?\w4\i[203]\i[254]\n\n[half] I hope you don't think less of me\w2, but I could scarcely blame you.\n\n\![*]\q[Back,OnKadanMenu]"
 		"\1\s[10]\i[204]I suppose,\w4\i[254]\i[404]\i[405] despite myself, Earth represents my turning down a different path.\w3\i[201] The one I was on ultimately led nowhere but ruin.\w4\s[10]\i[204]\i[403]\i[410] I have no noble reason\w4\i[203]\i[254], but there's no one left to judge me for walking away.\n\n\![*]\q[Back,OnKadanMenu]"
 	}
 }
@@ -1781,7 +1781,7 @@ Select.MirrorGiveTegraShiny
 	else
 	{
 	mirrortegratrust -= 1
-	"\0\s[0]Oh, shiny!\w8\w8\i[254] Wait\i[214]\w4, whare are you giving me this? Take it back.\e"
+	"\0\s[0]Oh, shiny!\w8\w8\i[254] Wait\i[214]\w4, why are you giving me this? Take it back.\e"
 	"\0\s[0]Oh...?\w8\w8\i[254] Wait\i[214]\w4\i[406], you're going to claim I stole this\w4, aren't you?\i[153]\e"
 	}
 	}

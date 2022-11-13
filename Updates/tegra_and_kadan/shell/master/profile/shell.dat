@@ -1,17 +1,17 @@
 Charset,UTF-8
 __system_settings_version__,2
 seriko.scaling.dither,1
-char0.bind.savearray,50=0 100=1
+char0.bind.savearray,50=1 100=1
 balloon,C:\Users\kat\Documents\Uka\balloon\FauxCARS Basic\
 Char1.balloon.isleft,0
 seriko.scaling.dither.balloon,1
-balloon0.offset,186.-160
+balloon0.offset,178.-149
 scriptbox.left,540
 Char0.centery,1294
 balloon1.offset,238.-151
 Char10.center,1859
 Char0.balloon.isleft,0
-Char.VirtualDesktop,fd73efb1-ef9d-4429-a75f-cda14f670f5d
+Char.VirtualDesktop,a36ee58a-488e-429d-a20c-e0837658a5f3
 Char0.center,253
 scriptbox.top,839
 Char10.balloon.isleft,1

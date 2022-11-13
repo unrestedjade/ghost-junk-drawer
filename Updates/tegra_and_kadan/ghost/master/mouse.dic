@@ -181,11 +181,11 @@ MouseDoubleClickSakura
  {
  	if reference4 == "Ear" || reference4 == "Face" //here, this is checking to see if the user is double clicking on either the character's head OR their face, which for our purposes means they're hitting the ghost. More about operators at the walkthrough.
 	{
-		if hitcount == 0 
+		if nowshell == "mirror" && mirrorhitcount == 0
 		{
-			"\1\_qSurely you wouldn't strike Tegra...?\n\n\![*]\q[I sure would!,ConfirmHitT]\n\![*]\q[No!!,NoHit]\e"
+			"\0\s[0]\i[208]\_qHey, Terran, you weren't about to hit me, were you...?\n\n\![*]\q[Yep!!,ConfirmHitT]\n\![*]\q[No!!,NoHit]\e"
 		}
-		elseif nowshell == "mirror"
+		elseif nowshell == "mirror" && mirrorhitcount > 0
 		{
 		mirrortegratrust -= 1
 		mirrorhitcount += 1
@@ -194,7 +194,11 @@ MouseDoubleClickSakura
 		"\0\s[0]\i[162]\i[208]\i[253]\i[407]\i[408]HSSS!!!\e"
 		"\0\s[0]\i[152]\i[208]\i[251]\i[409]\i[406]*gck*...........\e"
 		}
-		elseif feelings <= 0
+		elseif nowshell != "mirror" && hitcount == 0 
+		{
+			"\1\_qSurely you wouldn't strike Tegra...?\n\n\![*]\q[I sure would!,ConfirmHitT]\n\![*]\q[No!!,NoHit]\e"
+		}
+		elseif nowshell != "mirror" && feelings <= 0
 		{
 		tfeelings -= 5
 		hitcount += 1
@@ -231,7 +235,7 @@ MouseDoubleClickSakura
 		"\0\s[0]\i[162]\i[208]\i[253]\i[407]\i[408]HSSS!!!\e"
 		"\0\s[0]\i[152]\i[208]\i[251]\i[409]\i[406]*gck*...........\e"
 	}
-	else
+	elseif nowshell != "mirror"
 	{
 		tfeelings -= 5
 		hitcount += 1
@@ -251,15 +255,15 @@ MouseDoubleClickKero
  {
  	if reference4 == "Face" || reference4 == "Head" 
 	{
-		if hitcount == 0 
-		{
-			"\0\_qCareful! You'll smack Kadan in the face if you do that.\n\n\![*]\q[Exactly!,ConfirmHitK]\n\![*]\q[Oops!,NoHit]\e"
-		}
-		elseif nowshell == "mirror"
+		if nowshell == "mirror"
 		{
 			"\1\s[10]\i[204]Nice try, Terran.\w4\i[154]\e"
 			"\1\s[10]\i[204]\i[406]If you need to destress\w2, Tegra is right there.\0\s[0]\i[152]\i[253]\w4\1\s[10]\i[156]\e"
 			"\1\s[10]\i[204]That's almost cute\0\s[0]\i[204]\i[410]\1\s[10]\i[204], how you think you can harm me.\e"
+		}
+		elseif nowshell != "mirror" && hitcount == 0 
+		{
+			"\0\_qCareful! You'll smack Kadan in the face if you do that.\n\n\![*]\q[Exactly!,ConfirmHitK]\n\![*]\q[Oops!,NoHit]\e"
 		}
 		else
 		{

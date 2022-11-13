@@ -1,6 +1,6 @@
 --Readme--
 
-Update 10/15/22: Minor updates to clean up code from the jam version. Added the Candy shell!
+Update November 2022: Minor updates to clean up code from the jam version and fix a transparency bug introduced by an SSP update. Added the Candy shell!
 
 Initial release: Sweedeesh Feesh - 2022 Ukagaka Dream Team Ghost Jam entry (1 week).
 

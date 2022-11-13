@@ -2,10 +2,10 @@ Charset,UTF-8
 __system_settings_version__,2
 Char1.balloon.isleft,1
 balloon0.offset,306.-149
-Char0.centery,1059
-Char0.balloon.isleft,1
-Char.VirtualDesktop,6d2ab112-547b-4ba8-b17f-273e3ba04481
-Char0.center,1140
+Char0.centery,443
+Char0.balloon.isleft,0
+Char.VirtualDesktop,51a8873a-7974-46b0-8c93-3f503e050151
+Char0.center,356
 Char1.centery,824
 Char1.center,1272
 __system_written_flag_do_not_remove__,written

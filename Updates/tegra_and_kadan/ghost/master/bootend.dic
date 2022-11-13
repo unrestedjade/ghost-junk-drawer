@@ -568,7 +568,7 @@ OnShellChanging
 	}
 	else 
 	{
-	"\1\s[10]Ah, did you feel that? The anomaly was active for a moment.\w8\0\n\n[half]\s[0]Yeah, somthing's happening...?!!\w8\e"
+	"\1\s[10]Ah, did you feel that? The anomaly was active for a moment.\w8\0\n\n[half]\s[0]Yeah, something's happening...?!!\w8\e"
 	
 	"\0\s[0]\i[254]\i[210]Oh, my stomach flipped for a second!\w8\1\n\n[half]\s[10]\i[201]The anomaly is up to its usual mischief, I see.\e"
 	}

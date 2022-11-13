@@ -37,14 +37,21 @@ To Control:
 
 I'm not much of a programmer, but I love developing these two. Please reach out on the off chance there's anything you'd like to see as far as features or shell options! 
 
-Update 1.1, October 2022: 
+Update 1.1, November 2022: 
 
 	- Added the Costume Party shell
-	- Tegra no longer vanishes while receiving oomox when Kadan tells her to "do that somewhere else".
+	- Tegra no longer vanishes while receiving oomox when Kadan tells her to "do that somewhere else" 
 	- Tegra no longer vanishes if she loses at tic-tac-toe while disliking the user.
+	- Tegra no longer vanishes invites the player to "The Price is Right" on opening her menu while she's sleeping (are you sensing a theme?)
 	- Bugfix to Feelings accumulation. All positive and negative interactions should now tally correctly.
+	- Bugfix to Kadan's hit counter. Hitting Mirror Kadan remains futile, but now Prime Kadan won't irrationally hold your attempts against you.
 	- Warning dialog for Hit interaction should now display consistently whenever Hit tally is zero.
 	- Various typos in dialog corrected.
-    - Option added in config menu: toggle off/on interactive questions during random talk.
-    - Interactive questions are now also available from Tegra and Kadan's "Interact with..." menus. Ruthlessly manipulate their feelings toward you at your own pace!
+    	- Option added in config menu: toggle off/on interactive questions during random talk.
+    	- Interactive questions are now also available from Tegra and Kadan's "Interact with..." menus. Ruthlessly manipulate their feelings toward you at your own pace!
+	- Added a system tray icon.
+	- Fixed issue with the FauxCARS Basic balloon categorization. 
+	- Random dialogue now with 20% more randomness!
+
+Thanks to Zi for all the help with testing!!!
 
