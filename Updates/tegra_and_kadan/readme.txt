@@ -37,3 +37,14 @@ To Control:
 
 I'm not much of a programmer, but I love developing these two. Please reach out on the off chance there's anything you'd like to see as far as features or shell options! 
 
+Update 1.1, October 2022: 
+
+	- Added the Costume Party shell
+	- Tegra no longer vanishes while receiving oomox when Kadan tells her to "do that somewhere else".
+	- Tegra no longer vanishes if she loses at tic-tac-toe while disliking the user.
+	- Bugfix to Feelings accumulation. All positive and negative interactions should now tally correctly.
+	- Warning dialog for Hit interaction should now display consistently whenever Hit tally is zero.
+	- Various typos in dialog corrected.
+    - Option added in config menu: toggle off/on interactive questions during random talk.
+    - Interactive questions are now also available from Tegra and Kadan's "Interact with..." menus. Ruthlessly manipulate their feelings toward you at your own pace!
+

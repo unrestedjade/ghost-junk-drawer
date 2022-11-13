@@ -1,21 +1,24 @@
 Charset,UTF-8
 __system_settings_version__,2
 seriko.scaling.dither,1
-char0.bind.savearray,50=1 100=1
-balloon,C:\Users\Katherine\Desktop\Uka\balloon\FauxCARS Basic\
+char0.bind.savearray,50=0 100=1
+balloon,C:\Users\kat\Documents\Uka\balloon\FauxCARS Basic\
 Char1.balloon.isleft,0
 seriko.scaling.dither.balloon,1
-balloon0.offset,266.-158
+balloon0.offset,186.-160
 scriptbox.left,540
-Char0.centery,1062
-balloon1.offset,285.-162
-Char0.balloon.isleft,1
-Char.VirtualDesktop,f947302c-4b20-41c1-a711-0806db523e96
-Char0.center,377
+Char0.centery,1294
+balloon1.offset,238.-151
+Char10.center,1859
+Char0.balloon.isleft,0
+Char.VirtualDesktop,fd73efb1-ef9d-4429-a75f-cda14f670f5d
+Char0.center,253
 scriptbox.top,839
-Char1.centery,1061
-Char1.center,159
-char1.bind.savearray,350=0 50=1
+Char10.balloon.isleft,1
+Char1.centery,1294
+Char1.center,114
+char1.bind.savearray,350=1 50=1
 seriko.scaling.percent.x,100
 seriko.scaling.percent.y,100
+Char10.centery,1040
 __system_written_flag_do_not_remove__,written

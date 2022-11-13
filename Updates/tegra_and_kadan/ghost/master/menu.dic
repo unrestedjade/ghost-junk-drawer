@@ -6,14 +6,7 @@
 
 OpenSakuraMenu
 {
-	if tegrasleep == "on"
-	{
-		tegrasleep = "off"
-		"\0\s[20000]Come on down...\w4play the Price is Right...\w4\s[0] Huh?"
-		"\0\s[20000]...Zzz...Chef's special today is...\w4 Hmm?\s[0]"
-		"\0\s[0]...Mhm? \w4\i[252]Oh, was I asleep? Sorry!\w4 What's up?\i[158]"
-	}
-	elseif nowshell == "mirror"
+	if nowshell == "mirror"
 	{
 		tegrasleep = "off"
 		"\0\s[0]\i[253]\i[208]\w8\w8...I'm Gul Kadan's secretary, not yours.\w6 What?"
@@ -22,18 +15,30 @@ OpenSakuraMenu
 		--
 		OnMirrorMenuRun
 	}
+	elseif tegrasleep == "on"
+	{
+		tegrasleep = "off"
+		"\0\s[1]Come on down...\w4play the Price is Right...\w4\s[0] Huh?"
+		"\0\s[1]...Zzz...Chef's special today is...\w4 Hmm?\s[0]"
+		"\0\s[1]...Mhm? \w4\s[1]\i[252]Oh, was I asleep? Sorry!\w4 What's up?\i[158]"
+		--
+		MenuRun
+	}
 	elseif feelings <= 0
 	{
 		"\0\s[0]\i[253]\i[208]\w8\w8...What do you want, hu-mon?"
+		--
+		MenuRun
 	}
 	else
 	{
 		"\0\s[0]\i[204]\b2Like, what's up?\i[158]"
 		"\0\s[0]\i[203]\b2That'll be three strips of latinum! Haha\w3, j/k.\w5\i[152]\i[410]\i[403] Unless...?\i[158]"
 		"\0\s[0]\i[204]\b2What do you want to do?\i[158]"
-	}
 		--
 		MenuRun
+	}
+		
 }
 
 //--MenuRun
@@ -150,6 +155,8 @@ TalkConfig
 	"\f[bold,1]Birthday:\f[bold,0] %(birthdayprint) \f[sup,1](\q[Change it?,TEACHBDAY])\f[sup,0]\n\n"
 	--
 	"\f[bold,1]Talk Rate:\f[bold,0] - every %(talktime) \f[sup,1](\q[Change it,talkinter])\f[sup,0]\n\n"
+	--
+	"\f[bold,1]Autonomous Interact:\f[bold,0] - %(autointeract) \f[sup,1](\q[Change it,QuestionsOff])\f[sup,0]\n\n"
 	--		
 		{
 		"\![*]Enable Uninstall? (NOW : %(deleteshitai))\n\q[ON,deleteon] \q[OFF,deleteoff]\n\n[half]\n"
@@ -213,6 +220,30 @@ Select.choiceneither
 //"%(hisher) work is really cool."
 //"I'll ask %(himher) later."
 //"%(hesshes) really good at it."
+
+//Toggle off questions in the aitalk pools
+Select.QuestionsOff
+{
+	"\0\s[0]\i[204]\i[410]Can we interact with you on our own?\w5\n\n[half]\_q/
+		\![*]\q[Yes,questionsofffalse]\n/
+		\![*]\q[Only when prompted,questionsofftrue]\e"
+}
+
+Select.questionsofffalse
+{
+	autointeract = "Yes"
+	--
+	"\0\s[0]\i[204]We'll interact with you when we feel like it! <3\e"
+}
+
+Select.questionsofftrue
+{
+	autointeract = "No"
+	--
+	"\0\s[0]\i[204]We'll wait for you to invite us to interact! <3\e"
+}
+
+
 
 
 //These two options toggle whether or not you can delete your ghost. Leave them alone.
@@ -357,10 +388,9 @@ birthchecked
 
 Select.talkinter
  	{
-		if feelings <= 0
+		if nowshell == "mirror"
 		{
-		"\0\s[0]\b2Like, how often should we talk, according to you, creep?\w8\1\n\n[half]\s[10]Our talk interval is currently set to once per %(talktime)./
-		//You can replace the dialogue above with whatever you like, just make sure it ends with ./ and not \e.
+		"\0\s[0]\b2Gul Kadan, how often should we talk?\w8\1\n\n[half]\s[10]Our talk interval is currently set to once per %(talktime)..../
  		\0\n\n[half]/
  		\![*]\q[Every 30 seconds,TALKMAX]\n/
 		\![*]\q[Every 1 minute,TALKHIGH]\n/
@@ -369,10 +399,9 @@ Select.talkinter
  		\![*]\q[Don't speak,TALKNONE]\n\n[half]/
 		\![*]\q[Don't change,TalksTill]\e"
 		}
-		elseif nowshell == "mirror"
+		elseif feelings <= 0
 		{
-		"\0\s[0]\b2Gul Kadan, how often should we talk?\w8\1\n\n[half]\s[10]Our talk interval is currently set to once per %(talktime)..../
-		//You can replace the dialogue above with whatever you like, just make sure it ends with ./ and not \e.
+		"\0\s[0]\b2Like, how often should we talk, according to you, creep?\w8\1\n\n[half]\s[10]Our talk interval is currently set to once per %(talktime)./
  		\0\n\n[half]/
  		\![*]\q[Every 30 seconds,TALKMAX]\n/
 		\![*]\q[Every 1 minute,TALKHIGH]\n/
@@ -384,7 +413,6 @@ Select.talkinter
 		else
 		{
  		"\0\s[0]\b2Like, how often should we talk?\w8\1\n\n[half]\s[10]Our talk interval is currently set to once per %(talktime)./
-		//You can replace the dialogue above with whatever you like, just make sure it ends with ./ and not \e.
  		\0\n\n[half]/
  		\![*]\q[Every 30 seconds,TALKMAX]\n/
 		\![*]\q[Every 1 minute,TALKHIGH]\n/
@@ -437,13 +465,13 @@ Select.TALKNONE
  		talktime = "...we won't talk at all"
 		aitalkinterval = 0
 		
-		if feelings <= 0
-		{
-			"\0\s[0]\i[208]\i[253]\i[410]As if we wanna talk to you, anyway...\e"
-		}
-		elseif nowshell == "mirror"
+		if nowshell == "mirror"
 		{
 			"\1\s[10]\i[201]\i[406]Tegra, I'd like to introspect in silence until otherwise noted.\w8\0\n\n[half]\s[0]\i[201]Yes, ma'am.\e"
+		}
+		elseif feelings <= 0
+		{
+			"\0\s[0]\i[208]\i[253]\i[410]As if we wanna talk to you, anyway...\e"
 		}
 		else
 		{
@@ -462,17 +490,17 @@ Select.TEACHNAME
 //If the user selects cancel in a menu. Replace as you like, or just leave them blank.
 Select.CANCEL
 	{
-		if feelings <= 0
-		{
-			"\0\s[0]\i[204]\i[251]I'm not here to\w3, like\w5, do tricks for you like a trained fangcat\w2, y'know.\e"
-			
-			"\0\s[0]\i[204]\i[251]\i[406]\i[407]Ugh!\w4 Quit bothering me, then!\e"
-		}
-		elseif nowshell == "mirror"
+		if nowshell == "mirror"
 		{
 			"\1\s[10]Yes, plese do stop wasting my secretary's time.\e"
 			"\0\s[0]\i[208]\i[410]Good.\w4 I do have real work to do, you know.\e"
 			"\0\s[0]\i[208]\i[254]...\w8...\w8...\w8K.\e"
+		}
+		elseif feelings <= 0
+		{
+			"\0\s[0]\i[204]\i[251]I'm not here to\w3, like\w5, do tricks for you like a trained fangcat\w2, y'know.\e"
+			
+			"\0\s[0]\i[204]\i[251]\i[406]\i[407]Ugh!\w4 Quit bothering me, then!\e"
 		}
 		else
 		{
@@ -487,10 +515,10 @@ Select.CANCEL
 
 Select.dosomething
 {
-		if feelings <= 0
+		if nowshell == "mirror"
 		{
-		"\0\s[0]\i[208]\b2Like I'm your butler\w4...not!\n\n"
-		"\0\s[0]\i[208]\b2Ugh, like, hurry up, then.\n\n"
+		"\0\s[0]\i[208]\i[410]\b2Sorry, is your name Gul Kadan...?\n\n"
+		"\0\s[0]\i[208]\b2You're really bold, for a Terran.\n\n"
 		--
  		"\![*]\q[Open Calendar,CALENDAR]\n/
 		\![*]\q[Check Email,MailCheck]\n/
@@ -499,10 +527,10 @@ Select.dosomething
 		\![*]\q[System Information,ChoiceSystemInformation]\n\n/
  		\![*]\q[Back to main menu,BACKTOMENU]\e"
 		}
-		if nowshell == "mirror"
+		elseif feelings <= 0
 		{
-		"\0\s[0]\i[208]\i[410]\b2Sorry, is your name Gul Kadan...?\n\n"
-		"\0\s[0]\i[208]\b2You're really bold, for a Terran.\n\n"
+		"\0\s[0]\i[208]\b2Like I'm your butler\w4...not!\n\n"
+		"\0\s[0]\i[208]\b2Ugh, like, hurry up, then.\n\n"
 		--
  		"\![*]\q[Open Calendar,CALENDAR]\n/
 		\![*]\q[Check Email,MailCheck]\n/
@@ -532,14 +560,13 @@ Select.dosomething
 //When the user clicks Open Calender. This will open the calender function of SSP, an in-built feature that you don't have to worry about in the least.
 Select.CALENDAR
 {
-	
-	if feelings <= 0
-	{
-		"\0\s[0]\i[208]Fine, here's your stupid calendar.\w8\![open,calendar]\e"
-	}
-	elseif nowshell == "mirror"
+	if nowshell == "mirror"
 	{
 		"\0\s[0]\i[208]Like a Terran needs a calendar...\w8\![open,calendar]\e"
+	}
+	elseif feelings <= 0
+	{
+		"\0\s[0]\i[208]Fine, here's your stupid calendar.\w8\![open,calendar]\e"
 	}
 	else
 	{
@@ -550,13 +577,13 @@ Select.CALENDAR
 //When the user chooses SSP preferences. This will open the same window that shows up if you right click your ghost and go to Utilities - Preferences.
 Select.sspconfig
 {
-	if feelings <= 0
-	{
-	"\0\s[0]\i[208]SSP config menu\w4... Whoop-de-fraxxing-doo...\w8\![open,configurationdialog]\e"
-	}
-	elseif nowshell == "mirror"
+	if nowshell == "mirror"
 	{
 	"\0\s[0]\i[208]Be grateful that Gul Kadan lets you touch the SSP config menu...\w8\![open,configurationdialog]\e"
+	}
+	elseif feelings <= 0
+	{
+	"\0\s[0]\i[208]SSP config menu\w4... Whoop-de-fraxxing-doo...\w8\![open,configurationdialog]\e"
 	}
 	else
 	{
@@ -571,30 +598,31 @@ Select.ChoiceGarbagecan
 	
 	if _gomicheck == 0 //If the recycle bin is empty.
 	{
-		if feelings <= 0
-	{
-		"\1\s[10]Tegra, go along with it for now, yes?\w8\0\n\n[half]\s[0]\i[253]Ugh...\w4at least I won't have to look at %(himher) for a second...\w8\w8\s[-1]\w8\w8\w8\w8\w8\0\s[0]\c\i[408]\i[409]\i[251]\i[204]There wasn't even anything to frinxing recycle!\i[152]\e"
-	}
-	elseif nowshell == "mirror"
+		if nowshell == "mirror"
 	{
 		"\1\s[10]Tegra, run along like the Terran asked.\w4 It's amusing.\i[154]\w8\0\n\n[half]\s[0]\i[253]...Yes, of course, ma'am...\w8\w8\s[-1]\w8\w8\w8\w8\w8\0\s[0]\c\i[408]\i[409]\i[253]It was empty, ma'am.\i[152]\1\s[10]\n\n[half]\i[201]\i[154]\i[406]...Heh.\e"
 	}
-	else
+		elseif feelings <= 0
+	{
+		"\1\s[10]Tegra, go along with it for now, yes?\w8\0\n\n[half]\s[0]\i[253]Ugh...\w4at least I won't have to look at %(himher) for a second...\w8\w8\s[-1]\w8\w8\w8\w8\w8\0\s[0]\c\i[408]\i[409]\i[251]\i[204]There wasn't even anything to frinxing recycle!\i[152]\e"
+	}
+	
+		else
 	{
 		"\1\s[10]Tegra, check on %(username)'s recycling, won't you?\w8\0\n\n[half]\s[0]\i[252]Aye aye, dai'mon!\w8\w8\s[-1]\w8\w8\w8\w8\w8\0\s[0]\c\i[410]\i[403]It was squeaky-clean empty!\i[160]\e"
 	}
 	}
 	elseif _gomicheck >= 1 //If the recycle bin is full.
 	{
-		if feelings <= 0
-	{
-		"\1\s[10]Tegra, go along with it for now, yes?\w8\0\n\n[half]\s[0]\i[253]Ugh...\w4at least I won't have to look at %(himher) for a second...\w8\w8\s[-1]\w8\w8\w8\w8\w8\0\s[0]\c\i[408]\i[409]\i[251]\i[204]There!\w4 You're not welcome, by the way.\i[152]\e"
-	}
-	elseif nowshell == "mirror"
+		if nowshell == "mirror"
 	{
 		"\1\s[10]Tegra, run along and attend to the trash like %(heshe) ordered.\w8\0\n\n[half]\s[0]\i[253]\i[210]\i[406]...Just because %(heshe) told me to...?\w8\w8\s[-1]\w8\w8\w8\w8\w8\0\s[0]\c\i[408]\i[409]\i[254]\i[214]There.\w4 All done.\w8\w8\i[201] That was gross...\i[152]\1\s[10]\n\n[half]\i[201]\i[154]\i[406]...Heh.\e"
 	}
-	else
+		elseif feelings <= 0
+	{
+		"\1\s[10]Tegra, go along with it for now, yes?\w8\0\n\n[half]\s[0]\i[253]Ugh...\w4at least I won't have to look at %(himher) for a second...\w8\w8\s[-1]\w8\w8\w8\w8\w8\0\s[0]\c\i[408]\i[409]\i[251]\i[204]There!\w4 You're not welcome, by the way.\i[152]\e"
+	}
+		else
 	{
 		"\0\s[0]Clearing out the recycling~~~!\w8\w8\s[-1]\w8\w8\w8\w8\w8\![raise,OnGarbagecanEmpty]\w9\w9\w9\0\s[0]\c\i[203]All done!\i[160]\e"
 		
@@ -647,13 +675,13 @@ Select.MailCheck
 
 OnChoiceTimeout
  {
-	 if feelings <= 0
-	 {
-	"\0\s[0]\i[254]\i[208]Yeah, like\w4, why not waste my time, too?\e"
-	 }
-	 elseif nowshell == "mirror"
+	 if nowshell == "mirror"
 	 {
 	"\0\s[0]\i[254]\i[208]...Ugh, stop interrupting my work for no reason...!\e"
+	 }
+	 elseif feelings <= 0
+	 {
+	"\0\s[0]\i[254]\i[208]Yeah, like\w4, why not waste my time, too?\e"
 	 }
 	 else
 	 {
@@ -667,18 +695,19 @@ OnChoiceTimeout
 
 OpenKeroMenu
  {
-	if feelings <= 0
-	{
-	"\1\s[10]\i[251]\i[204]\w8\w8...\w6What?"
-	--
-	OnKadanMenu
-	}
-	elseif nowshell == "mirror"
+	if nowshell == "mirror"
 	{
 	"\1\s[10]\i[201]\i[404]Please direct all comments, questions, concerns, and pleas for mercy to my secretary.\e"
 	"\1\s[10]\i[204]\i[206]Terrans don't make requests of me.\e"
 	"\1\s[10]\i[204]...\w8Cheeky.\e"
 	}
+	elseif feelings <= 0
+	{
+	"\1\s[10]\i[251]\i[204]\w8\w8...\w6What?"
+	--
+	OnKadanMenu
+	}
+	
 	else
 	{
 	"\1\s[10]\i[404]\i[405]\i[204]\b[2]"
@@ -702,9 +731,11 @@ OnKadanMenu
 	\![*]\q[Interact with Kadan,OnKadanInteract]\n/
 	\![*]\q[Update,keroupdatecheck]\n/
  	\![*]\q[Bug report,bugreport]\n\n/
-	\![*]\q[Test variable,testvariable]\n\n/
+	
 	\![*]\q[Nothing,keroCANCEL]\e"
 }
+
+//\![*]\q[Test variable,testvariable]\n\n/
 
 Select.keroCANCEL
 {
@@ -728,10 +759,10 @@ Select.keroupdatecheck
 //I briefly mentioned the test variable in bootend.dic and possibly in etc.dic as well, I'm not sure. What exactly is the test variable? Basically, it's a place you can plug in anything you want to test out. While you can use Script Input to test most of your ghost's dialogue, there are some lines it just can't do, and it can't help you test choices. But the test variable can!
 //You can also use this to test functions as I mentioned above by adding \![raise,function] at the end of it, although you can do this with Script Input as well. Advanced Users, the test variable is also great for testing out any new stuff you may add to your ghost, like mode settings, item values, functions, raising or lowering numbers, what have you, particularly if you have a bunch you want to change all at once.
 
-Select.testvariable
-{
-	"\1\s[10]Testing.\e"
-}
+//Select.testvariable
+//{
+	//"\1\s[10]Testing.\e"
+//}
 
 
 //--Interactions-----------------------------------------------------------
@@ -746,6 +777,7 @@ OnTegraInteract
 	\![*]\q[Apologize for hitting,TegraApologize]\n/
 	\![*]\q[Give her something,TegraGive]\n/
 	\![*]\q[Ask her something,TegraAsk]\n/
+	\![*]\q[Ask me something,TegraInterview]\n/
 	\![*]\q[Tell her something,TegraTell]\n\n[half]/
 	\![*]\q[Never mind,BACKTOMENU]\e"
 	}
@@ -754,6 +786,7 @@ OnTegraInteract
 	"\n\n[half]/
 	\![*]\q[Give her something,TegraGive]\n/
 	\![*]\q[Ask her something,TegraAsk]\n/
+	\![*]\q[Ask me something,TegraInterview]\n/
 	\![*]\q[Tell her something,TegraTell]\n\n[half]/
 	\![*]\q[Never mind,BACKTOMENU]\e"
 	}
@@ -769,6 +802,7 @@ OnKadanInteract
 	\![*]\q[Apologize for hitting,KadanApologize]\n/
 	\![*]\q[Give her something,KadanGive]\n/
 	\![*]\q[Ask her something,KadanAsk]\n/
+	\![*]\q[Ask me something,KadanInterview]\n/
 	\![*]\q[Tell her something,KadanTell]\n/
 	\![*]\q[Feelings,OnFeelings]\n\n[half]/
 	\![*]\q[Never mind,OnKadanMenu]\e"
@@ -778,6 +812,7 @@ OnKadanInteract
 	"\n\n[half]/
 	\![*]\q[Give her something,KadanGive]\n/
 	\![*]\q[Ask her something,KadanAsk]\n/
+	\![*]\q[Ask me something,KadanInterview]\n/
 	\![*]\q[Tell her something,KadanTell]\n/
 	\![*]\q[Feelings,OnFeelings]\n\n[half]/
 	\![*]\q[Never mind,OnKadanMenu]\e"
@@ -1078,6 +1113,11 @@ Select.FangirlTegra
 		"\0\s[0]\i[216]\i[254]This might sound totally weird, but Mo really helps me get through stuff.\w8\w8\s[0]\i[210]\i[407] He's just always there for me\w2, you know?\w4\w6\s[0]\i[204]\i[406] Like...when I was growing up\w2, Mo was everything I couldn't have myself.\w8\s[0]\i[254]\i[410] He goes wherever he wants, he makes his own choices\w3, and no matter how hard things get, he always escapes by the skin of his teeth.\w8\w8\s[0]\i[204]\n\n[half] Maybe that's what gave me the idea that I could leave home.\w4\s[0]\i[201]\i[406] Like...I could be free like that, too.\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
 		"\0\s[0]\i[216]\i[254]I swear\w3, I know he's not real and I'm not crazy.\w8\w8\s[0]\i[210]\i[407] But Mo's sort of\w2 a friend?\w4\w4\w6\s[0]\i[214]\i[406] I didn't\w2 get a chance to make many friends back home\w3, other than daughters of my parents' friends.\w8\s[0]\i[220]\i[254]\i[410] You know\w3, since we could only leave our homes with our dads or brothers.\w8\w8\s[0]\i[204]\n\n[half] I used to daydream a lot about being on Mo's crew.\w4\s[0]\i[201]\i[406] Not having anyone\w3, like\w4, tell me what I can and can't do...\i[158]\n\n\![*]\q[Back,BACKTOMENU]"
 	}
+}
+
+Select.TegraInterview
+{
+	OnQuestionsTegra	
 }
 
 Select.TegraTell
@@ -1465,6 +1505,13 @@ Select.FutureKadan
 	}
 }
 
+Select.KadanInterview
+{
+	OnQuestionsKadan	
+}
+
+
+
 Select.KadanTell
 {
 	"\1\b[2]\s[10]\i[52]\i[410]\i[403]\_q(What do you want to tell her?)"
@@ -1641,7 +1688,7 @@ OnMirrorTegraInteract
 {
 	"\0\s[0]\i[204]\i[410]\i[403]What is it, Terran?\w9"
  	--
-	if hitcount > 0 
+	if mirrorhitcount > 0 
 	{
 	"\n\n[half]/
 	\![*]\q[Apologize for hitting,MirrorTegraApologize]\n/
@@ -1863,7 +1910,7 @@ Select.MirrorBerateTegra
 
 Select.MirrorTegraApologize
 {
-	hitcount = 0
+	mirrorhitcount = 0
 	mirrortegratrust += 1
 	
 	"\0\s[0]\i[208]Whatever. You're a Terran.\w4 Terrans are just violent.\e"
@@ -1926,7 +1973,7 @@ Select.MirrorTegraEvil
 	}
 	elseif mirrortegratrust > 50
 	{
-		"\0\s[0]\i[214]\i[254]\i[406]\w8\w8...Pretty much, yeah.\w4 We can tell ourselves we're just trying to survive\w3\i[201], but it's a load of shit.\w8\n\n[half]\s[0]\i[410]\i[216]None of the Terrans who hurt us during the empire are alive anymore.\w4\i[406] But this won't stop unless someone makes it stop...\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
+		"\0\s[0]\i[214]\i[254]\i[406]\w8\w8...Pretty much, yeah.\w4 We can tell ourselves we're just trying to survive\w3\i[201], but it's a load of beetle shit.\w8\n\n[half]\s[0]\i[410]\i[216]None of the Terrans who hurt us during the empire are alive anymore.\w4\i[406] But this won't stop unless someone makes it stop...\n\n\![*]\q[Back,BACKTOMIRRORMENU]"
 	}
 	else
 	{

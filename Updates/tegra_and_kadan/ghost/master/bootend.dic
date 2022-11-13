@@ -48,7 +48,6 @@ OnFirstBoot
 	nowshell = "master" 
 	tfeelings = 5
 	kfeelings = 5
-	feelings = tfeelings + kfeelings
 	hitcount = 0
 	mirrorverse = 0
 	mirrortegratrust = 0
@@ -64,6 +63,8 @@ OnFirstBoot
 	kgivendrink = 0
 	tgivengift = 0
 	kgivengift = 0
+	autointeract = "Yes" //for config menu and pools
+	MiscFlags = IARRAY
 	
 	firstboot = 1 //This marks that this is the first time you've run the ghost. It's so it won't reroute to general name changing dialogue when the user inputs their name.
 	
@@ -195,6 +196,8 @@ OnBoot
 	mirrortgivenfood = 0
 	mirrortgivendrink = 0
 	mirrortgivengift = 0
+	InitializeNewVars
+
 	
  	"\0\s[0]\1\s[10]" //This sets them up in their neutral pose for now.
 	
@@ -239,6 +242,10 @@ normalboottalk
 	elseif nowshell == "spa"
 	{
 		"\1\s[10]\i[404]\i[405]\i[202]Ngk...!\w8\0\n\n[half]\s[0]\i[204]Oh, hi %(username)! We're at the spa today!\w8\1\s[10]\i[251]\i[201]\n\n[half]This is so embarrassing...\w8\0\s[0]\i[254]\n\n[half]It's really not a big deal, is it?\e"
+	}
+	elseif nowshell == "costume"
+	{
+		"\1\s[10]\i[404]\i[405]\i[202]Ngk...!\w8\0\n\n[half]\s[0]\i[204]Oh, hi %(username)! We're invited to a costume party today!\w8\1\s[10]\i[251]\i[201]\n\n[half]This is so embarrassing...\w8\0\s[0]\i[254]\n\n[half]Aww, Kadan!\w4 What's embarrassing about it?\e"
 	}
 	elseif feelings < 0
 	{
@@ -317,7 +324,7 @@ normalboottalk
 
 OnClose
  {
-	if nowshell == mirror
+	if nowshell == "mirror"
 	{
 		"\1\s[10]\i[52]\i[410]\i[403]Good, we can get back to more important matters.\i[157]\w8\0\n\n[half]\s[0]\i[404]\i[405]So true, ma'am!\i[153]\w8\w8"
 		
@@ -325,7 +332,7 @@ OnClose
 		
 		"\0\s[0]\i[204]\1\s[10]\w8\i[52]\w8\w8\w8\w8\i[251]\i[201]\i[404]\i[405]...\w8\0\s[0]\i[251]\i[404]\i[405]\i[201]\i[153]....\w8\w8"
 	}
-	elseif feelings < 0
+	elseif nowshell != "mirror" && feelings < 0
 	{
 		"\1\s[10]\i[52]\i[410]\i[403]Oh, are we dismissed?\i[157]\w8\0\n\n[half]\s[0]\i[251]\i[404]\i[405]Wow\w4\i[201], how generous of you, %(username).\i[153]\w8\w8"
 		
@@ -335,7 +342,7 @@ OnClose
 	}
 	else
 	{
-	if passmin >= 5 || passhour > 0	//This checks to see if you've had them open for at least five minutes.
+	if nowshell != "mirror" && passmin >= 5 || passhour > 0	//This checks to see if you've had them open for at least five minutes.
 		{
 			if RAND(100) < 40 //see above about the random number generator
 			{
@@ -410,19 +417,19 @@ OnClose
  		
  	else //This dialogue is for if they haven't been open for at least five minutes.
  	{
-		if nowshell == mirror
+		if nowshell == "mirror"
 		{
 			"\1\s[10]\i[253]At least this was a brief interruption...\0\n\n[half]\s[0]\i[201]Agreed, ma'am.\e"
 		}
-		elseif feelings <= 0
+		elseif nowshell != "mirror" && feelings <= 0
 		{
 			"\0\s[0]\i[254]\i[208]Like\w4, thank the Exchequer...\w8\w8"
 		}
-		else
+		else 
 		{
- 		"\0\s[0]\i[204]\i[410]\i[403]Oh, are you, like, busy? See you later, then, %(username).\w8\w8"
+ 			"\0\s[0]\i[204]\i[410]\i[403]Oh, are you, like, busy? See you later, then, %(username).\w8\w8"
 		
- 		"\1\s[10]\i[408]\i[409]Ah, I'm being granted a reprieve.\w4\i[52] Thank you, %(username).\w8\0\n\n[half]\s[0]\i[406]\i[407]Hey! Kadan\w3, what do you mean???\i[152]\w8\w8"
+ 			"\1\s[10]\i[408]\i[409]Ah, I'm being granted a reprieve.\w4\i[52] Thank you, %(username).\w8\0\n\n[half]\s[0]\i[406]\i[407]Hey! Kadan\w3, what do you mean???\i[152]\w8\w8"
 		}
  	}
 	}
@@ -463,7 +470,7 @@ OnClose
 
 OnWindowStateRestore
  {
-	if nowshell == mirror
+	if nowshell == "mirror"
 	{
 		"\0\s[0]...Well\w4\i[254], that was weird.\w8\1\n\n[half]\s[10]\i[201]Extremely.\e"
 	}
@@ -491,7 +498,7 @@ OnGhostChanging
 	}
  	else //If you're switching to another Ghost.
 	{
-	if nowshell == mirror
+	if nowshell == "mirror"
 	{
 	"\1\s[10]Finally.\w4\i[204] Be on your way, terran.\e"
 	}
@@ -523,8 +530,9 @@ OnGhostChanged
 	}
 	else //If you're switching to them from another ghost...
 	{
-		if nowshell == mirror
+		if nowshell == "mirror"
 		{
+		mirrorverse = 1
 		"\0\s[0]\i[204]\i[253]Uh-oh...\w4 Gul Kadan?\w8\1\n\n[half]\s[10]\i[201\i[404]Oh, honestly...\e"
 		}
 		elseif feelings < 0
@@ -577,7 +585,7 @@ OnShellChanged
  	{
  		nowshell = "master" 
 		mirrorverse = 0
-		
+				
  		"\1\s[10]\0\s[0]Casual clothes are so nice, don't you think?\i[158]\w8\1\n\n[half]\s[10]Have you figured out the difference between different types of clothing, Tegra?\w8\0\s[0]\i[410]\i[403]\i[212]\n\n[half]...Mmmmmmmaybe\i[154]???\e"
  	}
  	elseif reference0 == "Tegra and Kadan Spa Day Shell" //You can use as many elseifs for as many shells as you've got.
@@ -585,22 +593,34 @@ OnShellChanged
  		nowshell = "spa"
 		mirrorverse = 0
 		
+		
  		"\1\s[10]\0\s[0]\i[253]\i[201]I'm totally never getting out of this pool!\i[158]\e"
 		
  		"\1\s[10]\0\s[0]We should really go to the spa more often, Kadan!\w8\1\n\n[half]\s[10]\i[404]\i[405]For a ferengi, you're a bit too eager to laze about.\w8\0\n\n[half]\s[0]\i[253]\i[202]Hey, we work hard all the time!\i[410]\i[403]\w5\i[201] We deserve to relax, too.\i[160]\e"
+		
+ 	}
+	elseif reference0 == "Tegra and Kadan Costume Party Shell" //You can use as many elseifs for as many shells as you've got.
+ 	{
+ 		nowshell = "costume"
+		mirrorverse = 0
+		
+		
+ 		"\1\s[10]\0\s[0]\i[252]\i[407]\i[406]Kadan!\w5\i[203] Let's take pictures of our cute cosplay!\i[160]\1\s[10]\i[201]\i[252]\i[404]\w8Ugh...\e"
+		
+ 		"\1\s[10]\0\s[0]Kadan, you look so cute in that!\w8\1\n\n[half]\s[10]\i[404]\i[405]I feel like a complete buffoon. \w3Why did I agree to this?\w8\0\n\n[half]\s[0]\i[253]\i[212]Um,\w6\i[404]\i[405] because you love me???\i[160]\e"
 		
  	}
  	elseif reference0 == "Tegra and Kadan Mirrorverse Shell"
  	{
  		nowshell = "mirror"
 		mirrorverse = 1
-		
+				
  		"\1\s[10]\i[52]Terran...?\e"
 		
  	}
  	else //For any shell without a specific name, or if you don't want to bother with individual responses to a shell.
  	{
-	mirrorverse = 0
+	
 	"\1\s[10]\0\s[0]Ohhh, so now we're using %(reference[0])!\w8\1\n\n[half]\s[10]...Hn?\e"
 	
 	//Note the %(reference[0]) here! This time that should store the name of whatever shell you're switching to. Replace this bit of dialogue as you need.
@@ -713,6 +733,17 @@ if reference0 == 0 //in OnDressupChanged, reference0 refers to the character, th
 			else //when you take it off
 			{
 			"\1\s[10]Best not to tempt one of the terrans into attempting to steal it, after all...\0\n\n[half]\s[0]\i[210]\i[253]\i[408]\i[403]Yeah, wouldn't it be awful if\w4\f[italic,true] a terran\w4\f[italic,false] tried to sell it\w5, haha...\e"
+			}
+		}
+		elseif reference1 == "Veil - Purple Gauze" 
+		{
+			if reference2 == 1 
+			{
+			"\0\s[0]\i[203]This adds an extra pop of color, don't you think?\i[158]\e"
+			}
+			else //when you take it off
+			{
+			"\0\s[0]\i[254]That thing was tickling my neck a little.\i[154]\e"
 			}
 		}
 	}

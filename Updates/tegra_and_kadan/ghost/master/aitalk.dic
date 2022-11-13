@@ -1,6 +1,6 @@
 ﻿//---------------------------AI Talk--------------------------
 //Tegra and Kadan
-//TODO de-spaghettify (orz), figure out why the nonoverlap isn't working (I may just misunderstand how this is meant to work with pools), figure out why certain eye intervals take priority over others with overlay (212, 220, 216 especially as they were not an issue prior to being animated), add animations and time dialogue for the arrays in word.dic, split dialogue pools into separate functions so aitalk isn't a trillion gd miles long, clean up menu.dic for same reason, write more interactive questions, add in cooldowns for gifting dialogue, tuning for sentiment system (separate T and K's sentiments so some questions can have opposed correct answers?), bulk out smaller pools, add alternate dressup and menu dialogues for variety, dressups spanning multiple intervals (smoky eyes for T could be good starter), more arms and eyes for K, possibly swap tail direction on balloons (￣m￣）
+//TODO de-spaghettify (orz), figure out why the nonoverlap isn't working (I may just misunderstand how this is meant to work with pools), figure out why certain eye intervals take priority over others with overlay (212, 220, 216 especially as they were not an issue prior to being animated), add animations and time dialogue for the arrays in word.dic, split dialogue pools into separate functions so aitalk isn't a trillion gd miles long, clean up menu.dic for same reason, write more interactive questions, add in cooldowns for gifting dialogue (done), tuning for sentiment system (separate T and K's sentiments so some questions can have opposed correct answers?), bulk out smaller pools, add alternate dressup and menu dialogues for variety, dressups spanning multiple intervals (smoky eyes for T could be good starter), more arms and eyes for K, possibly swap tail direction on balloons (￣m￣）
 
 
 //--OnAiTalk
@@ -32,7 +32,6 @@ OnAiTalk
 	}
  }
 
-
 //--RandomTalk 
 //***********************************************************************
 
@@ -42,52 +41,22 @@ if mirrorverse == 1 //This works so don't touch it, me.
 {
 	OnMirrorRandomTalk
 }
-else
-{	
-	//Time of day pools
-	if tegrasleep == "off" && kadansleep == "off"
-	{
-	parallel Pool("Pool_EarlyMorningDialogue",timeslot == 'earlymorning' && feelings > 0)
-	parallel Pool("Pool_MorningDialogue",timeslot == 'morning' && feelings > 0)
-	parallel Pool("Pool_LunchDialogue",timeslot == 'lunch' && feelings > 0)
-	parallel Pool("Pool_AfterNoonDialogue",timeslot == 'afternoon' && feelings > 0)
-	parallel Pool("Pool_EveningDialogue",timeslot == 'evening' && feelings > 0)
-	parallel Pool("Pool_LateNightDialogue",timeslot == 'latenight' && feelings > 0)
-	parallel Pool("Pool_MidNightDialogue",timeslot == 'midnight' && feelings > 0)
-	//Month pools
-	parallel Pool("Pool_JanuaryDialogue",month == 1 && feelings > 0)
-	parallel Pool("Pool_FebuaryDialogue",month == 2 && feelings > 0)
-	parallel Pool("Pool_MarchDialogue",month == 3 && feelings > 0)
-	parallel Pool("Pool_AprilDialogue",month == 4 && feelings > 0)
-	parallel Pool("Pool_MayDialogue",month == 5 && feelings > 0)
-	parallel Pool("Pool_JuneDialogue",month == 6 && feelings > 0)
-	parallel Pool("Pool_JulyDialogue",month == 7 && feelings > 0)
-	parallel Pool("Pool_AugustDialogue",month == 8 && feelings > 0)
-	parallel Pool("Pool_SeptemberDialogue",month == 9 && feelings > 0)
-	parallel Pool("Pool_OctoberDialogue",month == 10 && feelings > 0)
-	parallel Pool("Pool_NovemberDialogue",month == 11 && feelings > 0)
-	parallel Pool("Pool_DecemberDialogue",month >= 12 && feelings > 0)
-	//Day of week pools
-	parallel Pool("Pool_SundayDialogue",weekday == 0 && feelings > 0)
-	parallel Pool("Pool_MondayDialogue",weekday == 1 && feelings > 0)
-	parallel Pool("Pool_TuesdayDialogue",weekday == 2 && feelings > 0)
-	parallel Pool("Pool_WednesdayDialogue",weekday == 3 && feelings > 0)
-	parallel Pool("Pool_ThursdayDialogue",weekday == 4 && feelings > 0)
-	parallel Pool("Pool_FridayDialogue",weekday == 5 && feelings > 0)
-	parallel Pool("Pool_SaturdayDialogue",weekday == 6 && feelings > 0)
-	//Sentiment pools
-	parallel Pool("Pool_Dislikeyou",feelings <= 0)
-	parallel Pool("Pool_Conflictedwithyou",feelings > 0 && feelings <= 5)
-	parallel Pool("Pool_Neutraltoyou",feelings > 5)
-	parallel Pool("Pool_Likeyou",feelings > 35)
-	parallel Pool("Pool_Trustyou",feelings >= 100)
-	}
-	//Sleep pools
-	parallel Pool("Pool_TegraSleep",tegrasleep == "on" && kadansleep == "off")
-	parallel Pool("Pool_KadanSleep",kadansleep == "on" && tegrasleep == "off")
-	parallel Pool("Pool_BothSleep",kadansleep == "on" && tegrasleep == "on")
-	}
-	
+elseif tegrasleep == "on" && kadansleep == "on"
+{
+	OnBothSleepTalk
+}
+elseif tegrasleep == "on" && kadansleep == "off"
+{
+	OnTegraSleepTalk
+}
+elseif tegrasleep == "off" && kadansleep == "on"
+{
+	OnKadanSleepTalk
+}
+elseif tegrasleep == "off" && kadansleep == "off"
+{
+	OnNormalTalk
+}	
 }
 
 //--Chains
@@ -230,7 +199,7 @@ mochain
 
 partychain
 {{CHAIN
-	"\1\s[10]I don't \w2, but do tell.\w8\0\n\n[half]\s[0]\i[410]I wish they'd stop asking about Ferenginar, you know?\w4 They don't actually care about anything going on with us.\w4\s[0]\i[220] They just want to, like, insult us and brag about how perfect they are.\i[156]\w8\1\s[10]\n\n[half]\i[201]\i[253]Hm. That is indeed extremely ill-mannered.\e"
+	"\1\s[10]I find everyone annoying all the time\w2, but do tell.\w3 In what specific way were these humans annoying?\w8\0\n\n[half]\s[0]\i[410]I wish they'd stop asking about Ferenginar, you know?\w4 They don't actually care about anything going on with us.\w4\s[0]\i[220] They just want to, like, insult us and brag about how perfect they are.\i[156]\w8\1\s[10]\n\n[half]\i[201]\i[253]Hm. That is indeed extremely ill-mannered.\e"
 
 	"\0\s[0]At least you're honest about thinking Cardassia's better.\w8\1\n\n[half]\s[10]Which it is.\w8\0\s[0]\n\n[half]But they were all\w2\i[212]\i[406] ''oh noooo\w2, I.D.I.C. or whatever\w2, we're all just people''\w4\s[0]\i[254]\i[206] and then spent like half an hour talking down to me about how horrible my homeworld is\w4 right to my face!\w2\i[409] Like\w3, I'm a ferengi, too?\w2 Hello?\w3 I'm not an idiot.\e"
 
@@ -243,8 +212,7 @@ partychain
 	"\1\s[10]Sounds like an irritating way to while away an evening.\w8\0\n\n[half]\s[0]It super was!\w8\w8\i[210]\i[410] Thanks for letting me, like\w3\s[0]\i[254], vent at you, Kadan.\i[161]\w8\1\s[10]\n\n[half]\i[406]Oh, any time, Tegra. You know I enjoy a good airing of greivances.\i[154]\0\s[0]\i[158]\i[201]\e"
 }}CHAIN
 
-
-//Variable chains
+//Sleep Variable chains
 tegrasleepstart
 {{CHAIN
 	tegrasleep = "on"
@@ -264,7 +232,7 @@ bothsleepstart
 	"\0\s[1]Zzzz...\1\s[11]...Zzzz...\e:chain=end"
 }}CHAIN
 
-//Variable reset chains
+//Sleep Variable reset chains
 tegrawake
  {{CHAIN
 	tegrasleep = "off"
@@ -309,28 +277,11 @@ bothsleepend
 	"\1\s[10]\w8\w8\i[202]Oh dear, is that the time?\w8\0\n\n[half]\s[1]...Mmm? Is what the what?\i[155]\w8\1\s[10]\n\n[half]\i[251]\i[404]\f[bold,true]Tegra, wake up!\f[bold,false]\w8\0\s[0]\n\n[half]\i[202]\i[252]Aah! I'm up!\w3 Don't yell at me!\i[152]\w8\w8\w8\i[201]\i[253]\i[406]\i[407] You were asleep too...\i[155]\w8\1\s[10]\n\n[half]\i[210]\i[408]...How embarrassing, dozing off life that.\i[155]\w8\0\s[0]\n\n[half]\i[254]\i[206]\i[410]Kadan, it wasn't even for that long. Like, calm down.\w8\1\s[10]\n\n[half]\i[251]\i[404]\i[202]This is because you're always interfering with my sleep schedule.\i[152]\e:chain=end"
 }}CHAIN
 
-//Hidden question chains
-tegratoothsnafu
-{{CHAIN
-	"\0\s[0]\i[152]\i[203]\i[253]\i[406]\i[407]\1\s[10]\i[204]\i[404]\i[403]\![set,choicetimeout,0]Ah, %(username), assist me in talking Tegra down\w3, please? Reassure her that she has perfectly cromulent teeth.\n\n[half]\![*]\q[All teeth are valid,teethvalid]\n\![*]\q[They're snaggled and gross,teethgross]\e:chain=end"
-}}CHAIN
-
 //Pools
 //***************************************************************************
 //Sentiment pools
 Pool_Neutraltoyou : array //feelings > 5
 {
-	//Feelings up or down
-	"\0\s[0]\i[204]\i[410]\i[403]\![set,choicetimeout,0]Hey, %(username), do you like holonovels? Or, like, whatever they call them in your time?\n\n[half]\![*]\q[Love them!,hololove]\n\![*]\q[They're okay,holomeh]\n\![*]\q[They're stupid,holohate]\e"
-	
-	"\0\s[0]\i[204]\i[410]\i[403]\![set,choicetimeout,0]Hey, %(username), Nitmo or Mobus?\n\n[half]\![*]\q[Nitmo!,teamnitmo]\n\![*]\q[Mobus!,teammobus]\n\![*]\q[...What?,teamnobody]\e"
-
-	"\0\s[0]\i[204]\i[410]\i[403]\![set,choicetimeout,0]Hey, %(username), do you like listen to a lot of music?\n\n[half]\![*]\q[I listen a lot!,musiclove]\n\![*]\q[Sometimes,musicmeh]\n\![*]\q[I don't like music,musichate]\e"
-
-	"\1\s[10]\i[204]\i[410]\i[403]\![set,choicetimeout,0]I'm preparing for a gallery show, %(username).\w4 Do you appreciate art at all?\n\n[half]\![*]\q[Waste of time,arthate]\n\![*]\q[I don't like modern art much,artmeh]\n\![*]\q[Art is so important,artlove]\e"
-
-	"\0\s[0]\i[201]\i[251]\i[407]Ugh!\w4 Why do people here keep mistaking me for a male?\w8\s[0]\i[204] %(Capitalize(username))\w3, do you think my ears look that big?\n\n[half]\![*]\q[What? No!,smallear]\n\![*]\q[You could fly away with those,bigear]\e"
-		
 	//USER focused	
 	"\0\s[0]What do you think of %(username), Kadan?\w8\1\n\n[half]\s[10]I'd prefer not to discuss the matter while %(heshe) can hear us.\e"
 	
@@ -443,7 +394,8 @@ Pool_Neutraltoyou : array //feelings > 5
 	
 	//Non-sequiters
 	"\1\s[10]\i[253]\i[404]Tegra, how do you sleep with all those pillows and stuffed animals covering your bed?\w8\0\n\n[half]\s[0]\i[254]Like\w3, how do you sleep on that hard mattress and one super-hard pillow?\e"
-	
+
+	//Double envelopes
 	{
 	_therules = lessonrules 
 	_ruleread = _therules[0] 
@@ -496,6 +448,17 @@ Pool_Neutraltoyou : array //feelings > 5
 	
 	"\0\s[0]It's too bad you don't like the cool baths here, Kadan\w2, they're refreshing!\w8\1\n\n[half]\s[10]Like being in your old backyard, hm?\i[154]\w8\0\s[0]\i[406]\i[407]\n\n[half]You can laugh, but swamp water is super clean from all the plants filtering it.\s[0]\i[201]\w4 It's only green because of the algae.\w8\1\s[10]\i[406]\i[407]\n\n[half]Of course, I wouldn't think to cast aspersions on swamps.\i[154]\e"
 	}
+
+	if nowshell == "costume"
+	{
+	"\1\s[10]\i[410]\i[403]I feel perfectly foolish in this outfit...\w8\0\n\n[half]\s[0]\i[406]\i[403]\i[203]Aww, but you look super adorable!\i[160]\e"
+
+	"\1\s[10]\i[252]\i[404]The party you're dragging me to had better not be one of your...\w4special parties.\w8\0\n\n[half]\s[0]\i[406]\i[403]\i[206]Kadan, please!\w2 As if I'd bring you to an orgy without warning you.\i[156]\e"
+
+	"\0\s[0]\i[410]\i[403]Does Cardassia have any holidays where you get to dress up?\w8\1\n\n[half]\s[10]No, naturally.\w4 This is all a frivolous waste of time and resources.\w8\0\s[0]\i[254]\i[406]\i[407]\n\n[half]Isn't that the point of a holiday?\w8\1\s[10]\i[252]\n\n[half]Hmph...\e"
+
+	"\0\s[0]\i[410]So what do you wanna do first when we get to this costume party?\w8\w8\1\s[10]\i[404]\n\n[half]Go home.\e"
+	}
 	
 	//Drowsy
 	"\0\s[0]\i[220]Wow, I feel so totally energetic...\w8...\w8 Totally!\w8\w8\s[1]\e:chain=tegrasleepstart"
@@ -504,12 +467,11 @@ Pool_Neutraltoyou : array //feelings > 5
 	
 	"\0\s[0]\i[253]...Like, I'm so\w4\i[218] tired all of a sudden...\s[1]\1\n\n[half]\s[10]\i[404]\i[405]It's because...\w4\i[208]you stay up too late...\w4at night...\s[11]\e:chain=bothsleepstart"
 }
-
 Pool_Dislikeyou : array //feelings < 0
 {
 	"\0\s[0]\i[204]\i[410]\i[403]\i[204]...\w8\i[254]\w8\w8\w8\e"
 	
-	"\0\s[0]\i[253]\i[204]\i[410]\i[403]\i[204]\1\s[10]\i[52]\i[404]\i[405]\_s...\w8\w8\w8\w8\e"
+	"\0\s[0]\i[253]\i[204]\i[410]\i[403]\i[204]\1\s[10]\i[252]\i[404]\i[405]\_s...\w8\w8\w8\w8\e"
 	
 	"\0\s[0]\i[52]\i[410]\i[403]\i[208]...\w8\i[251]\w8\w8\w8\e"
 	
@@ -525,7 +487,6 @@ Pool_Dislikeyou : array //feelings < 0
 	
 	"\0\s[0]Kadan, are you going back home after you're done studying here?\w8\1\n\n[half]\s[10]\w4I see no reason to stay on Earth.\w8\0\s[0]\n\n[half]Could I come with you?\w4\i[253]\i[410]\i[403]\w8\w8\w8\1\s[10]\n\n[half]You may.\e"
 }
-
 Pool_Conflictedwithyou : array //feelings > 0 && feelings <= 5
 {
 	"\0\s[0]\i[410]\i[403]Am I the only one confused about %(username)?\w8\1\n\n[half]\s[10]\i[404]\i[405]It seems we're being kept off balance.\w5 Intentionally or not, I can't say for certain.\e"
@@ -544,12 +505,8 @@ Pool_Conflictedwithyou : array //feelings > 0 && feelings <= 5
 	
 	"\0\s[0]\i[410]\i[403]\i[201]I don't know if I like %(username)...\w8\1\n\n[half]\s[10]Regardless\w3, you shouldn't say as much out in the open like that.\w8\0\s[0]\i[406]\i[403]\n\n[half]Then %(heshe) should start doing a better job of selling me on %(himher)self!\e"
 }
-
 Pool_Likeyou : array //feelings > 35
 {
-	//Feelings up or down
-	"\0\s[0]\i[204]\i[410]\i[403]\![set,choicetimeout,0]Hey, %(username), would you smooch an alien?\n\n[half]\![*]\q[Who wouldn't?!,smoochyes]\n\![*]\q[It depends,smoochmaybe]\n\![*]\q[Ew! Gross!,smoochno]\e"
-
 	//USER focused
 	"\0\s[0]\i[203]\i[404]\i[405]Even when we're not talking directly, you're so nice to have around, %(username).\i[158]\w8\1\n\n[half]\s[10]\i[252]There is something oddly reassuring about this temporal anomaly we're sharing, true.\i[154]\i[201]\e"
 	
@@ -557,7 +514,7 @@ Pool_Likeyou : array //feelings > 35
 	
 	"\0\s[0]\i[406]\i[407]\i[204]Hey, %(username), when are you gonna figure out time travel so I have someone to go to the clubs with?\w8\1\n\n[half]\s[10]\i[201]What a petty reason to upset the space-time continuum...\e"
 	
-	"\0\s[0]\i[204]Hey, %(username), what's your favorite kind of rain?\w8\1\s[10]You know %(heshe) usually can't answer in a way we can hear, yes? Did you forget?\w8\0\s[0]\n\n[half]Ah, right. In that case... I bet %(username) likes \f[italic,true]%(frain)\f[italic,false].\e"
+	"\0\s[0]\i[204]Hey, %(username), what's your favorite kind of rain?\w8\1\s[10]\n\n[half]You know %(heshe) usually can't answer in a way we can hear, yes? Did you forget?\w8\0\s[0]\n\n[half]Ah, right. In that case... I bet %(username) likes \f[italic,true]%(frain)\f[italic,false].\e"
 	
 	"\0\s[0]\i[253]\1\s[10]Tegra, you look wistful. \0\n\n[half]\i[410]\i[403]\i[212]\w8I was just thinking how totally sad it is that %(username) is like 300 years in the past\w4 and we can't do friend stuff like borrow clothes. \1\s[10]\i[252]\i[404]\i[405]\i[201]\n\n[half]\w8Sad for you, but perhaps fortunate for %(himher)\w3, since you never return the clothes you borrow.\i[154]\0\s[0]\i[253]\i[406]\i[407]\i[152]\i[202]\e"
 	
@@ -610,7 +567,7 @@ Pool_Likeyou : array //feelings > 35
 	
 	"\1\s[10]Tegra\w3, once again I have no room for my cosmetics because yours are covering the entire vanity.\w8\0\n\n[half]\s[0]\i[252]\i[406]\i[407]Well, I have to keep up on my skincare, Kadan!\w4 The humidity here is super low compared to back home.\w8\1\n\n[half]\s[10]\i[251]\i[406]I counted no less than 14 containers!\w5 You can't possibly need all these.\w8\0\n\n[half]\s[0]\i[253]\i[406]\i[407]\i[202]And they all do different things!\w6 Unlike some people\w4, I'm not supposed to look scaly\w3, okay???\i[155]\1\s[10]\i[251]\i[404]\i[405]\i[201]\n\n[half]...Hmph.\e"
 	
-	"\1\s[10]Tegra\w3, I often wonder\w5, why is it you've decided to speak Federation Standard rather than use your U.T...?\w8\0\n\n[half]\n\n[half]\s[0]I didn't have a universal translator when I left home.\w4 They're super expensive\w3, you know?\e:chain=translatorchain"
+	"\1\s[10]Tegra\w3, I often wonder\w5, why is it you've decided to speak Federation Standard rather than use your U.T...?\w8\0\n\n[half]\s[0]I didn't have a universal translator when I left home.\w4 They're super expensive\w3, you know?\e:chain=translatorchain"
 	
 	"\0\s[0]\i[410]\i[405]\i[210]You ever notice how almost everyone is named after the planet they come from?\w8\1\n\n[half]\s[10]What\w4, you mean Cardassians belonging to Cardassia\w4, Ferengi belonging to Ferenginar\w4, Romulans belonging to Romulus\w3, and so on?\e:chain=speciesnamechain"
 	
@@ -638,7 +595,6 @@ Pool_Likeyou : array //feelings > 35
 	"\1\s[10]I really worry for all the orphans left behind back home in the wake of the war...\w8\0\n\n[half]\s[0]\i[406]\i[407]For sure!\w6 \i[410]\i[405]You know, I'm very maternal, Kadan. We should adopt some!\w8\1\s[10]\n\n[half]\w8\w8I question the wisdom of the state leaving traumatized cardassian children in your care.\w8\0\s[0]\n\n[half]It'd be just fine! I could be the fun mom, and you could be the strict mom!\w8\1\s[10]\w8\n\n[half]\i[251]\i[408]\i[409]...Why am I the strict one?\e"
 	
 	"\0\s[0]\i[252]Let's get married\w2, Kadan!\i[158] <3\1\n\n[half]\s[10]You do realize that cardassian marriages have no end date\w2, yes?\w3 They're forever.\w8\0\s[0]\i[410]\i[403]\n\n[half]Forever?\i[254]\w8\1\s[10]\i[201]\i[406]\i[407]\n\n[half]Yes\w3, forever.\w8\0\s[0]\i[254]\i[212]\i[406]\i[403]\n\n[half]For\f[italic,true]ever\f[italic,false] ever?\w8\1\s[10]\i[251]\i[404]\i[405]\n\n[half]What's not clicking?\w8\0\s[0]\i[253]\i[202]\i[406]\i[407]\n\n[half]Forever \w4\f[italic,true]ever\f[italic,false] ever?\i[152]\e"
-	
 }
 
 Pool_Trustyou : array //feelings > 100
@@ -660,12 +616,10 @@ Pool_Trustyou : array //feelings > 100
 	"\0\s[0]Is it okay if I call you Laille sometimes?\w8\1\n\n[half]\s[10]\i[408]If we're alone\w3, I suppose.\e"
 	
 	//Politics
-	"\0\s[0]You ever wonder how things are going back home?\w8\1\n\n[half]\s[10]Every moment of every day, yes.\w8\0\s[0]\i[210]]\n\n[half]Sometimes I feel a little guilty, like, being here.\w8\1\s[10]\i[201]\n\n[half]...As do I, every moment of every day.\e"
+	"\0\s[0]You ever wonder how things are going back home?\w8\1\n\n[half]\s[10]Every moment of every day, yes.\w8\0\s[0]\i[210]\n\n[half]Sometimes I feel a little guilty, like, being here.\w8\1\s[10]\i[201]\n\n[half]...As do I, every moment of every day.\e"
 
-	"\1\s[10]\i[253]\i[406]How did you enjoy that party you went you yesterday evening?\w8\0\s[0]\i[254]\i[203]\i[407]Ugh, like...\w4\s[0]\i[251] The people here are nice, but they're so annoying sometimes.\w4\i[220] Especially hu-mons.\i[152]\e:chain=partychain"
+	"\1\s[10]\i[253]\i[406]How did you enjoy that party you went to yesterday evening?\w8\0\s[0]\i[254]\i[203]\i[407]Ugh, like...\w4\s[0]\i[251] The people here are nice, but they're so annoying sometimes.\w4\i[220] Especially hu-mons.\i[152]\e:chain=partychain"
 
-
-	
 	//Relationships
 	"\0\s[0]\i[410]\i[403]Kadan, do you avoid dating because you're sexually inexperienced?\w8\1\n\n[half]\s[10]\i[251]\i[202]\i[410]\i[403]\f[italic,true]Excuse me?!\i[152]\f[italic,false]\w8\0\s[0]\n\n[half]I'm just saying, you can totally practice on me if you want! I'm a judgment-free zone.\w8\1\s[10]\i[251]\i[404]\i[405]\n\n[half]Leaving aside how wildly inappropriate it is to broach such a personal subject in public\w5, why in the world would you proposition one of your friends?\i[157]\w8\0\s[0]\i[254]\i[404]\i[405]\n\n[half]\w4...Um\w4, duh? Because we're friends??? Do cardassians not have friends?\i[156]\e"
 	
@@ -677,8 +631,217 @@ Pool_Trustyou : array //feelings > 100
 
 }
 
-//Sleep pools (test)
-Pool_KadanSleep : array
+//Time of Day pools
+Pool_EarlyMorningDialogue : array 
+{
+	"\0\s[0]\i[253]\i[406]\i[403]\i[201]Ugh, I'm so tired...\i[152]\w8\1\n\n[half]\s[10]Someday you'll learn to go to bed at a reasonable hour.\e"
+		
+	"\1\s[10]Tegra, you grew up on a farm, did you not?\0\n\n[half]\s[0]\i[252]Totally!\1\s[10]\n\n[half]I'm surprsed it's so difficult to get you moving in the morning, then.\0\s[0]\n\n[half]\i[410]\i[403]I can't help it if there's a ton of stuff worth staying up at night for here.\w8\1\s[10]\i[201]Hmm...\e"
+
+	"\0\s[0]\i[253]\i[406]\i[403]\i[201]I'm dying...\i[152]\w8\1\n\n[half]\s[10]Then your last moments can be spent enjoying this lovely sunrise\w5, how fortunate for you.\e"
+
+	"\0\s[0]\i[253]\i[406]\i[407]\i[201]Aaaaaauuuuuuuuggggghhhhhhh...\i[152]\e"
+}
+Pool_MorningDialogue : array 
+{
+	"\0\s[0]I'm still tired\i[202] Why do we have to start the day so early...\i[152]\w8\1\n\n[half]\s[10]If you'd stop staying up until sunrise...\e"
+		
+	"\0\s[0]\i[253]\i[201]Ugh, I need more coffee.\i[254] Raktajino. Amphetamines.\s[0]\[50] Something.\w8\1\n\n[half]\s[10]\i[406]\i[407]\i[55]How about adequate sleep?\i[212]\e"
+	
+	"\1\s[10]Nothing like a cup of hot fish juice to start the day.\i[154]\w8\0\n\n[half]\s[0]Tastes like the ocean,\i[406]\i[403] but hot!\i[158]\e"
+
+	"\0\s[0]\i[253]\i[406]\i[407]\i[203]Whoever came up with morning classes is, like\w4, SO evil.\i[152]\e"
+}	
+Pool_LunchDialogue : array
+{
+	"\0\s[0]It's about lunch-time, isn't it? Kadan, you can share my %(food) if you want!\w8\1\n\n[half]\s[10]...I'll pass.\0\s[0]\i[203]\n\n[half]Your loss!\i[204] More for me and %(username), then!\i[158]\e"
+		
+	"\1\s[10]\i[406]\i[407]\i[52]Don't forget to eat a proper meal...\i[0]\e"
+		
+	"\0\s[0]\i[410]Kadan, what are you having for lunch?\1\n\n[half]\s[10]\w8I'm having %(kfood).\e"
+	
+	"\0\s[0]\i[252]We should eat outside if the weather stays nice!\w8\1\n\n[half]\s[10]\i[252]\i[408]\i[409]You think anything short of hail and lightning is nice weather.\e"
+}
+Pool_AfterNoonDialogue : array 
+{
+	"\0\s[0]\i[252]\i[406]\i[403]It's already the afternoon!\w8\1\n\n[half]\s[10]\i[404]\i[405]Let's do our best to be productive in what remains of our day.\e"
+		
+	"\0\s[0]\i[410]\i[403]It's easy to get a sunburn this time of day if I'm not careful...\w8\1\n\n[half]\s[10]On the other hand, it's prime basking hours.\e"
+
+	"\1\s[10]Still a few hours left in which to work!\i[154]\w8\0\n\n[half]\s[0]Yeah,\i[406]\i[403] and after that it's the good part of the day!\i[158]\e"
+
+	"\1\s[10]\i[404]Today has gone by quickly, hasn't it?\i[154]\w8\0\n\n[half]\s[0]\i[203]\i[410]You say that like you're ready for bed!\i[160]\e"
+}	
+Pool_EveningDialogue : array 
+{
+	"\0\s[0]It's evening! Aren't sunsets pretty?\i[158]\w8\1\n\n[half]\s[10]Hn. \i[201]Agreed.\e"
+		
+	"\0\s[0]Do you like evenings? The dim light is so relaxing.\w8\1\n\n[half]\s[10]So long as the air remains warm, I prefer this level of light, yes.\e"
+	
+	"\1\s[10]\i[252]This time of day always makes me wonder if I could have gotten more done...\w8\0\n\n[half]\s[0]\i[254]That's because you go to bed, like, right after sundown.\w6\i[252]\i[406]\i[403] Just stay up later!\w8\1\s[10]\n\n[half]Hmmmm.\i[201] No.\e"
+	
+	"\1\s[10]\i[410]\i[403]\i[204]\i[54]\0\s[0]\i[254]\i[410]\i[403]Kadan, you good?\w8\1\n\n[half]\s[10]I'm a bit chilled presently, that's all.\w8\0\s[0]\i[253]\i[406]\i[407]\n\n[half]Poor thing! \w4\i[252]I could cuddle with you, if you want.\w8\1\s[10]\n\n[half]...\i[201]Perhaps later.\e"
+}	
+Pool_LateNightDialogue : array 
+{
+	"\0\s[0]\i[252]One of these nights I'm totally going to talk you into going clubbing with me, Kadan.\i[157]\w8\1\n\n[half]\s[10]\i[406]\i[407]Hn. \i[201]Keep thinking that.\i[154]\e"
+		
+	"\0\s[0]\i[410]\i[403]What do you like to do at night?\w8\1\n\n[half]\s[10]I read or listen to quiet music for a while, then go to sleep.\0\s[0]\n\n[half]\i[252]Boring! I bet %(username) goes on all kinds of fun adventures,\i[152]\i[204] right?\i[158]\e"
+	
+	"\1\s[10]\i[410]\i[403]\i[201]...\f[italic,true]*yawns*\f[italic,false]...\e"
+
+	"\1\s[10]\i[404]\i[403]\i[201]Surely it's almost time for bed, isn't it?\w8 I'm quite exhausted...\e"
+}
+Pool_MidNightDialogue : array 
+{
+	"\0\s[0]\i[406]\i[407]Don't you love being awake at this hour?\i[158]\w8\1\n\n[half]\s[10]\i[251]No, and I resent you two keeping me up.\0\s[0]\i[201]\n\n[half]But don't you feel, like, free and disconnected from the world?\i[158]\1\s[10]\n\n[half]You enjoy feeling like that?\e"
+		
+	"\0\s[0]\i[406]\i[403]\i[212]I wonder if the weather is good for stargazing?\w8\1\n\n[half]\s[10]I'm surprised you'd slow down enough to look up at the stars.\e"
+	
+	"\1\s[10]\i[252]\i[410]\i[403]\i[201]So very tired...\w8\0\n\n[half]\s[0]\i[402]\i[409]Drink some warm slug juice!\w3 That always works for me.\w8\1\s[10]\i[253]\i[201]\i[410]\i[403]\n\n[half]...I'll weather the insomnia on my own\w3, thanks.\e"
+
+	"\1\s[10]\i[252]\i[410]\i[403]\i[201]How are you able to stay up so late so easily, Tegra?\w8\0\n\n[half]\s[0]\i[402]\i[409]\i[212]Maybe because back home it's usually dark no matter what time of day it is?\i[159]\e"
+}
+//Month pools
+Pool_DecemberDialogue : array //month >= 12
+{
+	"\0\s[0]It's the last month of the solar year!\w8\1\n\n[half]\s[10]December, named in honor of the number ten...\i[404]\i[405]even though it's the twelfth month.\e"
+		
+	"\0\s[0]\i[252]\i[406]\i[407]There used to be a really big capitalistic festival at the end of this month!\i[158]\w8\1\n\n[half]\s[10]\i[252]\i[404]\i[405]And yet\w4 human-ferengi first contact wasn't until the 24th Century...\i[154]\e"
+}	
+Pool_JanuaryDialogue : array //month == 1
+{
+	"\0\s[0]January...that's the first month of the new solar calendar year.\w8\1\n\n[half]\s[10]\i[404]\i[405]Mid-winter or mid-summer are odd times to start a new year...\e"
+		
+	"\0\s[0]\i[406]\i[403]This year, I resolve to become a millionaire!\w8\1\n\n[half]\s[10]\i[406]\i[407]I believe the human tradition is to choose an \f[italic,true]attainable\f[italic,false] goal for the year.\i[154]\e"
+}
+Pool_FebruaryDialogue : array //month == 2
+{
+	"\0\s[0]\i[252]Kadan! Do you know about Valentine's Day?\w8\1\n\n[half]\s[10]I gather it honors a minor god in human mythology.\0\s[0]\i[406]\i[407]\n\n[half]And you bribe people you like with gifts!\i[201] It's so romantic!i[47]\e"
+		
+	"\0\s[0]How do you feel about chocolates, Kadan?\w8\1\n\n[half]\s[10]I don't care much for the taste.\w8\0\s[0]\i[254]\i[402]\i[409]...Oh.\w4 Okay.\w8\i[210] I wonder if the bakery would do an exchange...\i[152]\e"
+}	
+Pool_MarchDialogue : array //month == 3
+{
+	"\0\s[0]I wonder if %(username) is enjoying as much rainy weather as we are?\w8\1\n\n[half]\s[10]Enjoying? This cold\w3, dreary darkness?\w8\0\s[0]\i[252]\i[406]\i[407]Yeah!\i[157]\e"
+		
+	"\0\s[0]\i[203]It's Marsh!\i[157]\w8\1\n\n[half]\s[10]\i[406]I do believe it's pronounced March.\e"
+}
+Pool_AprilDialogue : array //month == 4
+{
+	"\1\s[10]April...\w8\0\n\n[half]\s[0]\i[410]\i[201]It's named after an ancient hu-mon female with connections to a bunch of famous artists back in Earth's Renaissance period!\i[157]\e"
+		
+	"\0\s[0]The weather in April is so nice!\i[158]\w8\1\s[10]Hn. \w3Still too chilly for me.\e"
+}
+Pool_MayDialogue : array //month == 5
+{
+	"\0\s[0]Why do you think it's called May?\w4 Who was May?\w8\1\n\n[half]\s[10]How would I know? You ought to ask %(username).\e"
+		
+	"\0\s[0]The semester is just about over!\w8\1\n\n[half]\s[10]So, you're ready for your exams\w3, yes?\0\s[0]\i[253]\i[406]\i[407]\i[152]\i[202]\e"
+}
+Pool_JuneDialogue : array //month == 6
+{
+	"\0\s[0]Like, who was June...?\w8\1\n\n[half]\s[10]I'd \f[italic,true]love\f[italic,false] to know why you assume Earth months are named after individuals.\e"
+		
+	"\0\s[0]\i[410]What should we do with our break, Kadan?\w8\1\n\n[half]\s[10]By the time you decide\w3, the break will be finished...\e"
+}
+Pool_JulyDialogue : array //month == 7
+{
+	"\0\s[0]It's Julie!\i[156]\i[203]\w8\1\n\n[half]\s[10]July.\w8\0\n\n[half]\s[0]\i[254]\i[410]\i[403]That's what I said\i[154]...?\e"
+		
+	"\0\s[0]\i[253]\i[201]Like\w3, it's so damn hot I'm gonna die...\i[152]\w8\1\n\n[half]\s[10]It's finally comfortable, yes.\i[201]\i[154]\e"
+}
+Pool_AugustDialogue : array //month == 8
+{
+	"\0\s[0]August!\i[253] The new semester is almost here already...\i[152]\w8\1\n\n[half]\s[10]A welcome return to a structured routine.\i[154]\e"
+		
+	"\0\s[0]\i[402]\i[409]There's still time for a few more parties before summer's over!\w8\1\n\n[half]\s[10]\i[251]\i[404]\i[405]As if you ever stop...\e"
+}
+Pool_SeptemberDialogue : array //month == 9
+{
+	"\0\s[0]September.\w4\i[201] The weather is finally cooling off...\i[158]\w8\1\n\n[half]\s[10]\i[201]\i[406]More like\w3, it's already cooling off.\i[155]\e"
+		
+	"\0\s[0]\i[201]\i[254]\i[410]Back to classes already...\w8\1\n\n[half]\s[10]Yes\w3\i[404], regimented days are here again.\i[154]\e"
+}
+Pool_OctoberDialogue : array //month == 10
+{
+	"\0\s[0]My fave hu-mon holiday is at the end of this month!\w8\1\n\n[half]\s[10]Yes, an ancient inversion festival with death-positive themes.\0\s[0]\n\n[half]And skimpy costumes!\e"
+		
+	"\0\s[0]\i[203]Isn't the sound of crunchy leaves the best?\w4 It's so cool!\i[160]\w8\1\n\n[half]\s[10]It is quite satisfying.\i[154]\e"
+}
+Pool_NovemberDialogue : array //month == 11
+{
+	"\0\s[0]It's getting cold out!\w8\1\n\n[half]\s[10]\i[406]\i[407]Sadly.\e"
+		
+	"\0\s[0]Did you used to draw pictures in the fog on your bedroom window as a kid?\i[160]\w8\1\n\n[half]\s[10]Blessedly, my childhood home wasn't cold enough.\e"
+}
+//Weekday pools
+Pool_MondayDialogue : array //weekday == 1
+{
+	"\0\s[0]It's totally Monday.\w8\1\n\n[half]\s[10]Uncreatively named for Earth's moon...\w4Moon.\e"
+		
+	"\1\s[10]The first day of the standard Earth work week...\w8\0\n\n[half]\s[0]Back home there's no weekend, so you\w3, like\w3, never have to feel sad about going back to work...!\1\s[10]\n\n[half]\i[253].\w8\w8.\w8\w8.\e"
+}
+Pool_TuesdayDialogue : array //weekday == 2
+{
+	"\0\s[0]Tuesday!\w4\i[203] Hu-mons call it that because it's the two's day.\i[158]\w8\1\n\n[half]\s[10]\i[404]That can't possibly be right.\e"
+		
+	"\0\s[0]\i[212]\i[254]Tuesday again?\i[159]\w8\1\n\n[half]\s[10]\i[253]Is that a problem?\e"
+}
+Pool_WednesdayDialogue : array //weekday == 3
+{
+	"\0\s[0]Wednesday... Why is it spelled backwards?\w8\1\n\n[half]\s[10]\i[253]...\w4Backwards?\e"
+		
+	"\1\s[10]Already halfway through the week.\w8\0\n\n[half]\s[0]\i[252]\i[406]Practically the weekend!\i[160]\e"
+}
+Pool_ThursdayDialogue : array //weekday == 4
+{
+	"\0\s[0]\i[201]It's Thursday.\w8\1\n\n[half]\s[10]\i[201]Named for one of Earth's ancient gods\w3, Thor.\e"
+		
+	"\0\s[0]\i[212]\i[410]Why do some hu-mons call today Friday Eve?\i[159]\w8\1\n\n[half]\s[10]\i[251]\i[402]Because they're insufferable.\i[152]\e"
+}
+Pool_FridayDialogue : array //weekday == 5
+{
+	"\0\s[0]It's Friday!\w8\1\n\n[half]\s[10]Named for another of Earth's primitive deities\w3, Freya.\e"
+		
+	"\0\s[0]\i[254]\i[407]Why do hu-mons like Friday so much?\w8\1\n\n[half]\s[10]\i[254]Something to do with the fact that they lack our industrious natures.\i[156]\e"
+}
+Pool_SaturdayDialogue : array //weekday == 6
+{
+	"\0\s[0]\i[406]\i[407]It's Saturday!\w8\1\n\n[half]\s[10]\i[201]Named for Sol VI\w4, itself named for the ancient human god\w3, Saturn.\e"
+		
+	"\0\s[0]Saturday!\w4 Kadan, what should we do?\w8\1\n\n[half]\s[10]Our usual follies, I expect.\e"
+}
+Pool_SundayDialogue : array //weekday == 0
+{
+	"\0\s[0]Sunday!\w8\1\n\n[half]\s[10]Presumably named for the vague concept of the sun\w4\i[253], yet it's not Solday...\e"
+		
+	"\1\s[10]It's Sunday.\w4 Tegra\w2, did you know some ancient human cultures prohibited working on this specific day?\w8\0\s[0]\i[252]Wow!\w4 So crazy!!!\i[154]\e"
+}
+
+
+//Global functions
+OnBothSleepTalk : nonoverlap
+{
+	"\0\s[1]......zzzzz....\w8\1\s[11]....zzz.......zzz....\e"
+		
+	"\0\s[1]Zzz...\w4 ...Wiggles...\w4\i[254] ...have in your mouth...?\w8\1\n\n[half]\s[11]\n\n[half]...zzz...\w4\i[251] ...Nothing...\i[152]\w8\0\s[1]\n\n[half]\i[406]\i[407]...back here...\w4\i[251] ...drop it...!\i[161]\e"
+
+	"\0\s[1]Zzz...\w4 ...wooly slug...\w4\i[254] ...into the mushroom plot again...\w8\1\n\n[half]\s[11]\n\n[half]...zzz...\w4\i[251] ...catch it...\i[152]\w8\0\s[1]\n\n[half]\i[406]\i[407]...all... slimy now...\w4\i[251] ...bad slug...!\i[161]\e"
+		
+	"\0\s[1]\1\s[11].....Snrk!\0\n\n[half]...?\e:chain=bothwake"
+		
+	"\1\s[11].....Snrk!\w6 ...?\e:chain=kadanwake"
+		
+	"\0\s[1].....Snrk!\w6\i[254] ...?\e:chain=tegrawake"
+
+	"\0\s[1]......zzzzz....\w8\1\s[11]....zzz.......zzz....\e:chain=bothsleepend"
+
+	"\0\s[1]......zzzzz....\w8\1\s[11]....zzz.......zzz....\e:chain=kadansleepend"
+
+	"\0\s[1]......zzzzz....\w8\1\s[11]....zzz.......zzz....\e:chain=tegrasleepend"
+}
+OnKadanSleepTalk : nonoverlap
 {
 	"\0\s[0]\i[254]\i[410]...?\w8\1\n\n[half]\s[10]\i[254]\i[201]\i[408]......Laille... ...don't fret now...\w8\0\s[0]\i[254]\i[406]\i[407]\n\n[half]\i[252]\i[159]...!\e"
 		
@@ -692,8 +855,7 @@ Pool_KadanSleep : array
 		
 	"\1\s[11].....Zzzz...\e:chain=kadanwake"
 }
-
-Pool_TegraSleep : array
+OnTegraSleepTalk : nonoverlap
 {
 	"\0\s[1]...Don't fall out... ...hydrofoil again...\w8\1\n\n[half]\s[10]\i[404]\i[405]...Silly girl...\i[156]\w8\0\s[1]\i[254]\n\n[half]Tag... ...you silly...\i[158]\e"
 		
@@ -717,228 +879,6 @@ Pool_TegraSleep : array
 		
 	"\0\s[1]...zzz...are weak\w6\i[254] ...carry...\w4...\w8\w8 ...me...\w4 ...strong...\w4 cry...\w4\_a[https://www.youtube.com/watch?v=ptSGHC2ikd0] ...let...me go...~\_a\i[159]\e"
 }
-
-Pool_BothSleep : array
-{
-	"\0\s[1]......zzzzz....\w8\1\s[11]....zzz.......zzz....\e"
-		
-	"\0\s[1]Zzz...\w4 ...Wiggles...\w4\i[254] ...have in your mouth...?\w8\1\n\n[half]\s[11]\n\n[half]...zzz...\w4\i[251] ...Nothing...\i[152]\w8\0\s[1]\n\n[half]\i[406]\i[407]...back here...\w4\i[251] ...drop it...!\i[161]\e"
-
-	"\0\s[1]Zzz...\w4 ...wooly slug...\w4\i[254] ...into the mushroom plot again...\w8\1\n\n[half]\s[11]\n\n[half]...zzz...\w4\i[251] ...catch it...\i[152]\w8\0\s[1]\n\n[half]\i[406]\i[407]...all... slimy now...\w4\i[251] ...bad slug...!\i[161]\e"
-		
-	"\0\s[1]\1\s[11].....Snrk!\0\n\n[half]...?\e:chain=bothwake"
-		
-	"\1\s[11].....Snrk!\w6 ...?\e:chain=kadanwake"
-		
-	"\0\s[1].....Snrk!\w6\i[254] ...?\e:chain=tegrawake"
-
-	"\0\s[1]......zzzzz....\w8\1\s[11]....zzz.......zzz....\e:chain=bothsleepend"
-
-	"\0\s[1]......zzzzz....\w8\1\s[11]....zzz.......zzz....\e:chain=kadansleepend"
-
-	"\0\s[1]......zzzzz....\w8\1\s[11]....zzz.......zzz....\e:chain=tegrasleepend"
-}
-
-//Time of Day pools
-Pool_EarlyMorningDialogue : array 
-{
-	"\0\s[0]\i[253]\i[406]\i[403]\i[201]Ugh, I'm so tired...\i[152]\w8\1\n\n[half]\s[10]Someday you'll learn to go to bed at a reasonable hour.\e"
-		
-	"\1\s[10]Tegra, you grew up on a farm, did you not?\0\n\n[half]\s[0]\i[252]Totally!\1\s[10]\n\n[half]I'm surprsed it's so difficult to get you moving in the morning, then.\0\s[0]\n\n[half]\i[410]\i[403]I can't help it if there's a ton of stuff worth staying up at night for here.\w8\1\s[10]\i[201]Hmm...\e"
-}
-
-Pool_MorningDialogue : array 
-{
-	"\0\s[0]I'm still tired\i[202] Why do we have to start the day so early...\i[152]\w8\1\n\n[half]\s[10]If you'd stop staying up until sunrise...\e"
-		
-	"\0\s[0]\i[253]\i[201]Ugh, I need more coffee.\i[254] Raktajino. Amphetamines.\s[0]\[50] Something.\w8\1\n\n[half]\s[10]\i[406]\i[407]\i[55]How about adequate sleep?\i[212]\e"
-	
-	"\1\s[10]Nothing like a cup of hot fish juice to start the day.\i[154]\w8\0\n\n[half]\s[0]Tastes like the ocean,\i[406]\i[403] but hot!\i[158]\e"
-}
-	
-Pool_LunchDialogue : array
-{
-	"\0\s[0]It's about lunch-time, isn't it? Kadan, you can share my %(food) if you want!\w8\1\n\n[half]\s[10]...I'll pass.\0\s[0]\i[203]\n\n[half]Your loss!\i[204] More for me and %(username), then!\i[158]\e"
-		
-	"\1\s[10]\i[406]\i[407]\i[52]Don't forget to eat a proper meal...\i[0]\e"
-		
-	"\0\s[0]\i[410]Kadan, what are you having for lunch?\1\n\n[half]\s[10]\w8I'm having %(kfood).\e"
-	
-	"\0\s[0]\i[252]We should eat outside if the weather stays nice!\w8\1\n\n[half]\s[10]\i[252]\i[408]\i[409]You think anything short of hail and lightning is nice weather.\e"
-}
-
-Pool_AfterNoonDialogue : array 
-{
-	"\0\s[0]\i[252]\i[406]\i[403]It's already the afternoon!\w8\1\n\n[half]\s[10]\i[404]\i[405]Let's do our best to be productive in what remains of our day.\e"
-		
-	"\0\s[0]\i[410]\i[403]It's easy to get a sunburn this time of day if I'm not careful...\w8\1\n\n[half]\s[10]On the other hand, it's prime basking hours.\e"
-}
-	
-Pool_EveningDialogue : array 
-{
-	"\0\s[0]It's evening! Aren't sunsets pretty?\i[158]\w8\1\n\n[half]\s[10]Hn. \i[201]Agreed.\e"
-		
-	"\0\s[0]Do you like evenings? The dim light is so relaxing.\w8\1\n\n[half]\s[10]So long as the air remains warm, I prefer this level of light, yes.\e"
-	
-	"\1\s[10]\i[252]This time of day always makes me wonder if I could have gotten more done...\w8\0\n\n[half]\s[0]\i[254]That's because you go to bed, like, right after sundown.\w6\i[252]\i[406]\i[403] Just stay up later!\w8\1\s[10]\n\n[half]Hmmmm.\i[201] No.\e"
-	
-	"\1\s[10]\i[410]\i[403]\i[204]\i[54]\0\s[0]\i[254]\i[410]\i[403]Kadan, you good?\w8\1\n\n[half]\s[10]I'm a bit chilled presently, that's all.\w8\0\s[0]\i[253]\i[406]\i[407]\n\n[half]Poor thing! \w4\i[252]I could cuddle with you, if you want.\w8\1\s[10]\n\n[half]...\i[201]Perhaps later.\e"
-}
-	
-Pool_LateNightDialogue : array 
-{
-	"\0\s[0]\i[252]One of these nights I'm totally going to talk you into going clubbing with me, Kadan.\i[157]\w8\1\n\n[half]\s[10]\i[406]\i[407]Hn. \i[201]Keep thinking that.\i[154]\e"
-		
-	"\0\s[0]\i[410]\i[403]What do you like to do at night?\w8\1\n\n[half]\s[10]I read or listen to quiet music for a while, then go to sleep.\0\s[0]\n\n[half]\i[252]Boring! I bet %(username) goes on all kinds of fun adventures,\i[152] right?\i[158]\e"
-	
-	"\1\s[10]\i[410]\i[403]\i[201]...\f[italic,true]*yawns*\f[italic,false]...\e"
-}
-
-Pool_MidNightDialogue : array 
-{
-	"\0\s[0]\i[406]\i[407]Don't you love being awake at this hour?\i[158]\w8\1\n\n[half]\s[10]\i[251]No, and I resent you two keeping me up.\0\s[0]\i[201]\n\n[half]But don't you feel, like, free and disconnected from the world?\i[158]\1\s[10]\n\n[half]You enjoy feeling like that?\e"
-		
-	"\0\s[0]\i[406]\i[403]\i[212]I wonder if the weather is good for stargazing?\w8\1\n\n[half]\s[10]I'm surprised you'd slow down enough to look up at the stars.\e"
-	
-	"\1\s[10]\i[252]\i[410]\i[403]\i[201]So very tired...\w8\0\n\n[half]\s[0]\i[402]\i[409]Drink some warm slug juice!\w3 That always works for me.\w8\1\s[10]\i[253]\i[201]\i[410]\i[403]\n\n[half]...I'll weather the insomnia on my own\w3, thanks.\e"
-}
-
-//Month pools
-Pool_DecemberDialogue : array //month >= 12
-{
-	"\0\s[0]It's the last month of the solar year!\w8\1\n\n[half]\s[10]December, named in honor of the number ten...\i[404]\i[405]even though it's the twelfth month.\e"
-		
-	"\0\s[0]\i[252]\i[406]\i[407]There used to be a really big capitalistic festival at the end of this month!\i[158]\w8\1\n\n[half]\s[10]\i[252]\i[404]\i[405]And yet\w4 human-ferengi first contact wasn't until the 24th Century...\i[154]\e"
-}
-	
-Pool_JanuaryDialogue : array //month == 1
-{
-	"\0\s[0]January...that's the first month of the new solar calendar year.\w8\1\n\n[half]\s[10]\i[404]\i[405]Mid-winter or mid-summer are odd times to start a new year...\e"
-		
-	"\0\s[0]\i[406]\i[403]This year, I resolve to become a millionaire!\w8\1\n\n[half]\s[10]\i[406]\i[407]I believe the human tradition is to choose an \f[italic,true]attainable\f[italic,false] goal for the year.\i[154]\e"
-}
-
-Pool_FebruaryDialogue : array //month == 2
-{
-	"\0\s[0]\i[252]Kadan! Do you know about Valentine's Day?\w8\1\n\n[half]\s[10]I gather it honors a minor god in human mythology.\0\s[0]\i[406]\i[407]\n\n[half]And you bribe people you like with gifts!\i[201] It's so romantic!i[47]\e"
-		
-	"\0\s[0]How do you feel about chocolates, Kadan?\w8\1\n\n[half]\s[10]I don't care much for the taste.\w8\0\s[0]\i[254]\i[402]\i[409]...Oh.\w4 Okay.\w8\i[210] I wonder if the bakery would do an exchange...\i[152]\e"
-}
-	
-Pool_MarchDialogue : array //month == 3
-{
-	"\0\s[0]I wonder if %(username) is enjoying as much rainy weather as we are?\w8\1\n\n[half]\s[10]Enjoying? This cold\w3, dreary darkness?\w8\0\s[0]\i[252]\i[406]\i[407]Yeah!\i[157]\e"
-		
-	"\0\s[0]\i[203]It's Marsh!\i[157]\w8\1\n\n[half]\s[10]\i[406]I do believe it's pronounced March.\e"
-}
-
-Pool_AprilDialogue : array //month == 4
-{
-	"\1\s[10]April...\w8\0\n\n[half]\s[0]\i[410]\i[201]It's named after an ancient hu-mon female with connections to a bunch of famous artists back in Earth's Renaissance period!\i[157]\e"
-		
-	"\0\s[0]The weather in April is so nice!\i[158]\w8\1\s[10]Hn. \w3Still too chilly for me.\e"
-}
-
-Pool_MayDialogue : array //month == 5
-{
-	"\0\s[0]Why do you think it's called May?\w4 Who was May?\w8\1\n\n[half]\s[10]How would I know? You ought to ask %(username).\e"
-		
-	"\0\s[0]The semester is just about over!\w8\1\n\n[half]\s[10]So, you're ready for your exams\w3, yes?\0\s[0]\i[253]\i[406]\i[407]\i[152]\i[202]\e"
-}
-
-Pool_JuneDialogue : array //month == 6
-{
-	"\0\s[0]Like, who was June...?\w8\1\n\n[half]\s[10]I'd \f[italic,true]love\f[italic,false] to know why you assume Earth months are named after individuals.\e"
-		
-	"\0\s[0]\i[410]What should we do with our break, Kadan?\w8\1\n\n[half]\s[10]By the time you decide\w3, the break will be finished...\e"
-}
-
-Pool_JulyDialogue : array //month == 7
-{
-	"\0\s[0]It's Julie!\i[156]\i[203]\w8\1\n\n[half]\s[10]July.\w8\0\n\n[half]\s[0]\i[254]\i[410]\i[403]That's what I said\i[154]...?\e"
-		
-	"\0\s[0]\i[253]\i[201]Like\w3, it's so damn hot I'm gonna die...\i[152]\w8\1\n\n[half]\s[10]It's finally comfortable, yes.\i[201]\i[154]\e"
-}
-
-Pool_AugustDialogue : array //month == 8
-{
-	"\0\s[0]August!\i[253] The new semester is almost here already...\i[152]\w8\1\n\n[half]\s[10]A welcome return to a structured routine.\i[154]\e"
-		
-	"\0\s[0]\i[402]\i[409]There's still time for a few more parties before summer's over!\w8\1\n\n[half]\s[10]\i[251]\i[404]\i[405]As if you ever stop...\e"
-}
-
-Pool_SeptemberDialogue : array //month == 9
-{
-	"\0\s[0]September.\w4\i[201] The weather is finally cooling off...\i[158]\w8\1\n\n[half]\s[10]\i[201]\i[406]More like\w3, it's already cooling off.\i[155]\e"
-		
-	"\0\s[0]\i[201]\i[254]\i[410]Back to classes already...\w8\1\n\n[half]\s[10]Yes\w3\i[404], regimented days are here again.\i[154]\e"
-}
-
-Pool_OctoberDialogue : array //month == 10
-{
-	"\0\s[0]My fave hu-mon holiday is at the end of this month!\w8\1\n\n[half]\s[10]Yes, an ancient inversion festival with death-positive themes.\0\s[0]\n\n[half]And skimpy costumes!\e"
-		
-	"\0\s[0]\i[203]Isn't the sound of crunchy leaves the best?\w4 It's so cool!\i[160]\w8\1\n\n[half]\s[10]It is quite satisfying.\i[154]\e"
-}
-
-Pool_NovemberDialogue : array //month == 11
-{
-	"\0\s[0]It's getting cold out!\w8\1\n\n[half]\s[10]\i[406]\i[407]Sadly.\e"
-		
-	"\0\s[0]Did you used to draw pictures in the fog on your bedroom window as a kid?\i[160]\w8\1\n\n[half]\s[10]Blessedly, my childhood home wasn't cold enough.\e"
-}
-
-//Weekday pools
-Pool_MondayDialogue : array //weekday == 1
-{
-	"\0\s[0]It's totally Monday.\w8\1\n\n[half]\s[10]Uncreatively named for Earth's moon...\w4Moon.\e"
-		
-	"\1\s[10]The first day of the standard Earth work week...\w8\0\n\n[half]\s[0]Back home there's no weekend, so you\w3, like\w3, never have to feel sad about going back to work...!\1\s[10]\n\n[half]\i[253].\w8\w8.\w8\w8.\e"
-}
-
-Pool_TuesdayDialogue : array //weekday == 2
-{
-	"\0\s[0]Tuesday!\w4\i[203] Hu-mons call it that because it's the two's day.\i[158]\w8\1\n\n[half]\s[10]\i[404]That can't possibly be right.\e"
-		
-	"\0\s[0]\i[212]\i[254]Tuesday again?\i[159]\w8\1\n\n[half]\s[10]\i[253]Is that a problem?\e"
-}
-
-Pool_WednesdayDialogue : array //weekday == 3
-{
-	"\0\s[0]Wednesday... Why is it spelled backwards?\w8\1\n\n[half]\s[10]\i[253]...\w4Backwards?\e"
-		
-	"\1\s[10]Already halfway through the week.\w8\0\n\n[half]\s[0]\i[252]\i[406]Practically the weekend!\i[160]\e"
-}
-
-Pool_ThursdayDialogue : array //weekday == 4
-{
-	"\0\s[0]\i[201]It's Thursday.\w8\1\n\n[half]\s[10]\i[201]Named for one of Earth's ancient gods\w3, Thor.\e"
-		
-	"\0\s[0]\i[212]\i[410]Why do some hu-mons call today Friday Eve?\i[159]\w8\1\n\n[half]\s[10]\i[251]\i[402]Because they're insufferable.\i[152]\e"
-}
-
-Pool_FridayDialogue : array //weekday == 5
-{
-	"\0\s[0]It's Friday!\w8\1\n\n[half]\s[10]Named for another of Earth's primitive deities\w3, Freya.\e"
-		
-	"\0\s[0]\i[254]\i[407]Why do hu-mons like Friday so much?\w8\1\n\n[half]\s[10]\i[254]Something to do with the fact that they lack our industrious natures.\i[156]\e"
-}
-
-Pool_SaturdayDialogue : array //weekday == 6
-{
-	"\0\s[0]\i[406]\i[407]It's Saturday!\w8\1\n\n[half]\s[10]\i[201]Named for Sol VI\w4, itself named for the ancient human god\w3, Saturn.\e"
-		
-	"\0\s[0]Saturday!\w4 Kadan, what should we do?\w8\1\n\n[half]\s[10]Our usual follies, I expect.\e"
-}
-
-Pool_SundayDialogue : array //weekday == 0
-{
-	"\0\s[0]Sunday!\w8\1\n\n[half]\s[10]Presumably named for the vague concept of the sun\w4\i[253], yet it's not Solday...\e"
-		
-	"\1\s[10]It's Sunday.\w4 Tegra\w2, did you know some ancient human cultures prohibited working on this specific day?\w8\0\s[0]\i[252]Wow!\w4 So crazy!!!\i[154]\e"
-}
-
-//Global functions
 OnMirrorRandomTalk : nonoverlap
 {
 	//To USER
@@ -1034,8 +974,82 @@ OnMirrorRandomTalk : nonoverlap
 
 	"\1\s[10]\i[210]On days when I'm simply doing paperwork in my office\w2, I wish I could forego the uniform and wear something more comfortable.\w4\i[201]\i[402] Not that I doubt the necessity of this regulation, of course.\i[156]\e"
 }
+OnNormalTalk
+{	
+	//Time of day pools
+	
+	{
+	parallel Pool("Pool_EarlyMorningDialogue",timeslot == 'earlymorning' && feelings > 0)
+	parallel Pool("Pool_MorningDialogue",timeslot == 'morning' && feelings > 0)
+	parallel Pool("Pool_LunchDialogue",timeslot == 'lunch' && feelings > 0)
+	parallel Pool("Pool_AfterNoonDialogue",timeslot == 'afternoon' && feelings > 0)
+	parallel Pool("Pool_EveningDialogue",timeslot == 'evening' && feelings > 0)
+	parallel Pool("Pool_LateNightDialogue",timeslot == 'latenight' && feelings > 0)
+	parallel Pool("Pool_MidNightDialogue",timeslot == 'midnight' && feelings > 0)
+	//Month pools
+	parallel Pool("Pool_JanuaryDialogue",month == 1 && feelings > 0)
+	parallel Pool("Pool_FebuaryDialogue",month == 2 && feelings > 0)
+	parallel Pool("Pool_MarchDialogue",month == 3 && feelings > 0)
+	parallel Pool("Pool_AprilDialogue",month == 4 && feelings > 0)
+	parallel Pool("Pool_MayDialogue",month == 5 && feelings > 0)
+	parallel Pool("Pool_JuneDialogue",month == 6 && feelings > 0)
+	parallel Pool("Pool_JulyDialogue",month == 7 && feelings > 0)
+	parallel Pool("Pool_AugustDialogue",month == 8 && feelings > 0)
+	parallel Pool("Pool_SeptemberDialogue",month == 9 && feelings > 0)
+	parallel Pool("Pool_OctoberDialogue",month == 10 && feelings > 0)
+	parallel Pool("Pool_NovemberDialogue",month == 11 && feelings > 0)
+	parallel Pool("Pool_DecemberDialogue",month >= 12 && feelings > 0)
+	//Day of week pools
+	parallel Pool("Pool_SundayDialogue",weekday == 0 && feelings > 0)
+	parallel Pool("Pool_MondayDialogue",weekday == 1 && feelings > 0)
+	parallel Pool("Pool_TuesdayDialogue",weekday == 2 && feelings > 0)
+	parallel Pool("Pool_WednesdayDialogue",weekday == 3 && feelings > 0)
+	parallel Pool("Pool_ThursdayDialogue",weekday == 4 && feelings > 0)
+	parallel Pool("Pool_FridayDialogue",weekday == 5 && feelings > 0)
+	parallel Pool("Pool_SaturdayDialogue",weekday == 6 && feelings > 0)
+	//Sentiment pools
+	parallel Pool("Pool_Dislikeyou",feelings <= 0)
+	parallel Pool("Pool_Conflictedwithyou",feelings > 0 && feelings <= 5)
+	parallel Pool("Pool_Neutraltoyou",feelings > 5)
+	parallel Pool("Pool_Likeyou",feelings > 35)
+	parallel Pool("Pool_Trustyou",feelings >= 100)
+	//Interaction pools
+	parallel Pool("OnQuestionsTegra",autointeract == "Yes")
+	parallel Pool("OnQuestionsKadan",autointeract == "Yes")
+	//parallel Pool("Pool_QuestionsNeutral",autointeract == "Yes" && feelings > 5) taking care of this check in the questions function itself, delete these later
+	//parallel Pool("Pool_QuestionsLike",autointeract == "Yes" &&  feelings > 35)
+	//parallel Pool("Pool_QuestionsTrust",autointeract == "Yes" && feelings > 100)
+	}
+	
+	
+	}
 
-//Local functions*********************************************************
+OnQuestionsTegra : array
+{
+    if feelings > 5
+    {
+    "\0\s[0]\i[204]\i[410]\i[403]\![set,choicetimeout,0]Hey, %(username), do you like holonovels? Or, like, whatever they call them in your time?\n\n[half]\![*]\q[Love them!,hololove]\n\![*]\q[They're okay,holomeh]\n\![*]\q[They're stupid,holohate]\e"
+	
+	"\0\s[0]\i[204]\i[410]\i[403]\![set,choicetimeout,0]Hey, %(username), Nitmo or Mobus?\n\n[half]\![*]\q[Nitmo!,teamnitmo]\n\![*]\q[Mobus!,teammobus]\n\![*]\q[...What?,teamnobody]\e"
+
+	"\0\s[0]\i[204]\i[410]\i[403]\![set,choicetimeout,0]Hey, %(username), do you like listen to a lot of music?\n\n[half]\![*]\q[I listen a lot!,musiclove]\n\![*]\q[Sometimes,musicmeh]\n\![*]\q[I don't like music,musichate]\e"
+
+	"\0\s[0]\i[201]\i[251]\i[407]Ugh!\w4 Why do people here keep mistaking me for a male?\w8\s[0]\i[204] %(Capitalize(username))\w3, do you think my ears look that big?\n\n[half]\![*]\q[What? No!,smallear]\n\![*]\q[You could fly away with those,bigear]\e"
+	}
+    if feelings > 35
+    {
+	//Tegra
+    "\0\s[0]\i[204]\i[410]\i[403]\![set,choicetimeout,0]Hey, %(username), would you smooch an alien?\n\n[half]\![*]\q[Who wouldn't?!,smoochyes]\n\![*]\q[It depends,smoochmaybe]\n\![*]\q[Ew! Gross!,smoochno]\e"
+    }
+}
+
+OnQuestionsKadan : array
+{
+	if feelings > 5
+    {
+		"\1\s[10]\i[204]\i[410]\i[403]\![set,choicetimeout,0]I'm preparing for a gallery show, %(username).\w4 Do you appreciate art at all?\n\n[half]\![*]\q[Waste of time,arthate]\n\![*]\q[I don't like modern art much,artmeh]\n\![*]\q[Art is so important,artlove]\e"
+	}
+}
 
 //Answers for feelings
 Select.hololove
@@ -1087,13 +1101,13 @@ Select.musicmeh
 Select.musichate
 {
 	tfeelings -=1
-	"\1\s[10]\i[204]As vapid as human music is\w4, I don't know that I entirely trust a self-admitted philistine.\w8\0\n\n[half]\s[0]\i[253]\i[406]\i[212]Yeah, and %(heshe) doesn't even appreciate music\w3, either...\i[154]\e"
+	"\1\s[10]\i[204]As vapid as human music is\w4, I don't know that I entirely trust a self-admitted philistine.\w8\0\n\n[half]\s[0]\i[253]\i[406]\i[212]Yeah, and %(username) doesn't even appreciate music\w3, either...\i[154]\e"
 }
 
 Select.artlove
 {
 	kfeelings +=1
-	"\1\s[10]\i[201]\i[254]\i[404]Yes, it adds such meaning and context to our lives\w4, does it not?\i[154]\w8\0\n\n[half]\s[0]\n\n[half]\i[410]Like that big stone egg you made last year!\w8\1\s[10]\n\n[half]\i[408] Stone egg?\w4\i[253]\i[208] You mean ''Cardassia, Reborn''\w3 I assume?\i[155]\w8\0\s[0]\n\n[half]\i[407]\i[203]Yeah!\w4 That cool giant egg!\i[160]\e"
+	"\1\s[10]\i[201]\i[254]\i[404]Yes, it adds such meaning and context to our lives\w4, does it not?\i[154]\w8\0\n\n[half]\s[0]\i[410]Like that big stone egg you made last year!\w8\1\s[10]\n\n[half]\i[408] Stone egg?\w4\i[253]\i[208] You mean ''Cardassia, Reborn''\w3 I assume?\i[155]\w8\0\s[0]\n\n[half]\i[407]\i[203]Yeah!\w4 That cool giant egg!\i[160]\e"
 }
 
 Select.artmeh
@@ -1152,6 +1166,14 @@ Select.teethgross
 	kfeelings -= 5
 	"\0\s[0]\i[202]\i[253]\i[408]\i[409]See?\w4 Even %(username) thinks they're disgusting.\i[162]\w8\1\s[10]\n\n[half]\i[204]\i[251]\i[404]Unbelievable.\w3 How was that necessary\w2, %(username)?\i[155]\w8\w8\s[10]\i[408] Tegra\w3, your teeth are fine.\w4\i[254] Don't you spend an hour each night making sure they're cared for and sharpened?\i[154]\w8\w8\0\s[0]\n\n[half]\i[253]Uh-huh.\w4 You got me that nice cuttlebone to chew on.\i[158]\e"
 }
+
+//Hidden question chains
+tegratoothsnafu
+{{CHAIN
+	"\0\s[0]\i[152]\i[203]\i[253]\i[406]\i[407]\1\s[10]\i[204]\i[404]\i[403]\![set,choicetimeout,0]Ah, %(username), assist me in talking Tegra down\w3, please? Reassure her that she has perfectly cromulent teeth.\n\n[half]\![*]\q[All teeth are valid,teethvalid]\n\![*]\q[They're snaggled and gross,teethgross]\e:chain=end"
+}}CHAIN
+
+//Local functions*********************************************************
 
 //Keeps track of if an hour has passed. Just ignore this.
 HourCheck
@@ -1244,6 +1266,8 @@ OnSecondChange
 		"\0\s[0]\i[210]\i[253]Ma'am?\w4\i[406] The Terran is still here.\w8\1\n\n[half]\s[10]\i[201]\i[251]Ah\w3, that's right. \w4How irritating.\4\e"
 	}
  }
+
+
 
  //---- MikireTalk ---------------------------------------------------------------------
  //MikireTalk is dialogue for when your main character is off-screen. Like if you dragged Girl over to the side of your monitor until she was partially concealed by it.

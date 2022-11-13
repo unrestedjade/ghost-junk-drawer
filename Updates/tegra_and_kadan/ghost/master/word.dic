@@ -55,6 +55,7 @@ holonovels
 	"Swamp King: the Swampening: the Remake"
 	"Privateer of the Swampways"
 	"Smiling Partner VII"
+	"Mass Effect 19"
 }
 
 food
@@ -168,7 +169,7 @@ destination
 tlocale
 {
 	"the Sacred Marketplace"
-	"the Latinum Mandible beetle derby"
+	"the Latinum Mandible beetle raceway"
 	"Binx"
 	"the Caverns of Sogg"
 	"the Gothis Mountains"
@@ -181,7 +182,7 @@ tlocale
 
 klocale
 {
-	" the Ithian Forest"
+	"the Ithian Forest"
 	"downtown Lakarian City"
 	"the Lakat botanical gardens"
 	"the Cardassian Institute of Art"
@@ -235,10 +236,10 @@ drink
 	"Rekarri Starburst"
 	"mead"
 	"zinfandel"
-	"el presidente"
+	"presidente"
 	"whiskey smash"
 	"jello shot"
-	"Old Fashioned"
+	"New Fashioned"
 	"sonic screwdriver"
 	"pink squirrel"
 	"ramos gin fizz"
@@ -260,7 +261,7 @@ softdrink
 	"Slug-o-Cola"
 	"hevrit juice"
 	"bubble juice"
-	"espresso"
+	
 }
 
 produce
@@ -338,6 +339,7 @@ relaxing
 	"chatting with someone"
 	"planning an outfit"
 	"window shopping"
+	"streaming"
 }
 
 gossip
@@ -525,7 +527,7 @@ flesson
 	"neep-gren,thank you"
 	"yop-im too,I'm sorry"
 	"bree,to say"
-	"orink,to observe (imperative)"
+	"orink,to observe"
 	"ningor,to go"
 	"fatarik,to know or be capable of something"
 	"im,to be"
@@ -565,12 +567,12 @@ lessonrules
 	"Rule 21:\nNever place friendship over profit.,\i[201]You all must lead incredibly atomized lives.,\i[216]Replace ''profit'' with ''the state'' and you'd be totally on board.\i[155]"
 	"Rule 22:\nA wise man can hear profit in the wind.,\i[210]\i[253]\i[406]Do you really never think about anything else?,\i[260]Well duh!\i[201]\i[410] They're not called the Rules of Everything Else."
 	"Rule 23:\nNothing is more important than your health except for your money.,Truly?,\i[406]\i[409]You can't go broke on medical bills and then go meet the Blessed Exchequer empty-handed. Right?"
-	"Rule 27:\nThere's nothing more dangerous than an honest businessman.,\i[402]I must confess this sounds like nonsense on its face.\i[155],This one's hard to explain to outsiders... \i[210]\i[410]\i[403]You'd have to read up on Drek-May-His-Name-Live-In-Infamy."
+	"Rule 27:\nThere's nothing more dangerous than an honest businessman.,\i[402]I must confess this sounds like nonsense on its face.\i[155],This one's hard to explain to outsiders... \i[210]\i[410]\i[403]You'd have to read up on Drek May-His-Name-Live-In-Infamy."
 	"Rule 29:\nWhat's in it for me?,\i[253]\i[406]I have a feeling only a rather narrow set of answers to this is acceptable.,\i[201]It's a question you gotta ask!"
 	"Rule 30:\nConfidentiality equals profit.,\i[253]\i[404]You do seem oddly capable of discretion.\i[156],\i[252]Big ears are good\w5\i[251]\i[201] and a big mouth is bad!\i[156]"
 	"Rule 31:\nNever make fun of a ferengi's mother. Insult something he cares about instead.,\i[202]\i[251]Revolting.\i[152],\i[254]Aw don't take that one too serious.\w5\i[206] And don't ever say nasty things about my mom!\i[161]"
 	"Rule 33:\nIt never hurts to suck up to the boss.,I have a feeling this goes beyond proper respect for one's superiors.\i[152],\i[212]\i[410]What's not proper about keeping your boss happy?"
-	"Rule 34:\nWar is good for business.,I suppose.,I like the hu-mon version better!\w4\i[203]\i[402]\i[409] Go on and look up ''human Rule 34'' ...!\w4 *snrk!*\i[160]"
+	"Rule 34:\nWar is good for business.,I suppose.,I like the hu-mon version better!\w4\i[203]\i[402]\i[409] Go on and look up ''human Rule 34'' ...!\w4 Hee hee *snrk!*\i[160]"
 	"Rule 35:\nPeace is good for business.,\i[253]\i[402]Doesn't this directly contradict ''war is good for business''?,\i[216]\i[410]You're not scared of a little contradiction are you?\i[155]"
 	"Rule 37:\nThe early investor reaps the most interest.,Mathematically I suppose this is true.,\i[201]As long as it's a sound investment in the first place. <3"
 	"Rule 39:\nDon't tell customers more than they need to know.,\i[201]\i[404]I can agree with a warning not to volunteer information carelessly.,\i[201]\i[406]Oversharing is no good!\i[156]"
@@ -647,7 +649,7 @@ lessonrules
 	//"Rule 194:\nIt's never too late to fire the staff.,A metaphor for knowing when to wash one's hands of a failed endeavor?,Cut toxicity out of your life! <3"
 	"Rule 199:\nLocation location location.,Completely impenetrable.,You gotta be where stuff's going on!"
 	"Rule 200:\nA ferengi chooses no side but his own.,Your species' policy of interstellar neutrality speaks to that.,Not like anyone's watching out for us."
-	"Rule 202:\nThe justification for profit is profit.,For profit being your species' alleged natural motivator you need a great many reminders of this fact.,Uh-huh! Like how your species needs reminders about how society is more important than you are...?"
+	"Rule 202:\nThe justification for profit is profit.,For profit being your species' alleged natural motivator you need a great many reminders of this fact.,Uh-huh! Like how your species needs reminders about how the state is more important than you are...?"
 	"Rule 203:\nNew customers are like razor-toothed gree worms. They can be succulent but sometimes they bite back.,Why not just kill the worms before you eat them?,Those bites do hurt super bad!"
 	"Rule 208:\nSometimes the only thing more dangerous than a question is an answer.,True. There is such a thing as being too curious for one's own good.,Don't ask if you don't really wanna know!"
 	"Rule 211:\nEmployees are rungs on the ladder of success; don't hesitate to step on them.,I'm not sure how this attitude fosters loyalty from one's underlings.,Oh it doesn't!"
@@ -664,10 +666,10 @@ lessonrules
 	"Rule 242:\nMore is good. All is better.,How has your civilization endured under this hyper-competitive ethos?,Competeing is fun! Especially when you're winning. <3"
 	"Rule 243:\nAlways leave yourself an out.,Good advice in moderation.\i[408] Is this why you seem so inconstant?,\i[201]Safety first! <3"
 	"Rule 248:\nThe definition of insanity is trying the same failed scheme and expecting different results.,You describe your own tactics as ''schemes''?,That's what they are!"
-	"Rule 255:\nA wife is a luxury; a smart accountant a necessity.,Once again the casual commodification of half your species greatly disturbs me.,The modern interpretation is that they're totally the same person But people have been talking about the ''subtextual homoeroticism'' of this one for like...centuries. <3"
+	"Rule 255:\nA wife is a luxury; a smart accountant a necessity.,Once again the casual commodification of half your species greatly disturbs me.,The modern interpretation is that they're totally the same person. But people have been talking about the ''subtextual homoeroticism'' of this one for like...centuries. <3"
 	"Rule 257:\nWhen the messenger comes to appropriate your profits-- kill the messenger.,I thought your species eschewed violence?,I don't think they mean literally shooting a literal messenger...?"
 	"Rule 261:\nA wealthy man can afford anything except a conscience.,This rings true. Likely for different reasons for myself than for the author.,How else can someone get rich in the first place?"
-	"Rule 263:\nNever allow doubt to tarnish your lust for latinum.,You people need so many reminders of something that's ostensibly in your nature.,If doing the right thing were easy then... I lost my train of thought. You get it."
+	"Rule 263:\nNever allow doubt to tarnish your lust for latinum.,You people need so many reminders of something that's ostensibly in your nature.,If doing the right thing were easy then...\w8 I lost my train of thought.\w4 You get it."
 	"Rule 266:\nWhen in doubt...lie.,I fully understand the impulse toward discretion but I loathe the wording.,Good advice should be simple and easy to understand!"
 	"Rule 267:\nIf you believe it-- they believe it.,A musing on becoming one's mask. How post-modern.,You gotta respect people enough to tell a *good* lie!"
 	"Rule 272:\nAlways inspect the merchandise before making a deal.,Sound enough advice in several aspects.,People will try to pull a fast one on you sometimes!"
@@ -677,10 +679,10 @@ lessonrules
 	"Rule 287:\nAlways get someone else to do the lifting.,Not literally I assume. You seem fairly muscular.,You can still carry my stuff for me if you want!"
 	"Rule 288:\nNever get into anything you can't get out of.,Fear of commitment tracks with what I've seen of you.,I like to keep my options open okay???"
 	"Rule 289:\nA man is only worth the sum of his possessions.,How depressing.,Can you honestly say this isn't at least a little true for your culture?"
-	"Rule 290:\nAn angry man in an enemy and a satisfied man is an ally.,Ferengi diplomacy in a nutshell I suppose.,Makes sense don't you think?"
+	"Rule 290:\nAn angry man is an enemy and a satisfied man is an ally.,Ferengi diplomacy in a nutshell I suppose.,Makes sense don't you think?"
 	"Rule 291:\nThe less employees know about the cash flow the smaller the share they can demand.,Hmm. How is that wave of union organizing on Ferenginar going?,It's going super good last I heard!"
-	"Rule 292:\nOnly a fool passes up a business opportunity.,Depends on the alternative options.,Agreeing to one opportunity means passing up on another!"
-	"Rule 293:\nThe more time they take deciding the more money they will spend.,Is that true?,The people who take the longest looking through our catalog always end up ordering the most stock from our farm!"
+	"Rule 292:\nOnly a fool passes up a business opportunity.,Depends on the alternative options.,Agreeing to one opportunity always means passing up on another!"
+	"Rule 293:\nThe more time they take deciding the more money they will spend.,Is that true?,The people who take the longest looking through our catalog always end up ordering the most stock from my family's farm!"
 	"Rule 294:\nA bargain usually isn't.,I thought ''only a fool pays retail''.,There's a difference between a deal you negotiate and one you're offered out of the blue."
 	"Rule 299:\nWhenever you exploit someone it never hurts to thank them.,So that they don't get fed up with you and either leave or retaliate?,Good manners make life easier for everyone!"
 		

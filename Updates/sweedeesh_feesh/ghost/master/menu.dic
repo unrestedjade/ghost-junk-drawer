@@ -19,7 +19,7 @@ OpenSakuraMenu
 		"\0\s[0]\b2What'll it be..."
 		"\0\s[0]\b2Where would you like to go today..."
 		"\0\s[0]\b2It's raining menu..."
-		"0\s[0]\b2Eine Menu-te..."
+		"\0\s[0]\b2Eine Menu-te..."
 		--
 		MenuRun
 }

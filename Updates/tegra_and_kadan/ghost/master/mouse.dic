@@ -48,7 +48,7 @@ MouseMoveSakura
 				"\0\s[0]\i[203]\i[408]\i[403]0w0...?\i[158]\e"
 				"\0\s[0]\i[204]Well, if you're offering, I'm not gonna turn down some oo-mox...\i[158]\e"
 				"\0\s[0]\i[212]\i[410]\i[403]\i[254]So long as you know this is, like, a sexual thing?\w4\i[204] I'm cool with it, haha.\w4\i[201]\i[158]\e"
-				"\0\s[0]\i[203]\i[406]\i[407]\i[158]\i[252]<3\w4 <3\s4 <3\w8\1\n\n[half]\s[10]\i[52]\i[252]\i[410]\i[403]Can't you do that somewhere else?\i[152]\e"
+				"\0\s[0]\i[203]\i[406]\i[407]\i[158]\i[252]<3\w4 <3\w4 <3\w8\n\n[half]\1\s[10]\i[252]\i[410]\i[403]\w8Can't you do that somewhere else?\i[152]\e"
 				}
  			}
  			elseif reference4 == "Face"
@@ -109,7 +109,7 @@ MouseMoveKero
 				{
 				"\1\s[10]\i[52]? Is this some human thing I'm not aware of?\e"
 				"\1\s[10]\i[55]I wonder why so many aliens are so fascinated by scales.\i[158]\e"
-				"\1\s[10]\i[201]\i[251]\i[406]\i[407] know you're trying to be friendly. However...\e"
+				"\1\s[10]\i[201]\i[251]\i[406]\i[407]I know you're trying to be friendly. However...\e"
 				}
  			}
 			elseif reference4 == "Head" 
@@ -181,17 +181,9 @@ MouseDoubleClickSakura
  {
  	if reference4 == "Ear" || reference4 == "Face" //here, this is checking to see if the user is double clicking on either the character's head OR their face, which for our purposes means they're hitting the ghost. More about operators at the walkthrough.
 	{
-		if hitcount == 0 && nowshell != "mirror"
+		if hitcount == 0 
 		{
-			HitTegraConfirm
-		}
-		elseif feelings <= 0
-		{
-		feelings -= 2
-		hitcount += 1
-		"\0\s[0]\i[162]\i[208]\i[253]\i[407]\i[408]HSSS!!!\e"
-		"\0\s[0]\i[201]\i[253]\i[407]\i[408]STOP IT!!!\i[153]\1\n\n[half]\s[10]\i[251]\i[204]\i[402]Enough, %(username)!\e"
-		"\0\s[0]\i[152]\i[208]\i[251]\i[409]\i[406]*gck*...........\e"
+			"\1\_qSurely you wouldn't strike Tegra...?\n\n\![*]\q[I sure would!,ConfirmHitT]\n\![*]\q[No!!,NoHit]\e"
 		}
 		elseif nowshell == "mirror"
 		{
@@ -202,12 +194,21 @@ MouseDoubleClickSakura
 		"\0\s[0]\i[162]\i[208]\i[253]\i[407]\i[408]HSSS!!!\e"
 		"\0\s[0]\i[152]\i[208]\i[251]\i[409]\i[406]*gck*...........\e"
 		}
+		elseif feelings <= 0
 		{
-		feelings -= 2
+		tfeelings -= 5
+		hitcount += 1
+		"\0\s[0]\i[162]\i[208]\i[253]\i[407]\i[408]HSSS!!!\e"
+		"\0\s[0]\i[201]\i[253]\i[407]\i[408]STOP IT!!!\i[153]\1\n\n[half]\s[10]\i[251]\i[204]\i[402]Enough, %(username)!\e"
+		"\0\s[0]\i[152]\i[208]\i[251]\i[409]\i[406]*gck*...........\e"
+		}
+		else
+		{
+		tfeelings -= 5
 		hitcount += 1
 		"\0\s[0]\i[251]\i[202]\i[408]\i[409]Ouch!\i[153]\w8\1\n\n[half]\s[10]\i[252]Did you offend %(username) in some way?\w8\0\s[0]\i[251]\i[206]\i[408]\i[409]\n\n[half]No, I didn't!!!\i[153]\w8\w8\w8\w8\s[0]\i[152]\i[253]\i[410]\i[405] Did I???\i[154]\e"
 		"\0\s[0]\i[251]\i[202]\i[408]\i[409]Hey! Not funny!\e"
-		"\0\s[0]\i[251]\i[202]\i[408]\i[409]Oww-uh...!\w8\1\n\n[half]\s[10]\i[251]\i[52]\i[404]\i[405]How \f[italic,true]dare\f[italic,false] you?!\e"
+		"\0\s[0]\i[251]\i[202]\i[408]\i[409]Oww-uh...!\w8\1\n\n[half]\s[10]\i[251]\i[252]\i[404]\i[405]How \f[italic,true]dare\f[italic,false] you?!\e"
 		"\0\s[0]\i[251]\i[202]\i[408]\i[409]Umm...Rude?!?!\e"
 		}
  	}
@@ -218,13 +219,10 @@ MouseDoubleClickSakura
 	}
  }
  
- Select.HitTegraConfirm
- {
-	"\0\_q(Are you sure you want to hit Tegra...?)\n\n\![*]\q[Yes,ConfirmHitT]\n\![*]\q[No!!,NoHit]\e"
- }
+ 
  Select.ConfirmHitT
  {
-	if nowshell = "mirror"
+	if nowshell == "mirror"
 	{
 		mirrortegratrust -= 1
 		mirrorhitcount += 1
@@ -235,7 +233,7 @@ MouseDoubleClickSakura
 	}
 	else
 	{
-		feelings -= 1
+		tfeelings -= 5
 		hitcount += 1
 		"\0\s[0]\i[251]\i[202]\i[408]\i[409]Ouch!\i[153]\w8\1\n\n[half]\s[10]\i[252]Did you offend %(username) in some way?\w8\0\s[0]\i[251]\i[206]\i[408]\i[409]\n\n[half]No, I didn't!!!\i[153]\w8\w8\w8\w8\s[0]\i[204]\i[253]\i[410]\i[405] Did I???\i[154]\e"
 		"\0\s[0]\i[251]\i[202]\i[408]\i[409]Hey! Not funny!\e"
@@ -253,11 +251,11 @@ MouseDoubleClickKero
  {
  	if reference4 == "Face" || reference4 == "Head" 
 	{
-		if hitcount == 0 && nowshell != "mirror"
+		if hitcount == 0 
 		{
-			"\0\_q(Are you sure you want to hit Kadan...?)\n\n\![*]\q[Yes,ConfirmHitK]\n\![*]\q[No!!,NoHit]\e"
+			"\0\_qCareful! You'll smack Kadan in the face if you do that.\n\n\![*]\q[Exactly!,ConfirmHitK]\n\![*]\q[Oops!,NoHit]\e"
 		}
-		if nowshell == "mirror"
+		elseif nowshell == "mirror"
 		{
 			"\1\s[10]\i[204]Nice try, Terran.\w4\i[154]\e"
 			"\1\s[10]\i[204]\i[406]If you need to destress\w2, Tegra is right there.\0\s[0]\i[152]\i[253]\w4\1\s[10]\i[156]\e"
@@ -265,7 +263,7 @@ MouseDoubleClickKero
 		}
 		else
 		{
-		feelings -= 1
+		kfeelings -= 5
 		hitcount += 1
 		"\1\s[10]\i[202]...! Excuse me?\w8\0\n\n[half]\s[0]Kadan! Are you okay?\w8\1\s[10]\n\n[half]I'm fine, Tegra, just...\w3peeved.\e"
 		"\1\s[10]\i[251]\i[204]Behave yourself, %(username).\e"
@@ -273,7 +271,7 @@ MouseDoubleClickKero
 		"\1\s[10]\i[251]\i[204]Stop that.\e"
 		}
  	}
-	else //Otherwise if you click anywhere else on Triangle's body
+	else //Otherwise if you click anywhere else on Kadan's body
  	{
 		OpenKeroMenu //This will open his menu set up in menu.dic.
 	}
@@ -281,7 +279,7 @@ MouseDoubleClickKero
  
  Select.ConfirmHitK
  {
-		feelings -= 1
+		kfeelings -= 5
 		hitcount += 1
 		"\1\s[10]\i[202]...! Excuse me?\w8\0\s[0]Kadan! Are you okay?\w8\1\s[10]\n\n[half]I'm fine, Tegra, just...peeved.\e"
 		"\1\s[10]\i[251]\i[204]Behave yourself, %(username).\e"

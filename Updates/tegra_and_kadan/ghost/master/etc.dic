@@ -6,8 +6,19 @@
 //I will reiterate that you should be editing these in Notepad++, and in particular, you should set the Language to C (or Java I guess) to properly highlight all the text. It will make things A LOT EASIER for you, trust me! It will also help you keep track of your brackets in case you forget some. If you click on a line with a bracket in Notepad++, it should highlight where the other bracket ends, or turn purple if there's no finishing bracket (which you should definitely fix!)
 //It will also highlight my commented lines in green, so you'll know where they are. Any line beginning with // is a commented line that the code will not read. It's just for your reference!
 
+//--Misc Functions****************************************************************************
+feelings
+{
+    tfeelings + kfeelings
+}
 
 //--Functions by Zichqec*****************************************************************************************
+
+InitializeNewVars
+	{
+  		if !ISVAR("autointeract"); autointeract = "Yes"
+	}
+
 //--Parallel Dialogue Pools
 //Written by Zichqec https://zichqec.github.io/s-the-skeleton/
 
@@ -114,7 +125,7 @@ Select.SetWallpaper_Cancel
  
 OnInstallBegin
  {
-	"\0\s[0]\i[204]\i[406]We'll totally install this file!\w8\1\n\n[half]\s[10]\i[204]This zip or nar contains an install.txt file, so make sure you read it.\e"
+	"\0\s[0]\i[204]\i[406]We'll totally install this file!\w8\1\n\n[half]\s[10]\i[204]This zip or nar contains an readme.txt file, so make sure you read it.\e"
  }
 
  //---- OnInstallComplete -------------------------------------------------------
@@ -347,6 +358,8 @@ OnUpdateReady
 
 OnUpdateComplete
  {
+	InitializeNewVars
+	
 	if reference0 == "none" //if the ghost had nothing to update with
  	{
  		"\1\s[10]\i[201]There are no new files available.\e"
@@ -1043,7 +1056,7 @@ PlayOXshow
         {
 			if feelings <= 0
 			{
-			 "\_q\0\s[0]\i[253]\i[208]\b[2]\n%(_tempstr)\n[half]\_q\s[3]I lost...\w8 Are you done, %(username)?\w9\w9\n[150]\_q\![*]\q[Play Again,OnPlayOX]\n\n[half]Back to...\n\n[half]\n\![*]\q[Main menu,OnBACKTOMENU]\e"
+			 "\_q\0\s[0]\i[253]\i[208]\b[2]\n%(_tempstr)\n[half]\_q\s[0]\i[253]\i[208]I lost...\w8 Are you done, %(username)?\w9\w9\n[150]\_q\![*]\q[Play Again,OnPlayOX]\n\n[half]Back to...\n\n[half]\n\![*]\q[Main menu,OnBACKTOMENU]\e"
             
             "\_q\0\s[0]\i[253]\i[208]\b[2]\n%(_tempstr)\n[half]\_qYou beat me, %(username).\w4 Satisfied?\w4 Wanna leave me alone now?\w8\n[150]\_q\![*]\q[Play Again,OnPlayOX]\n\n[half]Back to...\n\n[half]\n\![*]\q[Main menu,OnBACKTOMENU]\e"
             

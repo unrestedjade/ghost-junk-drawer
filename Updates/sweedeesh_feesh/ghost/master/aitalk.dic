@@ -145,6 +145,37 @@ RandomTalk : nonoverlap_pool
 	
 	
 	//And here we're going to go back into ifs! You see, you can space out your ifs with normal dialogue if you want, as I just mentioned. Anyway, you can set up if statements to check for a lot of different things! One of the cooler ones I think are ones set to check for time. This one for example checks if the month is December.
+
+	if nowshell == "candy"
+	{
+		"\0\s[0]Who can make the sunshine...\w8\n\n[half]Sprinkle it with dew...\e"
+
+		"\0\s[0]Lollypop lollypop O lolly lolly...\w8\n\n[half]Ba dum dum dum...\e"
+
+		"\0\s[0]Do you ever dream of...\w8\n\n[half]Candy-coated raindrops...\e"
+
+		"\0\s[0]Beets...\w8\n\n[half]Nature's candy...\e"
+
+		"\0\s[0]If only Feesh could turn your 100 Grands into one-hundred grand...\e"
+
+		"\0\s[0]Feesh's favorite candy?\w8\n\n[half]Feesh favors %(candy)...\e"
+
+		"\0\s[0]Count one, two, three...\w8\n\n[half]And you will be...\w8\n\n[half]In cotton candy land...\e"
+
+		"\0\s[0]Sometimes you tell the truth...\w8\n\n[half]Like you're pulling taffy...\e"
+
+		"\0\s[0]O to live on sugar mountain...\w8\n\n[half]With the barkers and the colored balloons...\e"
+
+		"\0\s[0]Feesh feels a sugar rush a-comin'...\e"
+
+		"\0\s[0]Tastes like red dye #40...\e"
+
+		"\0\s[0]Is cherry the better red flavor?\w8\n\n[half]Maybe strawberry?\w8\n\n[half]Lingonberry?\e"
+
+		"\0\s[0]Feesh needs no bubblegum to blow bubbles...\e"
+
+		"\0\s[0]Artificial strawberry flavor from real artificial strawberries...\e"
+	}
 	
 	if month >= 12
 	{
@@ -214,6 +245,16 @@ RandomTalk : nonoverlap_pool
 		"\0\s[0]Do you like crunchy leaves?\w8\n\n[half]Or creamy leaves?\e"
 		
 		"\0\s[0]October...\w8\n\n[half]Named for the noble octopus.\e"
+
+		"\0\s[0]Leave the porch light on for Feesh...\e"
+
+		"\0\s[0]Remember to check your candy...\w8\n\n[half]For Methyline Blue...\e"
+
+		"\0\s[0]I put a spell on you...\w8\n\n[half]And now you're mine...\e"
+
+		"\0\s[0]It's a dead man's party...\w8\n\n[half]Who could ask for more...\e"
+
+		"\0\s[0]It was the monster mash...\w8\n\n[half]It was a graveyard smash...\e"
 	}
 	if month == 11
 	{
